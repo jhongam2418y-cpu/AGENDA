@@ -1,0 +1,25 @@
+<?php
+include("../../datos/bd.php");
+
+$idadministracion = $_POST['idadministracion'];
+$nombre = $_POST['nombre'];
+$apellidos = $_POST['apellidos'];
+$cargo = $_POST['cargo'];
+$dni = $_POST['dni'];
+$genero = $_POST['genero'];
+$telefono = $_POST['telefono'];
+$correo = $_POST['correo'];
+$User = $_POST['User'];
+$passw = $_POST['passw'];
+
+$sql = "UPDATE administracion SET nombre='$nombre', apellidos='$apellidos', cargo='$cargo', dni='$dni', genero='$genero', 
+                                telefono='$telefono', correo='$correo', User='$User', passw='$passw' WHERE idadministracion='$idadministracion'";
+
+$query = mysqli_query($conn, $sql);
+
+if ($query) {
+    Header("Location: ../../ventana/administracion/datos_administrador.php?idadministracion=$idadministracion");
+} else {
+}
+
+?>

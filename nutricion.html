@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examen Nutricional</title>
+  <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    function confirmacion() {
+      var respuesta = confirm("¿Desea Eliminar la Ficha de Nutrición?");
+      if (respuesta == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <style>
+    body {
+      margin-bottom: 120px;
+    }
+
+    #btn3 {
+      border-bottom: 2px solid #25eaa4;
+      background-color: #d3d4d5;
+    }
+
+    #tablahistoria {
+      width: 80%;
+      font-family: sans-serif;
+    }
+
+    p {
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+
+    label {
+      font-family: sans-serif;
+    }
+
+    .form-control {
+      font-family: sans-serif;
+      border-bottom: 2px solid #25eaa4;
+    }
+
+    #guardar {
+      position: fixed;
+      right: 2%;
+      bottom: 20%;
+      background-color: #25eaa4;
+      color: white;
+    }
+  </style>
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+        <a id="btn1" href="datos_personales.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Datos</a>
+        <a id="btn2" href="odontograma.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen odontológico</a>
+        <a id="btn3" href="nutricion.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Nutricional</a>
+        <a id="btn4" href="psicologia.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Psicologico</a>
+        <a id="btn5" href="img.html" class="btn btn-secondary" tabindex="-1" role="button"
+          aria-disabled="true">Imagenes</a>
+        <a id="btn6" href="img_r.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Radiografias</a>
+        <a id="btn7" href="documentos.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html" target="_paren" class="btn btn-secondary"
+          tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-sm-6 col-xl-6">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped text-start align-middle mb-0" id="tablahistoria">
+      <thead>
+        <tr class="table-secondary">
+          <th>Historial Clinico</th>
+        </tr>
+      </thead>
+      <tbody id="historial-body">
+        <!-- Los registros del historial se cargarán dinámicamente aquí -->
+      </tbody>
+    </table>
+  </div>
+
+  <form id="form-nutricion" action="agregar_nutricion.html" method="POST">
+    <input type="hidden" name="idpaciente" id="idpaciente" value="">
+    <div class="container-fluid pt-4 px-4">
+      <p>Ficha de identificación</p>
+      <div class="row g-4">
+        <div class="col-sm-3 col-xl-3">
+          <label>Nombre:</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" readonly>
+        </div>
+        <div class="col-sm-3 col-xl-3">
+          <label>Apellidos:</label>
+          <input type="text" class="form-control" id="apellidos" name="apellidos" readonly>
+        </div>
+        <div class="col-sm-3 col-xl-3">
+          <label>Genero:</label>
+          <input type="text" class="form-control" id="genero" name="genero" readonly>
+        </div>
+        <div class="col-sm-3 col-xl-3">
+          <label>Fecha de nacimiento:</label>
+          <input type="date" class="form-control" id="nacimiento" name="nacimiento" readonly>
+        </div>
+        <div class="col-sm-3 col-xl-3">
+          <label>Edad:</label>
+          <input type="text" class="form-control" id="edad" name="edad" readonly>
+        </div>
+        <div class="col-sm-3 col-xl-3">
+          <label>Meses:</label>
+          <input type="text" class="form-control" id="meses" name="meses" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid pt-4 px-4">
+      <div class="row g-4">
+        <div class="table-responsive col-sm-6 col-xl-4">
+          <table class="table table-striped text-start align-middle mb-0" id="tablamedicion">
+            <thead>
+              <tr class="table-secondary">
+                <th>Medicion</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-secondary">
+                <td>Peso (KG):</td>
+                <td><input type="text" class="form-control" id="peso" name="peso" placeholder="0" oninput="calcular()">
+                </td>
+              </tr>
+              <tr class="table-secondary">
+                <td>Talla (CM):</td>
+                <td><input type="text" class="form-control" id="talla" name="talla" placeholder="0"
+                    oninput="calcular()"></td>
+              </tr>
+              <tr class="table-secondary">
+                <td>IMC:</td>
+                <td><input type="text" class="form-control" id="imc" name="imc" value="0" oninput="calcular()" readonly>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-responsive col-sm-6 col-xl-4">
+          <table class="table table-striped text-start align-middle mb-0" id="tablaantropometrica">
+            <thead>
+              <tr class="table-secondary">
+                <th>Indicadores</th>
+                <th>Antropométricos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-secondary">
+                <td>Peso / Edad:</td>
+                <td><input type="text" class="form-control" id="pesoedad" name="pesoedad" placeholder="0" readonly></td>
+              </tr>
+              <tr class="table-secondary">
+                <td>Talla / Edad:</td>
+                <td><input type="text" class="form-control" id="tallaedad" name="tallaedad" placeholder="0" readonly>
+                </td>
+              </tr>
+              <tr class="table-secondary">
+                <td>Peso / Talla:</td>
+                <td><input type="text" class="form-control" id="pesotalla" name="pesotalla" value="0" readonly></td>
+              </tr>
+              <tr class="table-secondary">
+                <td>IMC / Edad:</td>
+                <td><input type="text" class="form-control" id="imcvalor" name="imcedad" value="0" readonly></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-responsive col-sm-6 col-xl-4">
+          <table class="table table-striped text-start align-middle mb-0" id="tablabioquimica">
+            <thead>
+              <tr class="table-secondary">
+                <th>Indicadores</th>
+                <th>Bioquímicos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-secondary">
+                <td>Anemia</td>
+                <td><input type="text" class="form-control" id="anemia" name="anemia" placeholder="0">
+                  <input type="text" class="form-control" id="anemiavalor" name="anemiavalor" readonly>
+                </td>
+              </tr>
+              <tr class="table-secondary">
+                <td>Diabetes</td>
+                <td><input type="text" class="form-control" id="diabetes" name="diabetes" placeholder="0">
+                  <input type="text" class="form-control" id="diabetesvalor" name="diabetesvalor" readonly>
+                </td>
+              </tr>
+              <tr class="table-secondary">
+                <td>Prediabetes</td>
+                <td><input type="text" class="form-control" id="prediabetes" name="prediabetes" placeholder="0">
+                  <input type="text" class="form-control" id="prediabetesvalor" name="prediabetesvalor" readonly>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <input id="guardar" class="btn" type="submit" value="Guardar">
+  </form>
+
+  <script>
+    // Función para obtener parámetros de la URL
+function getUrlParams() {
+    const params = {};
+    const queryString = window.location.search.substring(1);
+    const pairs = queryString.split('&');
+    
+    for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i].split('=');
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+    }
+    
+    return params;
+}
+
+// Función para cargar datos del paciente desde localStorage
+function cargarDatosPaciente(nombrePaciente) {
+    // Buscar el paciente en las citas guardadas en localStorage
+    const citas = JSON.parse(localStorage.getItem("citas")) || [];
+    const paciente = citas.find(cita => cita.paciente === nombrePaciente);
+    
+    if (paciente) {
+        document.getElementById('idpaciente').value = nombrePaciente;
+        document.getElementById('nombre').value = nombrePaciente.split(' ')[0]; // Primer nombre
+        document.getElementById('apellidos').value = nombrePaciente.split(' ').slice(1).join(' '); // Apellidos
+        
+        // Estos campos podrías guardarlos en localStorage o usar valores por defecto
+        document.getElementById('genero').value = "Por definir";
+        document.getElementById('nacimiento').value = "";
+        document.getElementById('edad').value = "";
+        document.getElementById('meses').value = "";
+        
+        // Actualizar enlaces de navegación con el nombre del paciente
+        const enlaces = document.querySelectorAll('a[id^="btn"]');
+        enlaces.forEach(enlace => {
+            const href = enlace.getAttribute('href');
+            if (href && !href.includes('idpaciente=')) {
+                enlace.setAttribute('href', href + '?idpaciente=' + encodeURIComponent(nombrePaciente));
+            }
+        });
+    } else {
+        alert('Paciente no encontrado en el sistema');
+    }
+}
+
+// Función para cargar historial de nutrición desde localStorage
+function cargarHistorialNutricion(nombrePaciente) {
+    // Obtener historial de localStorage o crear uno vacío
+    const historialNutricion = JSON.parse(localStorage.getItem('historialNutricion')) || {};
+    const historial = historialNutricion[nombrePaciente] || [];
+    const historialBody = document.getElementById('historial-body');
+    historialBody.innerHTML = '';
+    
+    historial.forEach(registro => {
+        const fila = document.createElement('tr');
+        fila.className = 'table-secondary';
+        fila.innerHTML = `
+            <td>${registro.fecha}
+                <a id="modificar" class="btn btn-sm button" 
+                    href="actualizar_nutricion.html?idpaciente=${encodeURIComponent(nombrePaciente)}&fecha=${registro.fecha}&id=${registro.id}">
+                    <img class="buttonimg" src="img/historia.png" width="20"></a>
+                <a class="btn btn-sm button"
+                    href="eliminar/eliminar_nutricion.html?idpaciente=${encodeURIComponent(nombrePaciente)}&fecha=${registro.fecha}&id=${registro.id}"
+                    onclick='return confirmacion()'>
+                    <img class="buttonimg" src="img/eliminar.png" width="20"></a>
+            </td>
+        `;
+        historialBody.appendChild(fila);
+    });
+}
+
+// Función para guardar datos de nutrición en localStorage
+function guardarNutricion(event) {
+    event.preventDefault();
+    
+    const nombrePaciente = document.getElementById('idpaciente').value;
+    const datosNutricion = {
+        fecha: new Date().toISOString().split('T')[0],
+        peso: document.getElementById('peso').value,
+        talla: document.getElementById('talla').value,
+        imc: document.getElementById('imc').value,
+        pesoedad: document.getElementById('pesoedad').value,
+        tallaedad: document.getElementById('tallaedad').value,
+        pesotalla: document.getElementById('pesotalla').value,
+        imcedad: document.getElementById('imcvalor').value,
+        anemia: document.getElementById('anemia').value,
+        anemiavalor: document.getElementById('anemiavalor').value,
+        diabetes: document.getElementById('diabetes').value,
+        diabetesvalor: document.getElementById('diabetesvalor').value,
+        prediabetes: document.getElementById('prediabetes').value,
+        prediabetesvalor: document.getElementById('prediabetesvalor').value
+    };
+    
+    // Guardar en localStorage
+    const historialNutricion = JSON.parse(localStorage.getItem('historialNutricion')) || {};
+    if (!historialNutricion[nombrePaciente]) {
+        historialNutricion[nombrePaciente] = [];
+    }
+    
+    historialNutricion[nombrePaciente].unshift({
+        ...datosNutricion,
+        id: Date.now() // ID único basado en timestamp
+    });
+    
+    localStorage.setItem('historialNutricion', JSON.stringify(historialNutricion));
+    
+    alert('Datos de nutrición guardados correctamente');
+    cargarHistorialNutricion(nombrePaciente);
+    
+    // Limpiar formulario
+    document.getElementById('form-nutricion').reset();
+}
+
+// Función para calcular IMC y otros indicadores
+function calcular() {
+    // Obtener valores
+    var peso = parseFloat(document.getElementById('peso').value) || 0;
+    var talla = parseFloat(document.getElementById('talla').value) || 0;
+    
+    // Calcular IMC (peso en kg / (talla en m)^2)
+    if (talla > 0) {
+        var tallaMetros = talla / 100;
+        var imc = peso / (tallaMetros * tallaMetros);
+        document.getElementById('imc').value = imc.toFixed(2);
+        
+        // Calcular otros indicadores (simplificado)
+        document.getElementById('pesoedad').value = (peso * 0.8).toFixed(2);
+        document.getElementById('tallaedad').value = (talla * 1.1).toFixed(2);
+        document.getElementById('pesotalla').value = (peso / talla * 100).toFixed(2);
+        document.getElementById('imcvalor').value = imc.toFixed(2);
+        
+        // Calcular valores bioquímicos (simplificado)
+        document.getElementById('anemiavalor').value = (12 - (peso * 0.1)).toFixed(1) + " g/dL";
+        document.getElementById('diabetesvalor').value = (80 + (peso * 0.5)).toFixed(0) + " mg/dL";
+        document.getElementById('prediabetesvalor').value = (90 + (peso * 0.3)).toFixed(0) + " mg/dL";
+    }
+}
+
+// Inicialización cuando la página carga
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtener ID del paciente de la URL
+    const params = getUrlParams();
+    const idPaciente = params.idpaciente || params.paciente;
+    
+    if (idPaciente) {
+        // Cargar datos del paciente
+        cargarDatosPaciente(idPaciente);
+        
+        // Cargar historial de nutrición
+        cargarHistorialNutricion(idPaciente);
+    } else {
+        alert('No se ha especificado un paciente');
+    }
+    
+    // Agregar event listener para el formulario
+    document.getElementById('form-nutricion').addEventListener('submit', guardarNutricion);
+    
+    // Ocultar pantalla de carga
+    var contenedor = document.getElementById('contenedor_carga');
+    contenedor.style.visibility = 'hidden';
+    contenedor.style.opacity = '0';
+});
+  </script>
+
+</body>
+
+</html>

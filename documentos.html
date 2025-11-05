@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="MobileOptimized" content="width" />
+  <title>Documentos del Paciente</title>
+  <!-- Script css -->
+  <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+  <link href="css/styleimformes.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Script js -->
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <style>
+    body {
+      margin-bottom: 120px;
+    }
+
+    #btn7 {
+      border-bottom: 2px solid #25eaa4;
+      background-color: #d3d4d5;
+    }
+
+    #rounded1, #rounded2 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #img2, #img3 {
+      width: 50px;
+      height: 50px;
+      filter: invert(1);
+    }
+
+    #guardar {
+      background-color: #25eaa4;
+      color: white;
+      font-weight: bold;
+      padding: 10px 30px;
+      border-radius: 5px;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    #guardar:hover {
+      background-color: #1ec98c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(37, 234, 164, 0.3);
+    }
+
+    #contenedortabla {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #tabla th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
+
+    .buttonimg {
+      transition: transform 0.3s;
+    }
+
+    .buttonimg:hover {
+      transform: scale(1.1);
+    }
+
+    #eliminar {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+        <a id="btn1" href="datos_personales.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Datos</a>
+        <a id="btn2" href="odontograma.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen odontológico</a>
+        <a id="btn3" href="nutricion.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Nutricional</a>
+        <a id="btn4" href="psicologia.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Psicologico</a>
+        <a id="btn5" href="img.html" class="btn btn-secondary" tabindex="-1" role="button"
+          aria-disabled="true">Imagenes</a>
+        <a id="btn6" href="img_r.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Radiografias</a>
+        <a id="btn7" href="documentos.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+
+  <form id="documento-form" method="post" enctype="multipart/form-data">
+    <input type="hidden" class="form-control" name="paciente" id="paciente" value="">
+    <!-- Sale & Revenue Start -->
+    <div class="container-fluid pt-4 px-4">
+      <div class="row g-4">
+        <div class="col-sm-6 col-xl-4">
+          <div id="rounded1" class="rounded d-flex align-items-center justify-content-between p-4">
+            <img id="img3" src="img/clasificar2.png">
+            <div class="ms-3">
+              <p class="mb-2 text-white">SELECCIONA UN ARCHIVO</p>
+              <input class="form-control form-control-sm" type="file" name="archivo" id="archivoInput" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div id="rounded2" class="rounded d-flex align-items-center justify-content-between p-4">
+            <img id="img2" src="img/clasificar2.png">
+            <div class="ms-3">
+              <p class="mb-2 text-white">NOMBRE DEL ARCHIVO</p>
+              <input class="form-control form-control-sm" type="text" name="nombre" id="nombreInput" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="rounded d-flex align-items-center justify-content-between p-4">
+            <input id="guardar" type="submit" class="btn" value="Guardar" name="Guardar">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sale & Revenue End -->
+  </form>
+
+  <!-- tabla -->
+  <div class="container-fluid pt-4 px-4">
+    <div id="contenedortabla" class="text-center rounded p-4">
+      <div class="table-responsive">
+        <table class="table table-striped text-start align-middle mb-0" id="tabla">
+          <thead>
+            <tr>
+              <th>Archivo</th>
+              <th>Nombre</th>
+              <th>Fecha</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody id="documentos-body">
+            <!-- Los documentos se cargarán dinámicamente aquí -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Desea eliminar este documento?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Función para obtener parámetros de la URL
+    function getUrlParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const pairs = queryString.split('&');
+      
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i].split('=');
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+      }
+      
+      return params;
+    }
+
+    // Función para obtener el ID del paciente
+    function obtenerIdPaciente() {
+      const params = getUrlParams();
+      return params.idpaciente || params.paciente;
+    }
+
+    // Función para cargar documentos del paciente
+    function cargarDocumentosPaciente(nombrePaciente) {
+      const documentosPacientes = JSON.parse(localStorage.getItem('documentosPacientes')) || {};
+      return documentosPacientes[nombrePaciente] || [];
+    }
+
+    // Función para guardar documentos del paciente
+    function guardarDocumentosPaciente(nombrePaciente, documentos) {
+      const documentosPacientes = JSON.parse(localStorage.getItem('documentosPacientes')) || {};
+      documentosPacientes[nombrePaciente] = documentos;
+      localStorage.setItem('documentosPacientes', JSON.stringify(documentosPacientes));
+    }
+
+    // Función para obtener icono según extensión del archivo
+    function obtenerIconoDocumento(nombreArchivo) {
+      const extension = nombreArchivo.split('.').pop().toLowerCase();
+      const iconos = {
+        'pdf': 'document/icono_pdf.png',
+        'doc': 'document/word.png',
+        'docx': 'document/word.png',
+        'xls': 'document/exel.png',
+        'xlsx': 'document/exel.png',
+        'txt': 'document/txt.png',
+        'jpg': 'document/image.png',
+        'jpeg': 'document/image.png',
+        'png': 'document/image.png'
+      };
+      return iconos[extension] || 'document/icono_pdf.png';
+    }
+
+    // Función para cargar documentos en la tabla
+    function cargarDocumentosEnTabla(documentos) {
+      const documentosBody = document.getElementById('documentos-body');
+      documentosBody.innerHTML = '';
+
+      if (documentos.length === 0) {
+        documentosBody.innerHTML = `
+          <tr>
+            <td colspan="4" class="text-center text-muted">No hay documentos registrados</td>
+          </tr>
+        `;
+        return;
+      }
+
+      documentos.forEach(documento => {
+        const fila = document.createElement('tr');
+        const icono = obtenerIconoDocumento(documento.nombre);
+        
+        fila.innerHTML = `
+          <td>
+            <a href="#" class="descargar-documento" data-id="${documento.id}">
+              <img width='30' src='${icono}' alt="${documento.nombre}">
+            </a>
+          </td>
+          <td>${documento.nombre}</td>
+          <td>${documento.fecha}</td>
+          <td>
+            <a href="#" class="eliminar-documento" data-id="${documento.id}">
+              <img class="buttonimg" id="eliminar" src="img/eliminar.png" width="20" alt="Eliminar">
+            </a>
+          </td>
+        `;
+        documentosBody.appendChild(fila);
+      });
+
+      // Agregar event listeners para descargar
+      document.querySelectorAll('.descargar-documento').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const id = this.getAttribute('data-id');
+          descargarDocumento(id);
+        });
+      });
+
+      // Agregar event listeners para eliminar
+      document.querySelectorAll('.eliminar-documento').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const id = this.getAttribute('data-id');
+          mostrarConfirmacionEliminacion(id);
+        });
+      });
+    }
+
+    // Función para descargar documento
+    function descargarDocumento(id) {
+      const nombrePaciente = document.getElementById('paciente').value;
+      const documentos = cargarDocumentosPaciente(nombrePaciente);
+      const documento = documentos.find(doc => doc.id === id);
+
+      if (documento) {
+        // Crear un enlace temporal para descargar
+        const link = document.createElement('a');
+        link.href = documento.contenido;
+        link.download = documento.nombre;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        alert(`Descargando: ${documento.nombre}`);
+      }
+    }
+
+    // Función para mostrar confirmación de eliminación
+    function mostrarConfirmacionEliminacion(id) {
+      const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+      const confirmDeleteBtn = document.getElementById('confirmDelete');
+      
+      // Configurar el botón de confirmación
+      confirmDeleteBtn.onclick = function() {
+        eliminarDocumento(id);
+        confirmModal.hide();
+      };
+      
+      confirmModal.show();
+    }
+
+    // Función para eliminar documento
+    function eliminarDocumento(id) {
+      const nombrePaciente = document.getElementById('paciente').value;
+      const documentos = cargarDocumentosPaciente(nombrePaciente);
+      const nuevosDocumentos = documentos.filter(doc => doc.id !== id);
+      
+      guardarDocumentosPaciente(nombrePaciente, nuevosDocumentos);
+      cargarDocumentosEnTabla(nuevosDocumentos);
+      
+      alert('Documento eliminado correctamente');
+    }
+
+    // Convertir archivo a base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Manejar envío del formulario
+    document.getElementById('documento-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const nombrePaciente = document.getElementById('paciente').value;
+      if (!nombrePaciente) {
+        alert('No se ha especificado un paciente');
+        return;
+      }
+      
+      const archivoInput = document.getElementById('archivoInput');
+      const nombreInput = document.getElementById('nombreInput');
+      
+      // Validar que se haya seleccionado un archivo
+      if (archivoInput.files.length === 0) {
+        alert('Por favor, seleccione un archivo');
+        return;
+      }
+      
+      // Validar que se haya ingresado un nombre
+      if (!nombreInput.value.trim()) {
+        alert('Por favor, ingrese un nombre para el documento');
+        return;
+      }
+
+      try {
+        const archivo = archivoInput.files[0];
+        
+        // Convertir archivo a base64
+        const contenidoBase64 = await fileToBase64(archivo);
+        
+        // Obtener documentos existentes
+        const documentos = cargarDocumentosPaciente(nombrePaciente);
+        
+        // Crear nuevo documento
+        const nuevoDocumento = {
+          id: Date.now().toString(),
+          nombre: nombreInput.value,
+          contenido: contenidoBase64,
+          fecha: new Date().toISOString().split('T')[0],
+          tipo: archivo.type,
+          tamaño: archivo.size
+        };
+        
+        // Agregar nuevo documento
+        documentos.push(nuevoDocumento);
+        guardarDocumentosPaciente(nombrePaciente, documentos);
+        
+        // Recargar tabla
+        cargarDocumentosEnTabla(documentos);
+        
+        // Limpiar formulario
+        archivoInput.value = '';
+        nombreInput.value = '';
+        
+        // Mostrar mensaje de éxito
+        alert('Documento guardado correctamente');
+        
+      } catch (error) {
+        console.error('Error al procesar el documento:', error);
+        alert('Error al procesar el documento. Por favor, intente nuevamente.');
+      }
+    });
+
+    // Inicialización cuando la página carga
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obtener ID del paciente
+      const idPaciente = obtenerIdPaciente();
+      
+      if (idPaciente) {
+        // Configurar el formulario
+        document.getElementById('paciente').value = idPaciente;
+        
+        // Actualizar enlaces de navegación
+        const enlaces = document.querySelectorAll('a[id^="btn"]');
+        enlaces.forEach(enlace => {
+          const href = enlace.getAttribute('href');
+          if (href && !href.includes('idpaciente=')) {
+            enlace.setAttribute('href', href + '?idpaciente=' + encodeURIComponent(idPaciente));
+          }
+        });
+        
+        // Cargar documentos del paciente
+        const documentos = cargarDocumentosPaciente(idPaciente);
+        cargarDocumentosEnTabla(documentos);
+      } else {
+        alert('No se ha especificado un paciente');
+      }
+      
+      // Ocultar pantalla de carga
+      var contenedor = document.getElementById('contenedor_carga');
+      contenedor.style.visibility = 'hidden';
+      contenedor.style.opacity = '0';
+    });
+  </script>
+</body>
+</html>

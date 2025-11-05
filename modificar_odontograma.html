@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="MobileOptimized" content="width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario Odontológico</title>
+  <style>
+    /* Estilos generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* Estilos para el formulario */
+    .form-container {
+      margin-top: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group select:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    }
+    
+    /* Estilos para la tabla de dientes */
+    .teeth-section {
+      margin: 30px 0;
+    }
+    
+    .teeth-section h2 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .teeth-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .tooth-card {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 15px;
+    }
+    
+    .tooth-card h3 {
+      color: #495057;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    /* Estilos para el botón de guardar */
+    .submit-btn {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: block;
+      margin: 30px auto 0;
+      transition: background-color 0.3s;
+    }
+    
+    .submit-btn:hover {
+      background-color: #27ae60;
+    }
+    
+    /* Estilos para mensajes de información */
+    .info-message {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border-left: 4px solid #3498db;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .teeth-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      .container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Formulario Odontológico</h1>
+    
+    <div class="info-message">
+      Este formulario ha sido convertido a HTML puro. Los datos se enviarán a "modificar_resultado_odontograma.php" cuando se envíe el formulario.
+    </div>
+    
+    <form id="odontograma-form" action="modificar_resultado_odontograma.php" method="post" class="form-container">
+      <!-- Campos ocultos con valores por defecto -->
+      <input type="hidden" name="fecha" id="fecha" value="">
+      <input type="hidden" name="idpaciente" id="idpaciente" value="12345">
+      <input type="hidden" name="id" id="id" value="1">
+      
+      <!-- Sección de dientes superiores -->
+      <div class="teeth-section">
+        <h2>Dientes Superiores</h2>
+        <div class="teeth-grid">
+          <!-- Diente 17 -->
+          <div class="tooth-card">
+            <h3>Diente 17</h3>
+            <div class="form-group">
+              <label for="diente17">Estado:</label>
+              <input type="text" name="diente17" id="diente17" value="">
+            </div>
+            <div class="form-group">
+              <label for="c17">C:</label>
+              <input type="text" name="c17" id="c17" value="">
+            </div>
+            <div class="form-group">
+              <label for="t17">T:</label>
+              <input type="text" name="t17" id="t17" value="">
+            </div>
+            <div class="form-group">
+              <label for="v17">V:</label>
+              <input type="text" name="v17" id="v17" value="">
+            </div>
+            <div class="form-group">
+              <label for="d17">D:</label>
+              <input type="text" name="d17" id="d17" value="">
+            </div>
+            <div class="form-group">
+              <label for="o17">O:</label>
+              <input type="text" name="o17" id="o17" value="">
+            </div>
+            <div class="form-group">
+              <label for="m17">M:</label>
+              <input type="text" name="m17" id="m17" value="">
+            </div>
+            <div class="form-group">
+              <label for="p17">P:</label>
+              <input type="text" name="p17" id="p17" value="">
+            </div>
+            <div class="form-group">
+              <label for="u17">U:</label>
+              <input type="text" name="u17" id="u17" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 16 -->
+          <div class="tooth-card">
+            <h3>Diente 16</h3>
+            <div class="form-group">
+              <label for="diente16">Estado:</label>
+              <input type="text" name="diente16" id="diente16" value="">
+            </div>
+            <div class="form-group">
+              <label for="c16">C:</label>
+              <input type="text" name="c16" id="c16" value="">
+            </div>
+            <div class="form-group">
+              <label for="t16">T:</label>
+              <input type="text" name="t16" id="t16" value="">
+            </div>
+            <div class="form-group">
+              <label for="v16">V:</label>
+              <input type="text" name="v16" id="v16" value="">
+            </div>
+            <div class="form-group">
+              <label for="d16">D:</label>
+              <input type="text" name="d16" id="d16" value="">
+            </div>
+            <div class="form-group">
+              <label for="o16">O:</label>
+              <input type="text" name="o16" id="o16" value="">
+            </div>
+            <div class="form-group">
+              <label for="m16">M:</label>
+              <input type="text" name="m16" id="m16" value="">
+            </div>
+            <div class="form-group">
+              <label for="p16">P:</label>
+              <input type="text" name="p16" id="p16" value="">
+            </div>
+            <div class="form-group">
+              <label for="u16">U:</label>
+              <input type="text" name="u16" id="u16" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 15 -->
+          <div class="tooth-card">
+            <h3>Diente 15</h3>
+            <div class="form-group">
+              <label for="diente15">Estado:</label>
+              <input type="text" name="diente15" id="diente15" value="">
+            </div>
+            <div class="form-group">
+              <label for="c15">C:</label>
+              <input type="text" name="c15" id="c15" value="">
+            </div>
+            <div class="form-group">
+              <label for="t15">T:</label>
+              <input type="text" name="t15" id="t15" value="">
+            </div>
+            <div class="form-group">
+              <label for="v15">V:</label>
+              <input type="text" name="v15" id="v15" value="">
+            </div>
+            <div class="form-group">
+              <label for="d15">D:</label>
+              <input type="text" name="d15" id="d15" value="">
+            </div>
+            <div class="form-group">
+              <label for="o15">O:</label>
+              <input type="text" name="o15" id="o15" value="">
+            </div>
+            <div class="form-group">
+              <label for="m15">M:</label>
+              <input type="text" name="m15" id="m15" value="">
+            </div>
+            <div class="form-group">
+              <label for="p15">P:</label>
+              <input type="text" name="p15" id="p15" value="">
+            </div>
+            <div class="form-group">
+              <label for="u15">U:</label>
+              <input type="text" name="u15" id="u15" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 11 -->
+          <div class="tooth-card">
+            <h3>Diente 11</h3>
+            <div class="form-group">
+              <label for="diente11">Estado:</label>
+              <input type="text" name="diente11" id="diente11" value="">
+            </div>
+            <div class="form-group">
+              <label for="c11">C:</label>
+              <input type="text" name="c11" id="c11" value="">
+            </div>
+            <div class="form-group">
+              <label for="t11">T:</label>
+              <input type="text" name="t11" id="t11" value="">
+            </div>
+            <div class="form-group">
+              <label for="v11">V:</label>
+              <input type="text" name="v11" id="v11" value="">
+            </div>
+            <div class="form-group">
+              <label for="d11">D:</label>
+              <input type="text" name="d11" id="d11" value="">
+            </div>
+            <div class="form-group">
+              <label for="i11">I:</label>
+              <input type="text" name="i11" id="i11" value="">
+            </div>
+            <div class="form-group">
+              <label for="m11">M:</label>
+              <input type="text" name="m11" id="m11" value="">
+            </div>
+            <div class="form-group">
+              <label for="p11">P:</label>
+              <input type="text" name="p11" id="p11" value="">
+            </div>
+            <div class="form-group">
+              <label for="u11">U:</label>
+              <input type="text" name="u11" id="u11" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 21 -->
+          <div class="tooth-card">
+            <h3>Diente 21</h3>
+            <div class="form-group">
+              <label for="diente21">Estado:</label>
+              <input type="text" name="diente21" id="diente21" value="">
+            </div>
+            <div class="form-group">
+              <label for="c21">C:</label>
+              <input type="text" name="c21" id="c21" value="">
+            </div>
+            <div class="form-group">
+              <label for="t21">T:</label>
+              <input type="text" name="t21" id="t21" value="">
+            </div>
+            <div class="form-group">
+              <label for="v21">V:</label>
+              <input type="text" name="v21" id="v21" value="">
+            </div>
+            <div class="form-group">
+              <label for="d21">D:</label>
+              <input type="text" name="d21" id="d21" value="">
+            </div>
+            <div class="form-group">
+              <label for="i21">I:</label>
+              <input type="text" name="i21" id="i21" value="">
+            </div>
+            <div class="form-group">
+              <label for="m21">M:</label>
+              <input type="text" name="m21" id="m21" value="">
+            </div>
+            <div class="form-group">
+              <label for="p21">P:</label>
+              <input type="text" name="p21" id="p21" value="">
+            </div>
+            <div class="form-group">
+              <label for="u21">U:</label>
+              <input type="text" name="u21" id="u21" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 26 -->
+          <div class="tooth-card">
+            <h3>Diente 26</h3>
+            <div class="form-group">
+              <label for="diente26">Estado:</label>
+              <input type="text" name="diente26" id="diente26" value="">
+            </div>
+            <div class="form-group">
+              <label for="c26">C:</label>
+              <input type="text" name="c26" id="c26" value="">
+            </div>
+            <div class="form-group">
+              <label for="t26">T:</label>
+              <input type="text" name="t26" id="t26" value="">
+            </div>
+            <div class="form-group">
+              <label for="v26">V:</label>
+              <input type="text" name="v26" id="v26" value="">
+            </div>
+            <div class="form-group">
+              <label for="d26">D:</label>
+              <input type="text" name="d26" id="d26" value="">
+            </div>
+            <div class="form-group">
+              <label for="o26">O:</label>
+              <input type="text" name="o26" id="o26" value="">
+            </div>
+            <div class="form-group">
+              <label for="m26">M:</label>
+              <input type="text" name="m26" id="m26" value="">
+            </div>
+            <div class="form-group">
+              <label for="p26">P:</label>
+              <input type="text" name="p26" id="p26" value="">
+            </div>
+            <div class="form-group">
+              <label for="u26">U:</label>
+              <input type="text" name="u26" id="u26" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 27 -->
+          <div class="tooth-card">
+            <h3>Diente 27</h3>
+            <div class="form-group">
+              <label for="diente27">Estado:</label>
+              <input type="text" name="diente27" id="diente27" value="">
+            </div>
+            <div class="form-group">
+              <label for="c27">C:</label>
+              <input type="text" name="c27" id="c27" value="">
+            </div>
+            <div class="form-group">
+              <label for="t27">T:</label>
+              <input type="text" name="t27" id="t27" value="">
+            </div>
+            <div class="form-group">
+              <label for="v27">V:</label>
+              <input type="text" name="v27" id="v27" value="">
+            </div>
+            <div class="form-group">
+              <label for="d27">D:</label>
+              <input type="text" name="d27" id="d27" value="">
+            </div>
+            <div class="form-group">
+              <label for="o27">O:</label>
+              <input type="text" name="o27" id="o27" value="">
+            </div>
+            <div class="form-group">
+              <label for="m27">M:</label>
+              <input type="text" name="m27" id="m27" value="">
+            </div>
+            <div class="form-group">
+              <label for="p27">P:</label>
+              <input type="text" name="p27" id="p27" value="">
+            </div>
+            <div class="form-group">
+              <label for="u27">U:</label>
+              <input type="text" name="u27" id="u27" value="">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección de dientes inferiores -->
+      <div class="teeth-section">
+        <h2>Dientes Inferiores</h2>
+        <div class="teeth-grid">
+          <!-- Diente 47 -->
+          <div class="tooth-card">
+            <h3>Diente 47</h3>
+            <div class="form-group">
+              <label for="diente47">Estado:</label>
+              <input type="text" name="diente47" id="diente47" value="">
+            </div>
+            <div class="form-group">
+              <label for="c47">C:</label>
+              <input type="text" name="c47" id="c47" value="">
+            </div>
+            <div class="form-group">
+              <label for="t47">T:</label>
+              <input type="text" name="t47" id="t47" value="">
+            </div>
+            <div class="form-group">
+              <label for="l47">L:</label>
+              <input type="text" name="l47" id="l47" value="">
+            </div>
+            <div class="form-group">
+              <label for="d47">D:</label>
+              <input type="text" name="d47" id="d47" value="">
+            </div>
+            <div class="form-group">
+              <label for="o47">O:</label>
+              <input type="text" name="o47" id="o47" value="">
+            </div>
+            <div class="form-group">
+              <label for="v47">V:</label>
+              <input type="text" name="v47" id="v47" value="">
+            </div>
+            <div class="form-group">
+              <label for="m47">M:</label>
+              <input type="text" name="m47" id="m47" value="">
+            </div>
+            <div class="form-group">
+              <label for="u47">U:</label>
+              <input type="text" name="u47" id="u47" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 46 -->
+          <div class="tooth-card">
+            <h3>Diente 46</h3>
+            <div class="form-group">
+              <label for="diente46">Estado:</label>
+              <input type="text" name="diente46" id="diente46" value="">
+            </div>
+            <div class="form-group">
+              <label for="c46">C:</label>
+              <input type="text" name="c46" id="c46" value="">
+            </div>
+            <div class="form-group">
+              <label for="t46">T:</label>
+              <input type="text" name="t46" id="t46" value="">
+            </div>
+            <div class="form-group">
+              <label for="l46">L:</label>
+              <input type="text" name="l46" id="l46" value="">
+            </div>
+            <div class="form-group">
+              <label for="d46">D:</label>
+              <input type="text" name="d46" id="d46" value="">
+            </div>
+            <div class="form-group">
+              <label for="o46">O:</label>
+              <input type="text" name="o46" id="o46" value="">
+            </div>
+            <div class="form-group">
+              <label for="v46">V:</label>
+              <input type="text" name="v46" id="v46" value="">
+            </div>
+            <div class="form-group">
+              <label for="m46">M:</label>
+              <input type="text" name="m46" id="m46" value="">
+            </div>
+            <div class="form-group">
+              <label for="u46">U:</label>
+              <input type="text" name="u46" id="u46" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 31 -->
+          <div class="tooth-card">
+            <h3>Diente 31</h3>
+            <div class="form-group">
+              <label for="diente31">Estado:</label>
+              <input type="text" name="diente31" id="diente31" value="">
+            </div>
+            <div class="form-group">
+              <label for="c31">C:</label>
+              <input type="text" name="c31" id="c31" value="">
+            </div>
+            <div class="form-group">
+              <label for="t31">T:</label>
+              <input type="text" name="t31" id="t31" value="">
+            </div>
+            <div class="form-group">
+              <label for="l31">L:</label>
+              <input type="text" name="l31" id="l31" value="">
+            </div>
+            <div class="form-group">
+              <label for="d31">D:</label>
+              <input type="text" name="d31" id="d31" value="">
+            </div>
+            <div class="form-group">
+              <label for="i31">I:</label>
+              <input type="text" name="i31" id="i31" value="">
+            </div>
+            <div class="form-group">
+              <label for="v31">V:</label>
+              <input type="text" name="v31" id="v31" value="">
+            </div>
+            <div class="form-group">
+              <label for="m31">M:</label>
+              <input type="text" name="m31" id="m31" value="">
+            </div>
+            <div class="form-group">
+              <label for="u31">U:</label>
+              <input type="text" name="u31" id="u31" value="">
+            </div>
+          </div>
+          
+          <!-- Diente 37 -->
+          <div class="tooth-card">
+            <h3>Diente 37</h3>
+            <div class="form-group">
+              <label for="diente37">Estado:</label>
+              <input type="text" name="diente37" id="diente37" value="">
+            </div>
+            <div class="form-group">
+              <label for="c37">C:</label>
+              <input type="text" name="c37" id="c37" value="">
+            </div>
+            <div class="form-group">
+              <label for="t37">T:</label>
+              <input type="text" name="t37" id="t37" value="">
+            </div>
+            <div class="form-group">
+              <label for="l37">L:</label>
+              <input type="text" name="l37" id="l37" value="">
+            </div>
+            <div class="form-group">
+              <label for="d37">D:</label>
+              <input type="text" name="d37" id="d37" value="">
+            </div>
+            <div class="form-group">
+              <label for="o37">O:</label>
+              <input type="text" name="o37" id="o37" value="">
+            </div>
+            <div class="form-group">
+              <label for="v37">V:</label>
+              <input type="text" name="v37" id="v37" value="">
+            </div>
+            <div class="form-group">
+              <label for="m37">M:</label>
+              <input type="text" name="m37" id="m37" value="">
+            </div>
+            <div class="form-group">
+              <label for="u37">U:</label>
+              <input type="text" name="u37" id="u37" value="">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Campos adicionales -->
+      <div class="teeth-section">
+        <h2>Información Adicional</h2>
+        <div class="teeth-grid">
+          <div class="tooth-card">
+            <h3>Restauraciones</h3>
+            <div class="form-group">
+              <label for="rest11">Rest 11:</label>
+              <input type="text" name="rest11" id="rest11" value="0">
+            </div>
+            <div class="form-group">
+              <label for="rest12">Rest 12:</label>
+              <input type="text" name="rest12" id="rest12" value="0">
+            </div>
+            <div class="form-group">
+              <label for="rest21">Rest 21:</label>
+              <input type="text" name="rest21" id="rest21" value="0">
+            </div>
+            <div class="form-group">
+              <label for="rest22">Rest 22:</label>
+              <input type="text" name="rest22" id="rest22" value="0">
+            </div>
+          </div>
+          
+          <div class="tooth-card">
+            <h3>Tratamientos</h3>
+            <div class="form-group">
+              <label for="tratpul1">Trat. Pulpar 1:</label>
+              <input type="text" name="tratpul1" id="tratpul1" value="0">
+            </div>
+            <div class="form-group">
+              <label for="tratpul2">Trat. Pulpar 2:</label>
+              <input type="text" name="tratpul2" id="tratpul2" value="0">
+            </div>
+            <div class="form-group">
+              <label for="exodoncias1">Exodoncias 1:</label>
+              <input type="text" name="exodoncias1" id="exodoncias1" value="0">
+            </div>
+            <div class="form-group">
+              <label for="exodoncias2">Exodoncias 2:</label>
+              <input type="text" name="exodoncias2" id="exodoncias2" value="0">
+            </div>
+          </div>
+          
+          <div class="tooth-card">
+            <h3>Prevención</h3>
+            <div class="form-group">
+              <label for="fluor1">Fluor 1:</label>
+              <input type="text" name="fluor1" id="fluor1" value="0">
+            </div>
+            <div class="form-group">
+              <label for="fluor2">Fluor 2:</label>
+              <input type="text" name="fluor2" id="fluor2" value="0">
+            </div>
+            <div class="form-group">
+              <label for="fp1">FP 1:</label>
+              <input type="text" name="fp1" id="fp1" value="0">
+            </div>
+            <div class="form-group">
+              <label for="fp2">FP 2:</label>
+              <input type="text" name="fp2" id="fp2" value="0">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button type="submit" class="submit-btn">Guardar Datos Odontológicos</button>
+    </form>
+  </div>
+
+  <script>
+    // Establecer la fecha actual
+    document.addEventListener('DOMContentLoaded', function() {
+      const now = new Date();
+      const formattedDate = now.toISOString().split('T')[0];
+      document.getElementById('fecha').value = formattedDate;
+      
+      // Manejar el envío del formulario
+      document.getElementById('odontograma-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Aquí se pueden agregar validaciones antes de enviar
+        const confirmacion = confirm('¿Está seguro de que desea guardar los datos?');
+        
+        if (confirmacion) {
+          // En un entorno real, aquí se enviaría el formulario
+          // Por ahora, solo mostramos un mensaje
+          alert('Formulario enviado correctamente. En un entorno real, los datos se enviarían al servidor.');
+          
+          // Para enviar realmente el formulario, descomentar la siguiente línea:
+          // this.submit();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

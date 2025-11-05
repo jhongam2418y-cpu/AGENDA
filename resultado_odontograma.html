@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="css/style_resultado_odontograma.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    function confirmacion() {
+      var respuesta = confirm("¿Desea Eliminar la Ficha Odontologica?");
+      if (respuesta == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  </script>
+</head>
+<style>
+  #btn2 {
+    border-bottom: 2px solid #25eaa4;
+    background-color: #d3d4d5;
+  }
+
+  #tablahistoria {
+    width: 80%;
+    font-family: sans-serif;
+  }
+
+  #imprimir {
+    position: fixed;
+    right: 2%;
+    bottom: 12%;
+    background-color: #25eaa4;
+    color: white;
+    z-index: 2;
+  }
+</style>
+
+<body>
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+        <a id="btn1" href="datos_personales.html?idpaciente=<?= $idpaciente ?>" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Datos</a>
+        <a id="btn2" href="odontograma.html?idpaciente=<?= $idpaciente ?>" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen odontológico</a>
+        <a id="btn3" href="nutricion.html?idpaciente=<?= $idpaciente ?>" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Nutricional</a>
+        <a id="btn4" href="psicologia.html?idpaciente=<?= $idpaciente ?>" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Psicologico</a>
+        <a id="btn5" href="img.html?idpaciente=<?= $idpaciente ?>" class="btn btn-secondary" tabindex="-1" role="button"
+          aria-disabled="true">Imagenes</a>
+        <a id="btn6" href="img_r.html?idpaciente=<?= $idpaciente ?>" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Radiografias</a>
+        <a id="btn7" href="documentos.html?idpaciente=<?= $idpaciente ?>" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html?idpaciente=<?= $idpaciente ?>" target="_paren" class="btn btn-secondary"
+          tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-sm-6 col-xl-6">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped text-start align-middle mb-0" id="tablahistoria">
+      <thead>
+        <tr class="table-secondary">
+          <th>Historial Clinico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php while ($row_historial = mysqli_fetch_array($query)): ?>
+          <tr class="table-secondary">
+            <td><?= substr($row_historial['fecha'], -0, -9); ?>
+              <a class="btn btn-sm"
+                href="actualizar_odontograma.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $row_historial['fecha'] ?>&id=<?= $row_historial['id'] ?>">
+                <img class="buttonimg" src="img/historia.png" width="20"></a>
+
+              <a class="btn btn-sm"
+                href="higiene_oral.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $row_historial['fecha'] ?>&id=<?= $row_historial['id'] ?>">
+                <img class="buttonimg" src="img/ioh.png" width="20"></a>
+
+              <a class="btn btn-sm"
+                href="resultado_odontograma.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $row_historial['fecha'] ?>&id=<?= $row_historial['id'] ?>">
+                <img class="buttonimg" src="img/tabla.png" width="20"></a>
+
+              <a class="btn btn-sm"
+                href="eliminar/eliminar_odontograma.php?fecha=<?= $row_historial['fecha'] ?>&idpaciente=<?= $idpaciente ?>"
+                onclick='return confirmacion()'>
+                <img class="buttonimg" src="img/eliminar.png" width="20"></a>
+            </td>
+          </tr>
+        <?php endwhile; ?>
+      </tbody>
+    </table>
+  </div>
+  <?php
+  $sql = "SELECT * FROM odontograma_uno WHERE id='$id' AND fecha='$fecha'";
+  $query = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_array($query);
+  ?>
+  <input type="hidden" name="diente17" id="diente17" value="<?= isset($row_actual['diente17']) ? $row_actual['diente17'] : '' ?>">
+  <input type="hidden" name="pufa17" id="pufa17" value="<?= isset($row_actual['u17']) ? $row_actual['u17'] : '' ?>">
+  <input type="hidden" name="cpod17" id="cpod17" value="<?= isset($row_actual['c17']) ? $row_actual['c17'] : '' ?>">
+  <input type="hidden" name="nt17" id="nt17" value="<?= isset($row_actual['t17']) ? $row_actual['t17'] : '' ?>">
+  <input type="hidden" name="oclusal17" id="oclusal17" value="<?= isset($row_actual['o17']) ? $row_actual['o17'] : '' ?>">
+  <input type="hidden" name="posterior17" id="posterior17" value="<?= isset($row_actual['p17']) ? $row_actual['p17'] : '' ?>">
+  <input type="hidden" name="distal17" id="distal17" value="<?= isset($row_actual['d17']) ? $row_actual['d17'] : '' ?>">
+  <input type="hidden" name="vestibular17" id="vestibular17" value="<?= isset($row_actual['v17']) ? $row_actual['v17'] : '' ?>">
+  <input type="hidden" name="mesial17" id="mesial17" value="<?= isset($row_actual['m17']) ? $row_actual['m17'] : '' ?>">
+
+  <input type="hidden" name="diente16" id="diente16" value="<?= isset($row_actual['diente16']) ? $row_actual['diente16'] : '' ?>">
+  <input type="hidden" name="pufa16" id="pufa16" value="<?= isset($row_actual['u16']) ? $row_actual['u16'] : '' ?>">
+  <input type="hidden" name="cpod16" id="cpod16" value="<?= isset($row_actual['c16']) ? $row_actual['c16'] : '' ?>">
+  <input type="hidden" name="nt16" id="nt16" value="<?= isset($row_actual['t16']) ? $row_actual['t16'] : '' ?>">
+  <input type="hidden" name="oclusal16" id="oclusal16" value="<?= isset($row_actual['o16']) ? $row_actual['o16'] : '' ?>">
+  <input type="hidden" name="posterior16" id="posterior16" value="<?= isset($row_actual['p16']) ? $row_actual['p16'] : '' ?>">
+  <input type="hidden" name="distal16" id="distal16" value="<?= isset($row_actual['d16']) ? $row_actual['d16'] : '' ?>">
+  <input type="hidden" name="vestibular16" id="vestibular16" value="<?= isset($row_actual['v16']) ? $row_actual['v16'] : '' ?>">
+  <input type="hidden" name="mesial16" id="mesial16" value="<?= isset($row_actual['m16']) ? $row_actual['m16'] : '' ?>">
+
+  <input type="hidden" name="diente55" id="diente55" value="<?= isset($row_actual['diente55']) ? $row_actual['diente55'] : '' ?>">
+  <input type="hidden" name="pufa15" id="pufa15" value="<?= isset($row_actual['u15']) ? $row_actual['u15'] : '' ?>">
+  <input type="hidden" name="pufa55" id="pufa55" value="<?= isset($row_actual['u55']) ? $row_actual['u55'] : '' ?>">
+  <input type="hidden" name="cpod15" id="cpod15" value="<?= isset($row_actual['c15']) ? $row_actual['c15'] : '' ?>">
+  <input type="hidden" name="cpod55" id="cpod55" value="<?= isset($row_actual['c55']) ? $row_actual['c55'] : '' ?>">
+  <input type="hidden" name="nt15" id="nt15" value="<?= isset($row_actual['t15']) ? $row_actual['t15'] : '' ?>">
+  <input type="hidden" name="nt55" id="nt55" value="<?= isset($row_actual['t55']) ? $row_actual['t55'] : '' ?>">
+  <input type="hidden" name="oclusal55" id="oclusal55" value="<?= isset($row_actual['o55']) ? $row_actual['o55'] : '' ?>">
+  <input type="hidden" name="posterior55" id="posterior55" value="<?= isset($row_actual['p55']) ? $row_actual['p55'] : '' ?>">
+  <input type="hidden" name="distal55" id="distal55" value="<?= isset($row_actual['d55']) ? $row_actual['d55'] : '' ?>">
+  <input type="hidden" name="vestibular55" id="vestibular55" value="<?= isset($row_actual['v55']) ? $row_actual['v55'] : '' ?>">
+  <input type="hidden" name="mesial55" id="mesial55" value="<?= isset($row_actual['m55']) ? $row_actual['m55'] : '' ?>">
+  <input type="hidden" name="oclusal15" id="oclusal15" value="<?= isset($row_actual['o15']) ? $row_actual['o15'] : '' ?>">
+  <input type="hidden" name="posterior15" id="posterior15" value="<?= isset($row_actual['p15']) ? $row_actual['p15'] : '' ?>">
+  <input type="hidden" name="distal15" id="distal15" value="<?= isset($row_actual['d15']) ? $row_actual['d15'] : '' ?>">
+  <input type="hidden" name="vestibular15" id="vestibular15" value="<?= isset($row_actual['v15']) ? $row_actual['v15'] : '' ?>">
+  <input type="hidden" name="mesial15" id="mesial15" value="<?= isset($row_actual['m15']) ? $row_actual['m15'] : '' ?>">
+
+  <input type="hidden" name="diente54" id="diente54" value="<?= isset($row_actual['diente54']) ? $row_actual['diente54'] : '' ?>">
+  <input type="hidden" name="pufa14" id="pufa14" value="<?= isset($row_actual['u14']) ? $row_actual['u14'] : '' ?>">
+  <input type="hidden" name="pufa54" id="pufa54" value="<?= isset($row_actual['u54']) ? $row_actual['u54'] : '' ?>">
+  <input type="hidden" name="cpod14" id="cpod14" value="<?= isset($row_actual['c14']) ? $row_actual['c14'] : '' ?>">
+  <input type="hidden" name="cpod54" id="cpod54" value="<?= isset($row_actual['c54']) ? $row_actual['c54'] : '' ?>">
+  <input type="hidden" name="nt14" id="nt14" value="<?= isset($row_actual['t14']) ? $row_actual['t14'] : '' ?>">
+  <input type="hidden" name="nt54" id="nt54" value="<?= isset($row_actual['t54']) ? $row_actual['t54'] : '' ?>">
+  <input type="hidden" name="oclusal54" id="oclusal54" value="<?= isset($row_actual['o54']) ? $row_actual['o54'] : '' ?>">
+  <input type="hidden" name="posterior54" id="posterior54" value="<?= isset($row_actual['p54']) ? $row_actual['p54'] : '' ?>">
+  <input type="hidden" name="distal54" id="distal54" value="<?= isset($row_actual['d54']) ? $row_actual['d54'] : '' ?>">
+  <input type="hidden" name="vestibular54" id="vestibular54" value="<?= isset($row_actual['v54']) ? $row_actual['v54'] : '' ?>">
+  <input type="hidden" name="mesial54" id="mesial54" value="<?= isset($row_actual['m54']) ? $row_actual['m54'] : '' ?>">
+  <input type="hidden" name="oclusal14" id="oclusal14" value="<?= isset($row_actual['o14']) ? $row_actual['o14'] : '' ?>">
+  <input type="hidden" name="posterior14" id="posterior14" value="<?= isset($row_actual['p14']) ? $row_actual['p14'] : '' ?>">
+  <input type="hidden" name="distal14" id="distal14" value="<?= isset($row_actual['d14']) ? $row_actual['d14'] : '' ?>">
+  <input type="hidden" name="vestibular14" id="vestibular14" value="<?= isset($row_actual['v14']) ? $row_actual['v14'] : '' ?>">
+  <input type="hidden" name="mesial14" id="mesial14" value="<?= isset($row_actual['m14']) ? $row_actual['m14'] : '' ?>">
+
+  <input type="hidden" name="diente53" id="diente53" value="<?= isset($row_actual['diente53']) ? $row_actual['diente53'] : '' ?>">
+  <input type="hidden" name="pufa13" id="pufa13" value="<?= isset($row_actual['u13']) ? $row_actual['u13'] : '' ?>">
+  <input type="hidden" name="pufa53" id="pufa53" value="<?= isset($row_actual['u53']) ? $row_actual['u53'] : '' ?>">
+  <input type="hidden" name="cpod13" id="cpod13" value="<?= isset($row_actual['c13']) ? $row_actual['c13'] : '' ?>">
+  <input type="hidden" name="cpod53" id="cpod53" value="<?= isset($row_actual['c53']) ? $row_actual['c53'] : '' ?>">
+  <input type="hidden" name="nt13" id="nt13" value="<?= isset($row_actual['t13']) ? $row_actual['t13'] : '' ?>">
+  <input type="hidden" name="nt53" id="nt53" value="<?= isset($row_actual['t53']) ? $row_actual['t53'] : '' ?>">
+  <input type="hidden" name="posterior53" id="posterior53" value="<?= isset($row_actual['p53']) ? $row_actual['p53'] : '' ?>">
+  <input type="hidden" name="distal53" id="distal53" value="<?= isset($row_actual['d53']) ? $row_actual['d53'] : '' ?>">
+  <input type="hidden" name="vestibular53" id="vestibular53" value="<?= isset($row_actual['v53']) ? $row_actual['v53'] : '' ?>">
+  <input type="hidden" name="mesial53" id="mesial53" value="<?= isset($row_actual['m53']) ? $row_actual['m53'] : '' ?>">
+  <input type="hidden" name="posterior13" id="posterior13" value="<?= isset($row_actual['p13']) ? $row_actual['p13'] : '' ?>">
+  <input type="hidden" name="distal13" id="distal13" value="<?= isset($row_actual['d13']) ? $row_actual['d13'] : '' ?>">
+  <input type="hidden" name="vestibular13" id="vestibular13" value="<?= isset($row_actual['v13']) ? $row_actual['v13'] : '' ?>">
+  <input type="hidden" name="mesial13" id="mesial13" value="<?= isset($row_actual['m13']) ? $row_actual['m13'] : '' ?>">
+
+  <input type="hidden" name="diente52" id="diente52" value="<?= isset($row_actual['diente52']) ? $row_actual['diente52'] : '' ?>">
+  <input type="hidden" name="pufa12" id="pufa12" value="<?= isset($row_actual['u12']) ? $row_actual['u12'] : '' ?>">
+  <input type="hidden" name="pufa52" id="pufa52" value="<?= isset($row_actual['u52']) ? $row_actual['u52'] : '' ?>">
+  <input type="hidden" name="cpod12" id="cpod12" value="<?= isset($row_actual['c12']) ? $row_actual['c12'] : '' ?>">
+  <input type="hidden" name="cpod52" id="cpod52" value="<?= isset($row_actual['c52']) ? $row_actual['c52'] : '' ?>">
+  <input type="hidden" name="nt12" id="nt12" value="<?= isset($row_actual['t12']) ? $row_actual['t12'] : '' ?>">
+  <input type="hidden" name="nt52" id="nt52" value="<?= isset($row_actual['t52']) ? $row_actual['t52'] : '' ?>">
+  <input type="hidden" name="posterior52" id="posterior52" value="<?= isset($row_actual['p52']) ? $row_actual['p52'] : '' ?>">
+  <input type="hidden" name="distal52" id="distal52" value="<?= isset($row_actual['d52']) ? $row_actual['d52'] : '' ?>">
+  <input type="hidden" name="vestibular52" id="vestibular52" value="<?= isset($row_actual['v52']) ? $row_actual['v52'] : '' ?>">
+  <input type="hidden" name="mesial52" id="mesial52" value="<?= isset($row_actual['m52']) ? $row_actual['m52'] : '' ?>">
+  <input type="hidden" name="posterior12" id="posterior12" value="<?= isset($row_actual['p12']) ? $row_actual['p12'] : '' ?>">
+  <input type="hidden" name="distal12" id="distal12" value="<?= isset($row_actual['d12']) ? $row_actual['d12'] : '' ?>">
+  <input type="hidden" name="vestibular12" id="vestibular12" value="<?= isset($row_actual['v12']) ? $row_actual['v12'] : '' ?>">
+  <input type="hidden" name="mesial12" id="mesial12" value="<?= isset($row_actual['m12']) ? $row_actual['m12'] : '' ?>">
+
+  <input type="hidden" name="diente51" id="diente51" value="<?= isset($row_actual['diente51']) ? $row_actual['diente51'] : '' ?>">
+  <input type="hidden" name="pufa11" id="pufa11" value="<?= isset($row_actual['u11']) ? $row_actual['u11'] : '' ?>">
+  <input type="hidden" name="pufa51" id="pufa51" value="<?= isset($row_actual['u51']) ? $row_actual['u51'] : '' ?>">
+  <input type="hidden" name="cpod11" id="cpod11" value="<?= isset($row_actual['c11']) ? $row_actual['c11'] : '' ?>">
+  <input type="hidden" name="cpod51" id="cpod51" value="<?= isset($row_actual['c51']) ? $row_actual['c51'] : '' ?>">
+  <input type="hidden" name="nt11" id="nt11" value="<?= isset($row_actual['t11']) ? $row_actual['t11'] : '' ?>">
+  <input type="hidden" name="nt51" id="nt51" value="<?= isset($row_actual['t51']) ? $row_actual['t51'] : '' ?>">
+  <input type="hidden" name="posterior51" id="posterior51" value="<?= isset($row_actual['p51']) ? $row_actual['p51'] : '' ?>">
+  <input type="hidden" name="distal51" id="distal51" value="<?= isset($row_actual['d51']) ? $row_actual['d51'] : '' ?>">
+  <input type="hidden" name="vestibular51" id="vestibular51" value="<?= isset($row_actual['v51']) ? $row_actual['v51'] : '' ?>">
+  <input type="hidden" name="mesial51" id="mesial51" value="<?= isset($row_actual['m51']) ? $row_actual['m51'] : '' ?>">
+  <input type="hidden" name="posterior11" id="posterior11" value="<?= isset($row_actual['p11']) ? $row_actual['p11'] : '' ?>">
+  <input type="hidden" name="distal11" id="distal11" value="<?= isset($row_actual['d11']) ? $row_actual['d11'] : '' ?>">
+  <input type="hidden" name="vestibular11" id="vestibular11" value="<?= isset($row_actual['v11']) ? $row_actual['v11'] : '' ?>">
+  <input type="hidden" name="mesial11" id="mesial11" value="<?= isset($row_actual['m11']) ? $row_actual['m11'] : '' ?>">
+
+  <input type="hidden" name="diente61" id="diente61" value="<?= isset($row_actual['diente61']) ? $row_actual['diente61'] : '' ?>">
+  <input type="hidden" name="pufa21" id="pufa21" value="<?= isset($row_actual['u21']) ? $row_actual['u21'] : '' ?>">
+  <input type="hidden" name="pufa61" id="pufa61" value="<?= isset($row_actual['u61']) ? $row_actual['u61'] : '' ?>">
+  <input type="hidden" name="cpod21" id="cpod21" value="<?= isset($row_actual['c21']) ? $row_actual['c21'] : '' ?>">
+  <input type="hidden" name="cpod61" id="cpod61" value="<?= isset($row_actual['c61']) ? $row_actual['c61'] : '' ?>">
+  <input type="hidden" name="nt21" id="nt21" value="<?= isset($row_actual['t21']) ? $row_actual['t21'] : '' ?>">
+  <input type="hidden" name="nt61" id="nt61" value="<?= isset($row_actual['t61']) ? $row_actual['t61'] : '' ?>">
+  <input type="hidden" name="posterior61" id="posterior61" value="<?= isset($row_actual['p61']) ? $row_actual['p61'] : '' ?>">
+  <input type="hidden" name="distal61" id="distal61" value="<?= isset($row_actual['d61']) ? $row_actual['d61'] : '' ?>">
+  <input type="hidden" name="vestibular61" id="vestibular61" value="<?= isset($row_actual['v61']) ? $row_actual['v61'] : '' ?>">
+  <input type="hidden" name="mesial61" id="mesial61" value="<?= isset($row_actual['m61']) ? $row_actual['m61'] : '' ?>">
+  <input type="hidden" name="posterior21" id="posterior21" value="<?= isset($row_actual['p21']) ? $row_actual['p21'] : '' ?>">
+  <input type="hidden" name="distal21" id="distal21" value="<?= isset($row_actual['d21']) ? $row_actual['d21'] : '' ?>">
+  <input type="hidden" name="vestibular21" id="vestibular21" value="<?= isset($row_actual['v21']) ? $row_actual['v21'] : '' ?>">
+  <input type="hidden" name="mesial21" id="mesial21" value="<?= isset($row_actual['m21']) ? $row_actual['m21'] : '' ?>">
+
+  <input type="hidden" name="diente62" id="diente62" value="<?= isset($row_actual['diente62']) ? $row_actual['diente62'] : '' ?>">
+  <input type="hidden" name="pufa22" id="pufa22" value="<?= isset($row_actual['u22']) ? $row_actual['u22'] : '' ?>">
+  <input type="hidden" name="pufa62" id="pufa62" value="<?= isset($row_actual['u62']) ? $row_actual['u62'] : '' ?>">
+  <input type="hidden" name="cpod22" id="cpod22" value="<?= isset($row_actual['c22']) ? $row_actual['c22'] : '' ?>">
+  <input type="hidden" name="cpod62" id="cpod62" value="<?= isset($row_actual['c62']) ? $row_actual['c62'] : '' ?>">
+  <input type="hidden" name="nt22" id="nt22" value="<?= isset($row_actual['t22']) ? $row_actual['t22'] : '' ?>">
+  <input type="hidden" name="nt62" id="nt62" value="<?= isset($row_actual['t62']) ? $row_actual['t62'] : '' ?>">
+  <input type="hidden" name="posterior62" id="posterior62" value="<?= isset($row_actual['p62']) ? $row_actual['p62'] : '' ?>">
+  <input type="hidden" name="distal62" id="distal62" value="<?= isset($row_actual['d62']) ? $row_actual['d62'] : '' ?>">
+  <input type="hidden" name="vestibular62" id="vestibular62" value="<?= isset($row_actual['v62']) ? $row_actual['v62'] : '' ?>">
+  <input type="hidden" name="mesial62" id="mesial62" value="<?= isset($row_actual['m62']) ? $row_actual['m62'] : '' ?>">
+  <input type="hidden" name="posterior22" id="posterior22" value="<?= isset($row_actual['p22']) ? $row_actual['p22'] : '' ?>">
+  <input type="hidden" name="distal22" id="distal22" value="<?= isset($row_actual['d22']) ? $row_actual['d22'] : '' ?>">
+  <input type="hidden" name="vestibular22" id="vestibular22" value="<?= isset($row_actual['v22']) ? $row_actual['v22'] : '' ?>">
+  <input type="hidden" name="mesial22" id="mesial22" value="<?= isset($row_actual['m22']) ? $row_actual['m22'] : '' ?>">
+
+  <input type="hidden" name="diente63" id="diente63" value="<?= isset($row_actual['diente63']) ? $row_actual['diente63'] : '' ?>">
+  <input type="hidden" name="pufa23" id="pufa23" value="<?= isset($row_actual['u23']) ? $row_actual['u23'] : '' ?>">
+  <input type="hidden" name="pufa63" id="pufa63" value="<?= isset($row_actual['u63']) ? $row_actual['u63'] : '' ?>">
+  <input type="hidden" name="cpod23" id="cpod23" value="<?= isset($row_actual['c23']) ? $row_actual['c23'] : '' ?>">
+  <input type="hidden" name="cpod63" id="cpod63" value="<?= isset($row_actual['c63']) ? $row_actual['c63'] : '' ?>">
+  <input type="hidden" name="nt23" id="nt23" value="<?= isset($row_actual['t23']) ? $row_actual['t23'] : '' ?>">
+  <input type="hidden" name="nt63" id="nt63" value="<?= isset($row_actual['t63']) ? $row_actual['t63'] : '' ?>">
+  <input type="hidden" name="posterior63" id="posterior63" value="<?= isset($row_actual['p63']) ? $row_actual['p63'] : '' ?>">
+  <input type="hidden" name="distal63" id="distal63" value="<?= isset($row_actual['d63']) ? $row_actual['d63'] : '' ?>">
+  <input type="hidden" name="vestibular63" id="vestibular63" value="<?= isset($row_actual['v63']) ? $row_actual['v63'] : '' ?>">
+  <input type="hidden" name="mesial63" id="mesial63" value="<?= isset($row_actual['m63']) ? $row_actual['m63'] : '' ?>">
+  <input type="hidden" name="posterior23" id="posterior23" value="<?= isset($row_actual['p23']) ? $row_actual['p23'] : '' ?>">
+  <input type="hidden" name="distal23" id="distal23" value="<?= isset($row_actual['d23']) ? $row_actual['d23'] : '' ?>">
+  <input type="hidden" name="vestibular23" id="vestibular23" value="<?= isset($row_actual['v23']) ? $row_actual['v23'] : '' ?>">
+  <input type="hidden" name="mesial23" id="mesial23" value="<?= isset($row_actual['m23']) ? $row_actual['m23'] : '' ?>">
+
+  <input type="hidden" name="diente64" id="diente64" value="<?= isset($row_actual['diente64']) ? $row_actual['diente64'] : '' ?>">
+  <input type="hidden" name="pufa24" id="pufa24" value="<?= isset($row_actual['u24']) ? $row_actual['u24'] : '' ?>">
+  <input type="hidden" name="pufa64" id="pufa64" value="<?= isset($row_actual['u64']) ? $row_actual['u64'] : '' ?>">
+  <input type="hidden" name="cpod24" id="cpod24" value="<?= isset($row_actual['c24']) ? $row_actual['c24'] : '' ?>">
+  <input type="hidden" name="cpod64" id="cpod64" value="<?= isset($row_actual['c64']) ? $row_actual['c64'] : '' ?>">
+  <input type="hidden" name="nt24" id="nt24" value="<?= isset($row_actual['t24']) ? $row_actual['t24'] : '' ?>">
+  <input type="hidden" name="nt64" id="nt64" value="<?= isset($row_actual['t64']) ? $row_actual['t64'] : '' ?>">
+  <input type="hidden" name="oclusal64" id="oclusal64" value="<?= isset($row_actual['o64']) ? $row_actual['o64'] : '' ?>">
+  <input type="hidden" name="posterior64" id="posterior64" value="<?= isset($row_actual['p64']) ? $row_actual['p64'] : '' ?>">
+  <input type="hidden" name="distal64" id="distal64" value="<?= isset($row_actual['d64']) ? $row_actual['d64'] : '' ?>">
+  <input type="hidden" name="vestibular64" id="vestibular64" value="<?= isset($row_actual['v64']) ? $row_actual['v64'] : '' ?>">
+  <input type="hidden" name="mesial64" id="mesial64" value="<?= isset($row_actual['m64']) ? $row_actual['m64'] : '' ?>">
+  <input type="hidden" name="oclusal24" id="oclusal24" value="<?= isset($row_actual['o24']) ? $row_actual['o24'] : '' ?>">
+  <input type="hidden" name="posterior24" id="posterior24" value="<?= isset($row_actual['p24']) ? $row_actual['p24'] : '' ?>">
+  <input type="hidden" name="distal24" id="distal24" value="<?= isset($row_actual['d24']) ? $row_actual['d24'] : '' ?>">
+  <input type="hidden" name="vestibular24" id="vestibular24" value="<?= isset($row_actual['v24']) ? $row_actual['v24'] : '' ?>">
+  <input type="hidden" name="mesial24" id="mesial24" value="<?= isset($row_actual['m24']) ? $row_actual['m24'] : '' ?>">
+
+  <input type="hidden" name="diente65" id="diente65" value="<?= isset($row_actual['diente65']) ? $row_actual['diente65'] : '' ?>">
+  <input type="hidden" name="pufa25" id="pufa25" value="<?= isset($row_actual['u25']) ? $row_actual['u25'] : '' ?>">
+  <input type="hidden" name="pufa65" id="pufa65" value="<?= isset($row_actual['u65']) ? $row_actual['u65'] : '' ?>">
+  <input type="hidden" name="cpod25" id="cpod25" value="<?= isset($row_actual['c25']) ? $row_actual['c25'] : '' ?>">
+  <input type="hidden" name="cpod65" id="cpod65" value="<?= isset($row_actual['c65']) ? $row_actual['c65'] : '' ?>">
+  <input type="hidden" name="nt25" id="nt25" value="<?= isset($row_actual['t25']) ? $row_actual['t25'] : '' ?>">
+  <input type="hidden" name="nt65" id="nt65" value="<?= isset($row_actual['t65']) ? $row_actual['t65'] : '' ?>">
+  <input type="hidden" name="oclusal65" id="oclusal65" value="<?= isset($row_actual['o65']) ? $row_actual['o65'] : '' ?>">
+  <input type="hidden" name="posterior65" id="posterior65" value="<?= isset($row_actual['p65']) ? $row_actual['p65'] : '' ?>">
+  <input type="hidden" name="distal65" id="distal65" value="<?= isset($row_actual['d65']) ? $row_actual['d65'] : '' ?>">
+  <input type="hidden" name="vestibular65" id="vestibular65" value="<?= isset($row_actual['v65']) ? $row_actual['v65'] : '' ?>">
+  <input type="hidden" name="mesial65" id="mesial65" value="<?= isset($row_actual['m65']) ? $row_actual['m65'] : '' ?>">
+  <input type="hidden" name="oclusal25" id="oclusal25" value="<?= isset($row_actual['o25']) ? $row_actual['o25'] : '' ?>">
+  <input type="hidden" name="posterior25" id="posterior25" value="<?= isset($row_actual['p25']) ? $row_actual['p25'] : '' ?>">
+  <input type="hidden" name="distal25" id="distal25" value="<?= isset($row_actual['d25']) ? $row_actual['d25'] : '' ?>">
+  <input type="hidden" name="vestibular25" id="vestibular25" value="<?= isset($row_actual['v25']) ? $row_actual['v25'] : '' ?>">
+  <input type="hidden" name="mesial25" id="mesial25" value="<?= isset($row_actual['m25']) ? $row_actual['m25'] : '' ?>">
+
+  <input type="hidden" name="diente26" id="diente26" value="<?= isset($row_actual['diente26']) ? $row_actual['diente26'] : '' ?>">
+  <input type="hidden" name="pufa26" id="pufa26" value="<?= isset($row_actual['u26']) ? $row_actual['u26'] : '' ?>">
+  <input type="hidden" name="cpod26" id="cpod26" value="<?= isset($row_actual['c26']) ? $row_actual['c26'] : '' ?>">
+  <input type="hidden" name="nt26" id="nt26" value="<?= isset($row_actual['t26']) ? $row_actual['t26'] : '' ?>">
+  <input type="hidden" name="oclusal26" id="oclusal26" value="<?= isset($row_actual['o26']) ? $row_actual['o26'] : '' ?>">
+  <input type="hidden" name="posterior26" id="posterior26" value="<?= isset($row_actual['p26']) ? $row_actual['p26'] : '' ?>">
+  <input type="hidden" name="distal26" id="distal26" value="<?= isset($row_actual['d26']) ? $row_actual['d26'] : '' ?>">
+  <input type="hidden" name="vestibular26" id="vestibular26" value="<?= isset($row_actual['v26']) ? $row_actual['v26'] : '' ?>">
+  <input type="hidden" name="mesial26" id="mesial26" value="<?= isset($row_actual['m26']) ? $row_actual['m26'] : '' ?>">
+
+  <input type="hidden" name="diente27" id="diente27" value="<?= isset($row_actual['diente27']) ? $row_actual['diente27'] : '' ?>">
+  <input type="hidden" name="pufa27" id="pufa27" value="<?= isset($row_actual['u27']) ? $row_actual['u27'] : '' ?>">
+  <input type="hidden" name="cpod27" id="cpod27" value="<?= isset($row_actual['c27']) ? $row_actual['c27'] : '' ?>">
+  <input type="hidden" name="nt27" id="nt27" value="<?= isset($row_actual['t27']) ? $row_actual['t27'] : '' ?>">
+  <input type="hidden" name="oclusal27" id="oclusal27" value="<?= isset($row_actual['o27']) ? $row_actual['o27'] : '' ?>">
+  <input type="hidden" name="posterior27" id="posterior27" value="<?= isset($row_actual['p27']) ? $row_actual['p27'] : '' ?>">
+  <input type="hidden" name="distal27" id="distal27" value="<?= isset($row_actual['d27']) ? $row_actual['d27'] : '' ?>">
+  <input type="hidden" name="vestibular27" id="vestibular27" value="<?= isset($row_actual['v27']) ? $row_actual['v27'] : '' ?>">
+  <input type="hidden" name="mesial27" id="mesial27" value="<?= isset($row_actual['m27']) ? $row_actual['m27'] : '' ?>">
+
+  <input type="hidden" name="diente47" id="diente47" value="<?= isset($row_actual['diente47']) ? $row_actual['diente47'] : '' ?>">
+  <input type="hidden" name="pufa47" id="pufa47" value="<?= isset($row_actual['u47']) ? $row_actual['u47'] : '' ?>">
+  <input type="hidden" name="cpod47" id="cpod47" value="<?= isset($row_actual['c47']) ? $row_actual['c47'] : '' ?>">
+  <input type="hidden" name="nt47" id="nt47" value="<?= isset($row_actual['t47']) ? $row_actual['t47'] : '' ?>">
+  <input type="hidden" name="oclusal47" id="oclusal47" value="<?= isset($row_actual['o47']) ? $row_actual['o47'] : '' ?>">
+  <input type="hidden" name="lingual47" id="lingual47" value="<?= isset($row_actual['l47']) ? $row_actual['l47'] : '' ?>">
+  <input type="hidden" name="distal47" id="distal47" value="<?= isset($row_actual['d47']) ? $row_actual['d47'] : '' ?>">
+  <input type="hidden" name="vestibular47" id="vestibular47" value="<?= isset($row_actual['v47']) ? $row_actual['v47'] : '' ?>">
+  <input type="hidden" name="mesial47" id="mesial47" value="<?= isset($row_actual['m47']) ? $row_actual['m47'] : '' ?>">
+
+  <input type="hidden" name="diente46" id="diente46" value="<?= isset($row_actual['diente46']) ? $row_actual['diente46'] : '' ?>">
+  <input type="hidden" name="pufa46" id="pufa46" value="<?= isset($row_actual['u46']) ? $row_actual['u46'] : '' ?>">
+  <input type="hidden" name="cpod46" id="cpod46" value="<?= isset($row_actual['c46']) ? $row_actual['c46'] : '' ?>">
+  <input type="hidden" name="nt46" id="nt46" value="<?= isset($row_actual['t46']) ? $row_actual['t46'] : '' ?>">
+  <input type="hidden" name="oclusal46" id="oclusal46" value="<?= isset($row_actual['o46']) ? $row_actual['o46'] : '' ?>">
+  <input type="hidden" name="lingual46" id="lingual46" value="<?= isset($row_actual['l46']) ? $row_actual['l46'] : '' ?>">
+  <input type="hidden" name="distal46" id="distal46" value="<?= isset($row_actual['d46']) ? $row_actual['d46'] : '' ?>">
+  <input type="hidden" name="vestibular46" id="vestibular46" value="<?= isset($row_actual['v46']) ? $row_actual['v46'] : '' ?>">
+  <input type="hidden" name="mesial46" id="mesial46" value="<?= isset($row_actual['m46']) ? $row_actual['m46'] : '' ?>">
+
+  <input type="hidden" name="diente85" id="diente85" value="<?= isset($row_actual['diente85']) ? $row_actual['diente85'] : '' ?>">
+  <input type="hidden" name="pufa45" id="pufa45" value="<?= isset($row_actual['u45']) ? $row_actual['u45'] : '' ?>">
+  <input type="hidden" name="pufa85" id="pufa85" value="<?= isset($row_actual['u85']) ? $row_actual['u85'] : '' ?>">
+  <input type="hidden" name="cpod45" id="cpod45" value="<?= isset($row_actual['c45']) ? $row_actual['c45'] : '' ?>">
+  <input type="hidden" name="cpod85" id="cpod85" value="<?= isset($row_actual['c85']) ? $row_actual['c85'] : '' ?>">
+  <input type="hidden" name="nt45" id="nt45" value="<?= isset($row_actual['t45']) ? $row_actual['t45'] : '' ?>">
+  <input type="hidden" name="nt85" id="nt85" value="<?= isset($row_actual['t85']) ? $row_actual['t85'] : '' ?>">
+  <input type="hidden" name="oclusal85" id="oclusal85" value="<?= isset($row_actual['o85']) ? $row_actual['o85'] : '' ?>">
+  <input type="hidden" name="lingual85" id="lingual85" value="<?= isset($row_actual['l85']) ? $row_actual['l85'] : '' ?>">
+  <input type="hidden" name="distal85" id="distal85" value="<?= isset($row_actual['d85']) ? $row_actual['d85'] : '' ?>">
+  <input type="hidden" name="vestibular85" id="vestibular85" value="<?= isset($row_actual['v85']) ? $row_actual['v85'] : '' ?>">
+  <input type="hidden" name="mesial85" id="mesial85" value="<?= isset($row_actual['m85']) ? $row_actual['m85'] : '' ?>">
+  <input type="hidden" name="oclusal45" id="oclusal45" value="<?= isset($row_actual['o45']) ? $row_actual['o45'] : '' ?>">
+  <input type="hidden" name="lingual45" id="lingual45" value="<?= isset($row_actual['l45']) ? $row_actual['l45'] : '' ?>">
+  <input type="hidden" name="distal45" id="distal45" value="<?= isset($row_actual['d45']) ? $row_actual['d45'] : '' ?>">
+  <input type="hidden" name="vestibular45" id="vestibular45" value="<?= isset($row_actual['v45']) ? $row_actual['v45'] : '' ?>">
+  <input type="hidden" name="mesial45" id="mesial45" value="<?= isset($row_actual['m45']) ? $row_actual['m45'] : '' ?>">
+
+  <input type="hidden" name="diente84" id="diente84" value="<?= isset($row_actual['diente84']) ? $row_actual['diente84'] : '' ?>">
+  <input type="hidden" name="pufa44" id="pufa44" value="<?= isset($row_actual['u44']) ? $row_actual['u44'] : '' ?>">
+  <input type="hidden" name="pufa84" id="pufa84" value="<?= isset($row_actual['u84']) ? $row_actual['u84'] : '' ?>">
+  <input type="hidden" name="cpod44" id="cpod44" value="<?= isset($row_actual['c44']) ? $row_actual['c44'] : '' ?>">
+  <input type="hidden" name="cpod84" id="cpod84" value="<?= isset($row_actual['c84']) ? $row_actual['c84'] : '' ?>">
+  <input type="hidden" name="nt44" id="nt44" value="<?= isset($row_actual['t44']) ? $row_actual['t44'] : '' ?>">
+  <input type="hidden" name="nt84" id="nt84" value="<?= isset($row_actual['t84']) ? $row_actual['t84'] : '' ?>">
+  <input type="hidden" name="oclusal84" id="oclusal84" value="<?= isset($row_actual['o84']) ? $row_actual['o84'] : '' ?>">
+  <input type="hidden" name="lingual84" id="lingual84" value="<?= isset($row_actual['l84']) ? $row_actual['l84'] : '' ?>">
+  <input type="hidden" name="distal84" id="distal84" value="<?= isset($row_actual['d84']) ? $row_actual['d84'] : '' ?>">
+  <input type="hidden" name="vestibular84" id="vestibular84" value="<?= isset($row_actual['v84']) ? $row_actual['v84'] : '' ?>">
+  <input type="hidden" name="mesial84" id="mesial84" value="<?= isset($row_actual['m84']) ? $row_actual['m84'] : '' ?>">
+  <input type="hidden" name="oclusal44" id="oclusal44" value="<?= isset($row_actual['o44']) ? $row_actual['o44'] : '' ?>">
+  <input type="hidden" name="lingual44" id="lingual44" value="<?= isset($row_actual['l44']) ? $row_actual['l44'] : '' ?>">
+  <input type="hidden" name="distal44" id="distal44" value="<?= isset($row_actual['d44']) ? $row_actual['d44'] : '' ?>">
+  <input type="hidden" name="vestibular44" id="vestibular44" value="<?= isset($row_actual['v44']) ? $row_actual['v44'] : '' ?>">
+  <input type="hidden" name="mesial44" id="mesial44" value="<?= isset($row_actual['m44']) ? $row_actual['m44'] : '' ?>">
+
+  <input type="hidden" name="diente83" id="diente83" value="<?= isset($row_actual['diente83']) ? $row_actual['diente83'] : '' ?>">
+  <input type="hidden" name="pufa43" id="pufa43" value="<?= isset($row_actual['u43']) ? $row_actual['u43'] : '' ?>">
+  <input type="hidden" name="pufa83" id="pufa83" value="<?= isset($row_actual['u83']) ? $row_actual['u83'] : '' ?>">
+  <input type="hidden" name="cpod43" id="cpod43" value="<?= isset($row_actual['c43']) ? $row_actual['c43'] : '' ?>">
+  <input type="hidden" name="cpod83" id="cpod83" value="<?= isset($row_actual['c83']) ? $row_actual['c83'] : '' ?>">
+  <input type="hidden" name="nt43" id="nt43" value="<?= isset($row_actual['t43']) ? $row_actual['t43'] : '' ?>">
+  <input type="hidden" name="nt83" id="nt83" value="<?= isset($row_actual['t83']) ? $row_actual['t83'] : '' ?>">
+  <input type="hidden" name="lingual83" id="lingual83" value="<?= isset($row_actual['l83']) ? $row_actual['l83'] : '' ?>">
+  <input type="hidden" name="distal83" id="distal83" value="<?= isset($row_actual['d83']) ? $row_actual['d83'] : '' ?>">
+  <input type="hidden" name="vestibular83" id="vestibular83" value="<?= isset($row_actual['v83']) ? $row_actual['v83'] : '' ?>">
+  <input type="hidden" name="mesial83" id="mesial83" value="<?= isset($row_actual['m83']) ? $row_actual['m83'] : '' ?>">
+  <input type="hidden" name="lingual43" id="lingual43" value="<?= isset($row_actual['l43']) ? $row_actual['l43'] : '' ?>">
+  <input type="hidden" name="distal43" id="distal43" value="<?= isset($row_actual['d43']) ? $row_actual['d43'] : '' ?>">
+  <input type="hidden" name="vestibular43" id="vestibular43" value="<?= isset($row_actual['v43']) ? $row_actual['v43'] : '' ?>">
+  <input type="hidden" name="mesial43" id="mesial43" value="<?= isset($row_actual['m43']) ? $row_actual['m43'] : '' ?>">
+
+  <input type="hidden" name="diente82" id="diente82" value="<?= isset($row_actual['diente82']) ? $row_actual['diente82'] : '' ?>">
+  <input type="hidden" name="pufa42" id="pufa42" value="<?= isset($row_actual['u42']) ? $row_actual['u42'] : '' ?>">
+  <input type="hidden" name="pufa82" id="pufa82" value="<?= isset($row_actual['u82']) ? $row_actual['u82'] : '' ?>">
+  <input type="hidden" name="cpod42" id="cpod42" value="<?= isset($row_actual['c42']) ? $row_actual['c42'] : '' ?>">
+  <input type="hidden" name="cpod82" id="cpod82" value="<?= isset($row_actual['c82']) ? $row_actual['c82'] : '' ?>">
+  <input type="hidden" name="nt42" id="nt42" value="<?= isset($row_actual['t42']) ? $row_actual['t42'] : '' ?>">
+  <input type="hidden" name="nt82" id="nt82" value="<?= isset($row_actual['t82']) ? $row_actual['t82'] : '' ?>">
+  <input type="hidden" name="lingual82" id="lingual82" value="<?= isset($row_actual['l82']) ? $row_actual['l82'] : '' ?>">
+  <input type="hidden" name="distal82" id="distal82" value="<?= isset($row_actual['d82']) ? $row_actual['d82'] : '' ?>">
+  <input type="hidden" name="vestibular82" id="vestibular82" value="<?= isset($row_actual['v82']) ? $row_actual['v82'] : '' ?>">
+  <input type="hidden" name="mesial82" id="mesial82" value="<?= isset($row_actual['m82']) ? $row_actual['m82'] : '' ?>">
+  <input type="hidden" name="lingual42" id="lingual42" value="<?= isset($row_actual['l42']) ? $row_actual['l42'] : '' ?>">
+  <input type="hidden" name="distal42" id="distal42" value="<?= isset($row_actual['d42']) ? $row_actual['d42'] : '' ?>">
+  <input type="hidden" name="vestibular42" id="vestibular42" value="<?= isset($row_actual['v42']) ? $row_actual['v42'] : '' ?>">
+  <input type="hidden" name="mesial42" id="mesial42" value="<?= isset($row_actual['m42']) ? $row_actual['m42'] : '' ?>">
+
+  <input type="hidden" name="diente81" id="diente81" value="<?= isset($row_actual['diente81']) ? $row_actual['diente81'] : '' ?>">
+  <input type="hidden" name="pufa41" id="pufa41" value="<?= isset($row_actual['u41']) ? $row_actual['u41'] : '' ?>">
+  <input type="hidden" name="pufa81" id="pufa81" value="<?= isset($row_actual['u81']) ? $row_actual['u81'] : '' ?>">
+  <input type="hidden" name="cpod41" id="cpod41" value="<?= isset($row_actual['c41']) ? $row_actual['c41'] : '' ?>">
+  <input type="hidden" name="cpod81" id="cpod81" value="<?= isset($row_actual['c81']) ? $row_actual['c81'] : '' ?>">
+  <input type="hidden" name="nt41" id="nt41" value="<?= isset($row_actual['t41']) ? $row_actual['t41'] : '' ?>">
+  <input type="hidden" name="nt81" id="nt81" value="<?= isset($row_actual['t81']) ? $row_actual['t81'] : '' ?>">
+  <input type="hidden" name="lingual81" id="lingual81" value="<?= isset($row_actual['l81']) ? $row_actual['l81'] : '' ?>">
+  <input type="hidden" name="distal81" id="distal81" value="<?= isset($row_actual['d81']) ? $row_actual['d81'] : '' ?>">
+  <input type="hidden" name="vestibular81" id="vestibular81" value="<?= isset($row_actual['v81']) ? $row_actual['v81'] : '' ?>">
+  <input type="hidden" name="mesial81" id="mesial81" value="<?= isset($row_actual['m81']) ? $row_actual['m81'] : '' ?>">
+  <input type="hidden" name="lingual41" id="lingual41" value="<?= isset($row_actual['l41']) ? $row_actual['l41'] : '' ?>">
+  <input type="hidden" name="distal41" id="distal41" value="<?= isset($row_actual['d41']) ? $row_actual['d41'] : '' ?>">
+  <input type="hidden" name="vestibular41" id="vestibular41" value="<?= isset($row_actual['v41']) ? $row_actual['v41'] : '' ?>">
+  <input type="hidden" name="mesial41" id="mesial41" value="<?= isset($row_actual['m41']) ? $row_actual['m41'] : '' ?>">
+
+  <input type="hidden" name="diente71" id="diente71" value="<?= isset($row_actual['diente71']) ? $row_actual['diente71'] : '' ?>">
+  <input type="hidden" name="pufa31" id="pufa31" value="<?= isset($row_actual['u31']) ? $row_actual['u31'] : '' ?>">
+  <input type="hidden" name="pufa71" id="pufa71" value="<?= isset($row_actual['u71']) ? $row_actual['u71'] : '' ?>">
+  <input type="hidden" name="cpod31" id="cpod31" value="<?= isset($row_actual['c31']) ? $row_actual['c31'] : '' ?>">
+  <input type="hidden" name="cpod71" id="cpod71" value="<?= isset($row_actual['c71']) ? $row_actual['c71'] : '' ?>">
+  <input type="hidden" name="nt31" id="nt31" value="<?= isset($row_actual['t31']) ? $row_actual['t31'] : '' ?>">
+  <input type="hidden" name="nt71" id="nt71" value="<?= isset($row_actual['t71']) ? $row_actual['t71'] : '' ?>">
+  <input type="hidden" name="lingual71" id="lingual71" value="<?= isset($row_actual['l71']) ? $row_actual['l71'] : '' ?>">
+  <input type="hidden" name="distal71" id="distal71" value="<?= isset($row_actual['d71']) ? $row_actual['d71'] : '' ?>">
+  <input type="hidden" name="vestibular71" id="vestibular71" value="<?= isset($row_actual['v71']) ? $row_actual['v71'] : '' ?>">
+  <input type="hidden" name="mesial71" id="mesial71" value="<?= isset($row_actual['m71']) ? $row_actual['m71'] : '' ?>">
+  <input type="hidden" name="lingual31" id="lingual31" value="<?= isset($row_actual['l31']) ? $row_actual['l31'] : '' ?>">
+  <input type="hidden" name="distal31" id="distal31" value="<?= isset($row_actual['d31']) ? $row_actual['d31'] : '' ?>">
+  <input type="hidden" name="vestibular31" id="vestibular31" value="<?= isset($row_actual['v31']) ? $row_actual['v31'] : '' ?>">
+  <input type="hidden" name="mesial31" id="mesial31" value="<?= isset($row_actual['m31']) ? $row_actual['m31'] : '' ?>">
+
+  <input type="hidden" name="diente72" id="diente72" value="<?= isset($row_actual['diente72']) ? $row_actual['diente72'] : '' ?>">
+  <input type="hidden" name="pufa32" id="pufa32" value="<?= isset($row_actual['u32']) ? $row_actual['u32'] : '' ?>">
+  <input type="hidden" name="pufa72" id="pufa72" value="<?= isset($row_actual['u72']) ? $row_actual['u72'] : '' ?>">
+  <input type="hidden" name="cpod32" id="cpod32" value="<?= isset($row_actual['c32']) ? $row_actual['c32'] : '' ?>">
+  <input type="hidden" name="cpod72" id="cpod72" value="<?= isset($row_actual['c72']) ? $row_actual['c72'] : '' ?>">
+  <input type="hidden" name="nt32" id="nt32" value="<?= isset($row_actual['t32']) ? $row_actual['t32'] : '' ?>">
+  <input type="hidden" name="nt72" id="nt72" value="<?= isset($row_actual['t72']) ? $row_actual['t72'] : '' ?>">
+  <input type="hidden" name="lingual72" id="lingual72" value="<?= isset($row_actual['l72']) ? $row_actual['l72'] : '' ?>">
+  <input type="hidden" name="distal72" id="distal72" value="<?= isset($row_actual['d72']) ? $row_actual['d72'] : '' ?>">
+  <input type="hidden" name="vestibular72" id="vestibular72" value="<?= isset($row_actual['v72']) ? $row_actual['v72'] : '' ?>">
+  <input type="hidden" name="mesial72" id="mesial72" value="<?= isset($row_actual['m72']) ? $row_actual['m72'] : '' ?>">
+  <input type="hidden" name="lingual32" id="lingual32" value="<?= isset($row_actual['l32']) ? $row_actual['l32'] : '' ?>">
+  <input type="hidden" name="distal32" id="distal32" value="<?= isset($row_actual['d32']) ? $row_actual['d32'] : '' ?>">
+  <input type="hidden" name="vestibular32" id="vestibular32" value="<?= isset($row_actual['v32']) ? $row_actual['v32'] : '' ?>">
+  <input type="hidden" name="mesial32" id="mesial32" value="<?= isset($row_actual['m32']) ? $row_actual['m32'] : '' ?>">
+
+  <input type="hidden" name="diente73" id="diente73" value="<?= isset($row_actual['diente73']) ? $row_actual['diente73'] : '' ?>">
+  <input type="hidden" name="pufa33" id="pufa33" value="<?= isset($row_actual['u33']) ? $row_actual['u33'] : '' ?>">
+  <input type="hidden" name="pufa73" id="pufa73" value="<?= isset($row_actual['u73']) ? $row_actual['u73'] : '' ?>">
+  <input type="hidden" name="cpod33" id="cpod33" value="<?= isset($row_actual['c33']) ? $row_actual['c33'] : '' ?>">
+  <input type="hidden" name="cpod73" id="cpod73" value="<?= isset($row_actual['c73']) ? $row_actual['c73'] : '' ?>">
+  <input type="hidden" name="nt33" id="nt33" value="<?= isset($row_actual['t33']) ? $row_actual['t33'] : '' ?>">
+  <input type="hidden" name="nt73" id="nt73" value="<?= isset($row_actual['t73']) ? $row_actual['t73'] : '' ?>">
+  <input type="hidden" name="lingual73" id="lingual73" value="<?= isset($row_actual['l73']) ? $row_actual['l73'] : '' ?>">
+  <input type="hidden" name="distal73" id="distal73" value="<?= isset($row_actual['d73']) ? $row_actual['d73'] : '' ?>">
+  <input type="hidden" name="vestibular73" id="vestibular73" value="<?= isset($row_actual['v73']) ? $row_actual['v73'] : '' ?>">
+  <input type="hidden" name="mesial73" id="mesial73" value="<?= isset($row_actual['m73']) ? $row_actual['m73'] : '' ?>">
+  <input type="hidden" name="lingual33" id="lingual33" value="<?= isset($row_actual['l33']) ? $row_actual['l33'] : '' ?>">
+  <input type="hidden" name="distal33" id="distal33" value="<?= isset($row_actual['d33']) ? $row_actual['d33'] : '' ?>">
+  <input type="hidden" name="vestibular33" id="vestibular33" value="<?= isset($row_actual['v33']) ? $row_actual['v33'] : '' ?>">
+  <input type="hidden" name="mesial33" id="mesial33" value="<?= isset($row_actual['m33']) ? $row_actual['m33'] : '' ?>">
+
+  <input type="hidden" name="diente74" id="diente74" value="<?= isset($row_actual['diente74']) ? $row_actual['diente74'] : '' ?>">
+  <input type="hidden" name="pufa34" id="pufa34" value="<?= isset($row_actual['u34']) ? $row_actual['u34'] : '' ?>">
+  <input type="hidden" name="pufa74" id="pufa74" value="<?= isset($row_actual['u74']) ? $row_actual['u74'] : '' ?>">
+  <input type="hidden" name="cpod34" id="cpod34" value="<?= isset($row_actual['c34']) ? $row_actual['c34'] : '' ?>">
+  <input type="hidden" name="cpod74" id="cpod74" value="<?= isset($row_actual['c74']) ? $row_actual['c74'] : '' ?>">
+  <input type="hidden" name="nt34" id="nt34" value="<?= isset($row_actual['t34']) ? $row_actual['t34'] : '' ?>">
+  <input type="hidden" name="nt74" id="nt74" value="<?= isset($row_actual['t74']) ? $row_actual['t74'] : '' ?>">
+  <input type="hidden" name="oclusal74" id="oclusal74" value="<?= isset($row_actual['o74']) ? $row_actual['o74'] : '' ?>">
+  <input type="hidden" name="lingual74" id="lingual74" value="<?= isset($row_actual['l74']) ? $row_actual['l74'] : '' ?>">
+  <input type="hidden" name="distal74" id="distal74" value="<?= isset($row_actual['d74']) ? $row_actual['d74'] : '' ?>">
+  <input type="hidden" name="vestibular74" id="vestibular74" value="<?= isset($row_actual['v74']) ? $row_actual['v74'] : '' ?>">
+  <input type="hidden" name="mesial74" id="mesial74" value="<?= isset($row_actual['m74']) ? $row_actual['m74'] : '' ?>">
+  <input type="hidden" name="oclusal34" id="oclusal34" value="<?= isset($row_actual['o34']) ? $row_actual['o34'] : '' ?>">
+  <input type="hidden" name="lingual34" id="lingual34" value="<?= isset($row_actual['l34']) ? $row_actual['l34'] : '' ?>">
+  <input type="hidden" name="distal34" id="distal34" value="<?= isset($row_actual['d34']) ? $row_actual['d34'] : '' ?>">
+  <input type="hidden" name="vestibular34" id="vestibular34" value="<?= isset($row_actual['v34']) ? $row_actual['v34'] : '' ?>">
+  <input type="hidden" name="mesial34" id="mesial34" value="<?= isset($row_actual['m34']) ? $row_actual['m34'] : '' ?>">
+
+  <input type="hidden" name="diente75" id="diente75" value="<?= isset($row_actual['diente75']) ? $row_actual['diente75'] : '' ?>">
+  <input type="hidden" name="pufa35" id="pufa35" value="<?= isset($row_actual['u35']) ? $row_actual['u35'] : '' ?>">
+  <input type="hidden" name="pufa75" id="pufa75" value="<?= isset($row_actual['u75']) ? $row_actual['u75'] : '' ?>">
+  <input type="hidden" name="cpod35" id="cpod35" value="<?= isset($row_actual['c35']) ? $row_actual['c35'] : '' ?>">
+  <input type="hidden" name="cpod75" id="cpod75" value="<?= isset($row_actual['c75']) ? $row_actual['c75'] : '' ?>">
+  <input type="hidden" name="nt35" id="nt35" value="<?= isset($row_actual['t35']) ? $row_actual['t35'] : '' ?>">
+  <input type="hidden" name="nt75" id="nt75" value="<?= isset($row_actual['t75']) ? $row_actual['t75'] : '' ?>">
+  <input type="hidden" name="oclusal75" id="oclusal75" value="<?= isset($row_actual['o75']) ? $row_actual['o75'] : '' ?>">
+  <input type="hidden" name="lingual75" id="lingual75" value="<?= isset($row_actual['l75']) ? $row_actual['l75'] : '' ?>">
+  <input type="hidden" name="distal75" id="distal75" value="<?= isset($row_actual['d75']) ? $row_actual['d75'] : '' ?>">
+  <input type="hidden" name="vestibular75" id="vestibular75" value="<?= isset($row_actual['v75']) ? $row_actual['v75'] : '' ?>">
+  <input type="hidden" name="mesial75" id="mesial75" value="<?= isset($row_actual['m75']) ? $row_actual['m75'] : '' ?>">
+  <input type="hidden" name="oclusal35" id="oclusal35" value="<?= isset($row_actual['o35']) ? $row_actual['o35'] : '' ?>">
+  <input type="hidden" name="lingual35" id="lingual35" value="<?= isset($row_actual['l35']) ? $row_actual['l35'] : '' ?>">
+  <input type="hidden" name="distal35" id="distal35" value="<?= isset($row_actual['d35']) ? $row_actual['d35'] : '' ?>">
+  <input type="hidden" name="vestibular35" id="vestibular35" value="<?= isset($row_actual['v35']) ? $row_actual['v35'] : '' ?>">
+  <input type="hidden" name="mesial35" id="mesial35" value="<?= isset($row_actual['m35']) ? $row_actual['m35'] : '' ?>">
+
+  <input type="hidden" name="diente36" id="diente36" value="<?= isset($row_actual['diente36']) ? $row_actual['diente36'] : '' ?>">
+  <input type="hidden" name="pufa36" id="pufa36" value="<?= isset($row_actual['u36']) ? $row_actual['u36'] : '' ?>">
+  <input type="hidden" name="cpod36" id="cpod36" value="<?= isset($row_actual['c36']) ? $row_actual['c36'] : '' ?>">
+  <input type="hidden" name="nt36" id="nt36" value="<?= isset($row_actual['t36']) ? $row_actual['t36'] : '' ?>">
+  <input type="hidden" name="oclusal36" id="oclusal36" value="<?= isset($row_actual['o36']) ? $row_actual['o36'] : '' ?>">
+  <input type="hidden" name="lingual36" id="lingual36" value="<?= isset($row_actual['l36']) ? $row_actual['l36'] : '' ?>">
+  <input type="hidden" name="distal36" id="distal36" value="<?= isset($row_actual['d36']) ? $row_actual['d36'] : '' ?>">
+  <input type="hidden" name="vestibular36" id="vestibular36" value="<?= isset($row_actual['v36']) ? $row_actual['v36'] : '' ?>">
+  <input type="hidden" name="mesial36" id="mesial36" value="<?= isset($row_actual['m36']) ? $row_actual['m36'] : '' ?>">
+
+  <input type="hidden" name="diente37" id="diente37" value="<?= isset($row_actual['diente37']) ? $row_actual['diente37'] : '' ?>">
+  <input type="hidden" name="pufa37" id="pufa37" value="<?= isset($row_actual['u37']) ? $row_actual['u37'] : '' ?>">
+  <input type="hidden" name="cpod37" id="cpod37" value="<?= isset($row_actual['c37']) ? $row_actual['c37'] : '' ?>">
+  <input type="hidden" name="nt37" id="nt37" value="<?= isset($row_actual['t37']) ? $row_actual['t37'] : '' ?>">
+  <input type="hidden" name="oclusal37" id="oclusal37" value="<?= isset($row_actual['o37']) ? $row_actual['o37'] : '' ?>">
+  <input type="hidden" name="lingual37" id="lingual37" value="<?= isset($row_actual['l37']) ? $row_actual['l37'] : '' ?>">
+  <input type="hidden" name="distal37" id="distal37" value="<?= isset($row_actual['d37']) ? $row_actual['d37'] : '' ?>">
+  <input type="hidden" name="vestibular37" id="vestibular37" value="<?= isset($row_actual['v37']) ? $row_actual['v37'] : '' ?>">
+  <input type="hidden" name="mesial37" id="mesial37" value="<?= isset($row_actual['m37']) ? $row_actual['m37'] : '' ?>">
+  <input type="hidden" name="total1" id="total1" value="0">
+  <input type="hidden" name="total2" id="total2" value="0">
+
+
+  <?php
+  $sql = "SELECT * FROM datos_grupal WHERE idpaciente='$idpaciente'";
+  $query = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_array($query);
+  ?>
+  <div id="divtable">
+    <div id="resultado1">
+      <table class="table table-sm" id="permanente">
+        <thead>
+          <tr class="table-secondary">
+            <th>Permanente</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>NDPP =</td>
+            <td><?= isset($row_datos['ndpp1']) ? $row_datos['ndpp1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>NPPS =</td>
+            <td><?= isset($row_datos['npps1']) ? $row_datos['npps1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>DC1 =</td>
+            <td><?= isset($row_datos['dc11']) ? $row_datos['dc11'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>DC2 =</td>
+            <td><?= isset($row_datos['dc12']) ? $row_datos['dc12'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>DP =</td>
+            <td><?= isset($row_datos['dp1']) ? $row_datos['dp1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>DO =</td>
+            <td><?= isset($row_datos['do1']) ? $row_datos['do1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>CPOD =</td>
+            <td><?= isset($row_datos['cpod1']) ? $row_datos['cpod1'] : '0' ?></td>
+          </tr>
+          
+      <table class="table table-sm" id="superficie">
+        <thead>
+          <tr class="table-secondary">
+            <th>Superficie</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>SC1 =</td>
+            <td><?= isset($row_datos['sc11']) ? $row_datos['sc11'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>SC2 =</td>
+            <td><?= isset($row_datos['sc12']) ? $row_datos['sc12'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>SP =</td>
+            <td><?= isset($row_datos['sp1']) ? $row_datos['sp1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>SO =</td>
+            <td><?= isset($row_datos['so1']) ? $row_datos['so1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>CPOS =</td>
+            <td><?= isset($row_datos['cpos1']) ? $row_datos['cpos1'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-sm" id="nectrat">
+        <thead>
+          <tr class="table-secondary">
+            <th>Nec. TraT.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>Rest 1 sup =</td>
+            <td><?= isset($row_datos['rest11']) ? $row_datos['rest11'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Rest 2 sup =</td>
+            <td><?= isset($row_datos['rest12']) ? $row_datos['rest12'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Trat. Pulpar =</td>
+            <td><?= isset($row_datos['tratpul1']) ? $row_datos['tratpul1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Exodoncias =</td>
+            <td><?= isset($row_datos['exodoncias1']) ? $row_datos['exodoncias1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>flúor =</td>
+            <td><?= isset($row_datos['fluor1']) ? $row_datos['fluor1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>F. P. =</td>
+            <td><?= isset($row_datos['fp1']) ? $row_datos['fp1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>F. I. =</td>
+            <td><?= isset($row_datos['fi1']) ? $row_datos['fi1'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-sm" id="pufa">
+        <thead>
+          <tr class="table-secondary">
+            <th>PUFA</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>P =</td>
+            <td><?= isset($row_datos['p1']) ? $row_datos['p1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>U =</td>
+            <td><?= isset($row_datos['u1']) ? $row_datos['u1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>F =</td>
+            <td><?= isset($row_datos['f1']) ? $row_datos['f1'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>A =</td>
+            <td><?= isset($row_datos['a1']) ? $row_datos['a1'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div id="resultado2">
+      <table id="principal1" class="table table-sm">
+        <tbody>
+          <tr class="table-secondary">
+            <td>PUFA</td>
+            <td><input id="u17" class="dato" value="" readonly></td>
+            <td><input id="u16" class="dato" value="" readonly></td>
+            <td><input id="u55" class="dato" value="" readonly></td>
+            <td><input id="u54" class="dato" value="" readonly></td>
+            <td><input id="u53" class="dato" value="" readonly></td>
+            <td><input id="u52" class="dato" value="" readonly></td>
+            <td><input id="u51" class="dato" value="" readonly></td>
+            <td><input id="u61" class="dato" value="" readonly></td>
+            <td><input id="u62" class="dato" value="" readonly></td>
+            <td><input id="u63" class="dato" value="" readonly></td>
+            <td><input id="u64" class="dato" value="" readonly></td>
+            <td><input id="u65" class="dato" value="" readonly></td>
+            <td><input id="u26" class="dato" value="" readonly></td>
+            <td><input id="u27" class="dato" value="" readonly></td>
+            <td>PUFA</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>CPOD</td>
+            <td><input id="c17" class="dato" value="" readonly></td>
+            <td><input id="c16" class="dato" value="" readonly></td>
+            <td><input id="c55" class="dato" value="" readonly></td>
+            <td><input id="c54" class="dato" value="" readonly></td>
+            <td><input id="c53" class="dato" value="" readonly></td>
+            <td><input id="c52" class="dato" value="" readonly></td>
+            <td><input id="c51" class="dato" value="" readonly></td>
+            <td><input id="c61" class="dato" value="" readonly></td>
+            <td><input id="c62" class="dato" value="" readonly></td>
+            <td><input id="c63" class="dato" value="" readonly></td>
+            <td><input id="c64" class="dato" value="" readonly></td>
+            <td><input id="c65" class="dato" value="" readonly></td>
+            <td><input id="c26" class="dato" value="" readonly></td>
+            <td><input id="c27" class="dato" value="" readonly></td>
+            <td>CPOD</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>NT</td>
+            <td><input id="t17" class="dato" value="" readonly></td>
+            <td><input id="t16" class="dato" value="" readonly></td>
+            <td><input id="t55" class="dato" value="" readonly></td>
+            <td><input id="t54" class="dato" value="" readonly></td>
+            <td><input id="t53" class="dato" value="" readonly></td>
+            <td><input id="t52" class="dato" value="" readonly></td>
+            <td><input id="t51" class="dato" value="" readonly></td>
+            <td><input id="t61" class="dato" value="" readonly></td>
+            <td><input id="t62" class="dato" value="" readonly></td>
+            <td><input id="t63" class="dato" value="" readonly></td>
+            <td><input id="t64" class="dato" value="" readonly></td>
+            <td><input id="t65" class="dato" value="" readonly></td>
+            <td><input id="t26" class="dato" value="" readonly></td>
+            <td><input id="t27" class="dato" value="" readonly></td>
+            <td>NT</td>
+          </tr>
+          <tr class="table-secondary">
+            <td></td>
+            <td><input class="dato" id="numero17" value="" readonly></td>
+            <td><input class="dato" id="numero16" value="" readonly></td>
+            <td><input class="dato" id="numero15" value="" readonly></td>
+            <td><input class="dato" id="numero14" value="" readonly></td>
+            <td><input class="dato" id="numero13" value="" readonly></td>
+            <td><input class="dato" id="numero12" value="" readonly></td>
+            <td><input class="dato" id="numero11" value="" readonly></td>
+            <td><input class="dato" id="numero21" value="" readonly></td>
+            <td><input class="dato" id="numero22" value="" readonly></td>
+            <td><input class="dato" id="numero23" value="" readonly></td>
+            <td><input class="dato" id="numero24" value="" readonly></td>
+            <td><input class="dato" id="numero25" value="" readonly></td>
+            <td><input class="dato" id="numero26" value="" readonly></td>
+            <td><input class="dato" id="numero27" value="" readonly></td>
+            <td></td>
+          </tr>
+          <tr class="table-secondary">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input class="dato" id="numero55" value="" readonly></td>
+            <td><input class="dato" id="numero54" value="" readonly></td>
+            <td><input class="dato" id="numero53" value="" readonly></td>
+            <td><input class="dato" id="numero52" value="" readonly></td>
+            <td><input class="dato" id="numero51" value="" readonly></td>
+            <td><input class="dato" id="numero61" value="" readonly></td>
+            <td><input class="dato" id="numero62" value="" readonly></td>
+            <td><input class="dato" id="numero63" value="" readonly></td>
+            <td><input class="dato" id="numero64" value="" readonly></td>
+            <td><input class="dato" id="numero65" value="" readonly></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table id="principal2" class="table table-sm">
+        <tbody>
+          <tr class="table-secondary">
+            <td>O</td>
+            <td><input class="dato" id="o17" value="" readonly></td>
+            <td><input class="dato" id="o16" value="" readonly></td>
+            <td><input class="dato" id="o55" value="" readonly></td>
+            <td><input class="dato" id="o54" value="" readonly></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input class="dato" id="o64" value="" readonly></td>
+            <td><input class="dato" id="o65" value="" readonly></td>
+            <td><input class="dato" id="o26" value="" readonly></td>
+            <td><input class="dato" id="o27" value="" readonly></td>
+            <td>O</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>P</td>
+            <td><input class="dato" id="p17" value="" readonly></td>
+            <td><input class="dato" id="p16" value="" readonly></td>
+            <td><input class="dato" id="p55" value="" readonly></td>
+            <td><input class="dato" id="p54" value="" readonly></td>
+            <td><input class="dato" id="p53" value="" readonly></td>
+            <td><input class="dato" id="p52" value="" readonly></td>
+            <td><input class="dato" id="p51" value="" readonly></td>
+            <td><input class="dato" id="p61" value="" readonly></td>
+            <td><input class="dato" id="p62" value="" readonly></td>
+            <td><input class="dato" id="p63" value="" readonly></td>
+            <td><input class="dato" id="p64" value="" readonly></td>
+            <td><input class="dato" id="p65" value="" readonly></td>
+            <td><input class="dato" id="p26" value="" readonly></td>
+            <td><input class="dato" id="p27" value="" readonly></td>
+            <td>P</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>D</td>
+            <td><input class="dato" id="d17" value="" readonly></td>
+            <td><input class="dato" id="d16" value="" readonly></td>
+            <td><input class="dato" id="d55" value="" readonly></td>
+            <td><input class="dato" id="d54" value="" readonly></td>
+            <td><input class="dato" id="d53" value="" readonly></td>
+            <td><input class="dato" id="d52" value="" readonly></td>
+            <td><input class="dato" id="d51" value="" readonly></td>
+            <td><input class="dato" id="d61" value="" readonly></td>
+            <td><input class="dato" id="d62" value="" readonly></td>
+            <td><input class="dato" id="d63" value="" readonly></td>
+            <td><input class="dato" id="d64" value="" readonly></td>
+            <td><input class="dato" id="d65" value="" readonly></td>
+            <td><input class="dato" id="d26" value="" readonly></td>
+            <td><input class="dato" id="d27" value="" readonly></td>
+            <td>D</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>V</td>
+            <td><input class="dato" id="v17" value="" readonly></td>
+            <td><input class="dato" id="v16" value="" readonly></td>
+            <td><input class="dato" id="v55" value="" readonly></td>
+            <td><input class="dato" id="v54" value="" readonly></td>
+            <td><input class="dato" id="v53" value="" readonly></td>
+            <td><input class="dato" id="v52" value="" readonly></td>
+            <td><input class="dato" id="v51" value="" readonly></td>
+            <td><input class="dato" id="v61" value="" readonly></td>
+            <td><input class="dato" id="v62" value="" readonly></td>
+            <td><input class="dato" id="v63" value="" readonly></td>
+            <td><input class="dato" id="v64" value="" readonly></td>
+            <td><input class="dato" id="v65" value="" readonly></td>
+            <td><input class="dato" id="v26" value="" readonly></td>
+            <td><input class="dato" id="v27" value="" readonly></td>
+            <td>V</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>M</td>
+            <td><input class="dato" id="m17" value="" readonly></td>
+            <td><input class="dato" id="m16" value="" readonly></td>
+            <td><input class="dato" id="m55" value="" readonly></td>
+            <td><input class="dato" id="m54" value="" readonly></td>
+            <td><input class="dato" id="m53" value="" readonly></td>
+            <td><input class="dato" id="m52" value="" readonly></td>
+            <td><input class="dato" id="m51" value="" readonly></td>
+            <td><input class="dato" id="m61" value="" readonly></td>
+            <td><input class="dato" id="m62" value="" readonly></td>
+            <td><input class="dato" id="m63" value="" readonly></td>
+            <td><input class="dato" id="m64" value="" readonly></td>
+            <td><input class="dato" id="m65" value="" readonly></td>
+            <td><input class="dato" id="m26" value="" readonly></td>
+            <td><input class="dato" id="m27" value="" readonly></td>
+            <td>M</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <table id="principal3" class="table table-sm">
+        <tbody>
+          <tr class="table-secondary">
+            <td>PUFA</td>
+            <td><input class="dato" id="u47" value="" readonly></td>
+            <td><input class="dato" id="u46" value="" readonly></td>
+            <td><input class="dato" id="u85" value="" readonly></td>
+            <td><input class="dato" id="u84" value="" readonly></td>
+            <td><input class="dato" id="u83" value="" readonly></td>
+            <td><input class="dato" id="u82" value="" readonly></td>
+            <td><input class="dato" id="u81" value="" readonly></td>
+            <td><input class="dato" id="u71" value="" readonly></td>
+            <td><input class="dato" id="u72" value="" readonly></td>
+            <td><input class="dato" id="u73" value="" readonly></td>
+            <td><input class="dato" id="u74" value="" readonly></td>
+            <td><input class="dato" id="u75" value="" readonly></td>
+            <td><input class="dato" id="u36" value="" readonly></td>
+            <td><input class="dato" id="u37" value="" readonly></td>
+            <td>PUFA</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>CPOD</td>
+            <td><input class="dato" id="c47" value="" readonly></td>
+            <td><input class="dato" id="c46" value="" readonly></td>
+            <td><input class="dato" id="c85" value="" readonly></td>
+            <td><input class="dato" id="c84" value="" readonly></td>
+            <td><input class="dato" id="c83" value="" readonly></td>
+            <td><input class="dato" id="c82" value="" readonly></td>
+            <td><input class="dato" id="c81" value="" readonly></td>
+            <td><input class="dato" id="c71" value="" readonly></td>
+            <td><input class="dato" id="c72" value="" readonly></td>
+            <td><input class="dato" id="c73" value="" readonly></td>
+            <td><input class="dato" id="c74" value="" readonly></td>
+            <td><input class="dato" id="c75" value="" readonly></td>
+            <td><input class="dato" id="c36" value="" readonly></td>
+            <td><input class="dato" id="c37" value="" readonly></td>
+            <td>CPOD</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>NT</td>
+            <td><input class="dato" id="t47" value="" readonly></td>
+            <td><input class="dato" id="t46" value="" readonly></td>
+            <td><input class="dato" id="t85" value="" readonly></td>
+            <td><input class="dato" id="t84" value="" readonly></td>
+            <td><input class="dato" id="t83" value="" readonly></td>
+            <td><input class="dato" id="t82" value="" readonly></td>
+            <td><input class="dato" id="t81" value="" readonly></td>
+            <td><input class="dato" id="t71" value="" readonly></td>
+            <td><input class="dato" id="t72" value="" readonly></td>
+            <td><input class="dato" id="t73" value="" readonly></td>
+            <td><input class="dato" id="t74" value="" readonly></td>
+            <td><input class="dato" id="t75" value="" readonly></td>
+            <td><input class="dato" id="t36" value="" readonly></td>
+            <td><input class="dato" id="t37" value="" readonly></td>
+            <td>NT</td>
+          </tr>
+          <tr class="table-secondary">
+            <td></td>
+            <td><input class="dato" id="numero47" value="" readonly></td>
+            <td><input class="dato" id="numero46" value="" readonly></td>
+            <td><input class="dato" id="numero45" value="" readonly></td>
+            <td><input class="dato" id="numero44" value="" readonly></td>
+            <td><input class="dato" id="numero43" value="" readonly></td>
+            <td><input class="dato" id="numero42" value="" readonly></td>
+            <td><input class="dato" id="numero41" value="" readonly></td>
+            <td><input class="dato" id="numero31" value="" readonly></td>
+            <td><input class="dato" id="numero32" value="" readonly></td>
+            <td><input class="dato" id="numero33" value="" readonly></td>
+            <td><input class="dato" id="numero34" value="" readonly></td>
+            <td><input class="dato" id="numero35" value="" readonly></td>
+            <td><input class="dato" id="numero36" value="" readonly></td>
+            <td><input class="dato" id="numero37" value="" readonly></td>
+            <td></td>
+          </tr>
+          <tr class="table-secondary">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input class="dato" id="numero85" value="" readonly></td>
+            <td><input class="dato" id="numero84" value="" readonly></td>
+            <td><input class="dato" id="numero83" value="" readonly></td>
+            <td><input class="dato" id="numero82" value="" readonly></td>
+            <td><input class="dato" id="numero81" value="" readonly></td>
+            <td><input class="dato" id="numero71" value="" readonly></td>
+            <td><input class="dato" id="numero72" value="" readonly></td>
+            <td><input class="dato" id="numero73" value="" readonly></td>
+            <td><input class="dato" id="numero74" value="" readonly></td>
+            <td><input class="dato" id="numero75" value="" readonly></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table id="principal4" class="table table-sm">
+        <tbody>
+          <tr class="table-secondary">
+            <td>O</td>
+            <td><input class="dato" id="o47" value="" readonly></td>
+            <td><input class="dato" id="o46" value="" readonly></td>
+            <td><input class="dato" id="o85" value="" readonly></td>
+            <td><input class="dato" id="o84" value="" readonly></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input class="dato" id="o74" value="" readonly></td>
+            <td><input class="dato" id="o75" value="" readonly></td>
+            <td><input class="dato" id="o36" value="" readonly></td>
+            <td><input class="dato" id="o37" value="" readonly></td>
+            <td>O</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>L</td>
+            <td><input class="dato" id="l47" value="" readonly></td>
+            <td><input class="dato" id="l46" value="" readonly></td>
+            <td><input class="dato" id="l85" value="" readonly></td>
+            <td><input class="dato" id="l84" value="" readonly></td>
+            <td><input class="dato" id="l83" value="" readonly></td>
+            <td><input class="dato" id="l82" value="" readonly></td>
+            <td><input class="dato" id="l81" value="" readonly></td>
+            <td><input class="dato" id="l71" value="" readonly></td>
+            <td><input class="dato" id="l72" value="" readonly></td>
+            <td><input class="dato" id="l73" value="" readonly></td>
+            <td><input class="dato" id="l74" value="" readonly></td>
+            <td><input class="dato" id="l75" value="" readonly></td>
+            <td><input class="dato" id="l36" value="" readonly></td>
+            <td><input class="dato" id="l37" value="" readonly></td>
+            <td>L</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>D</td>
+            <td><input class="dato" id="d47" value="" readonly></td>
+            <td><input class="dato" id="d46" value="" readonly></td>
+            <td><input class="dato" id="d85" value="" readonly></td>
+            <td><input class="dato" id="d84" value="" readonly></td>
+            <td><input class="dato" id="d83" value="" readonly></td>
+            <td><input class="dato" id="d82" value="" readonly></td>
+            <td><input class="dato" id="d81" value="" readonly></td>
+            <td><input class="dato" id="d71" value="" readonly></td>
+            <td><input class="dato" id="d72" value="" readonly></td>
+            <td><input class="dato" id="d73" value="" readonly></td>
+            <td><input class="dato" id="d74" value="" readonly></td>
+            <td><input class="dato" id="d75" value="" readonly></td>
+            <td><input class="dato" id="d36" value="" readonly></td>
+            <td><input class="dato" id="d37" value="" readonly></td>
+            <td>D</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>V</td>
+            <td><input class="dato" id="v47" value="" readonly></td>
+            <td><input class="dato" id="v46" value="" readonly></td>
+            <td><input class="dato" id="v85" value="" readonly></td>
+            <td><input class="dato" id="v84" value="" readonly></td>
+            <td><input class="dato" id="v83" value="" readonly></td>
+            <td><input class="dato" id="v82" value="" readonly></td>
+            <td><input class="dato" id="v81" value="" readonly></td>
+            <td><input class="dato" id="v71" value="" readonly></td>
+            <td><input class="dato" id="v72" value="" readonly></td>
+            <td><input class="dato" id="v73" value="" readonly></td>
+            <td><input class="dato" id="v74" value="" readonly></td>
+            <td><input class="dato" id="v75" value="" readonly></td>
+            <td><input class="dato" id="v36" value="" readonly></td>
+            <td><input class="dato" id="v37" value="" readonly></td>
+            <td>V</td>
+          </tr>
+          <tr class="table-secondary">
+            <td>M</td>
+            <td><input class="dato" id="m47" value="" readonly></td>
+            <td><input class="dato" id="m46" value="" readonly></td>
+            <td><input class="dato" id="m85" value="" readonly></td>
+            <td><input class="dato" id="m84" value="" readonly></td>
+            <td><input class="dato" id="m83" value="" readonly></td>
+            <td><input class="dato" id="m82" value="" readonly></td>
+            <td><input class="dato" id="m81" value="" readonly></td>
+            <td><input class="dato" id="m71" value="" readonly></td>
+            <td><input class="dato" id="m72" value="" readonly></td>
+            <td><input class="dato" id="m73" value="" readonly></td>
+            <td><input class="dato" id="m74" value="" readonly></td>
+            <td><input class="dato" id="m75" value="" readonly></td>
+            <td><input class="dato" id="m36" value="" readonly></td>
+            <td><input class="dato" id="m37" value="" readonly></td>
+            <td>M</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="resultado3">
+      <table class="table table-sm" id="deciduos">
+        <thead>
+          <tr class="table-secondary">
+            <th>Deciduos</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>nddp =</td>
+            <td><?= isset($row_datos['nddp2']) ? $row_datos['nddp2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>ndds =</td>
+            <td><?= isset($row_datos['ndds2']) ? $row_datos['ndds2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>dc1 =</td>
+            <td><?= isset($row_datos['dc21']) ? $row_datos['dc21'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>dc2 =</td>
+            <td><?= isset($row_datos['dc22']) ? $row_datos['dc22'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>de =</td>
+            <td><?= isset($row_datos['dp2']) ? $row_datos['dp2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>do =</td>
+            <td><?= isset($row_datos['do2']) ? $row_datos['do2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>ceod =</td>
+            <td><?= isset($row_datos['ceod2']) ? $row_datos['ceod2'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-sm" id="superficie">
+        <thead>
+          <tr class="table-secondary">
+            <th>Superficie</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>sc1 =</td>
+            <td><?= isset($row_actual['sc21']) ? $row_actual['sc21'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>sc2 =</td>
+            <td><?= isset($row_actual['sc22']) ? $row_actual['sc22'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>sp =</td>
+            <td><?= isset($row_actual['sp2']) ? $row_actual['sp2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>so =</td>
+            <td><?= isset($row_actual['so2']) ? $row_actual['so2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>cpos =</td>
+            <td><?= isset($row_actual['cpos2']) ? $row_actual['cpos2'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-sm" id="nectrat">
+        <thead>
+          <tr class="table-secondary">
+            <th>Nec. TraT.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>Rest 1 sup =</td>
+            <td><?= isset($row_actual['rest21']) ? $row_actual['rest21'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Rest 2 sup =</td>
+            <td><?= isset($row_actual['rest22']) ? $row_actual['rest22'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Trat. Pulpar =</td>
+            <td><?= isset($row_actual['tratpul2']) ? $row_actual['tratpul2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>Exodoncias =</td>
+            <td><?= isset($row_actual['exodoncias2']) ? $row_actual['exodoncias2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>flúor =</td>
+            <td><?= isset($row_actual['fluor2']) ? $row_actual['fluor2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>F. P. =</td>
+            <td><?= isset($row_actual['fp2']) ? $row_actual['fp2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>F. I. =</td>
+            <td><?= isset($row_actual['fi2']) ? $row_actual['fi2'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-sm" id="pufa">
+        <thead>
+          <tr class="table-secondary">
+            <th>pufa</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-secondary">
+            <td>p =</td>
+            <td><?= isset($row_actual['p2']) ? $row_actual['p2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>u =</td>
+            <td><?= isset($row_actual['u2']) ? $row_actual['u2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>f =</td>
+            <td><?= isset($row_actual['f2']) ? $row_actual['f2'] : '0' ?></td>
+          </tr>
+          <tr class="table-secondary">
+            <td>a =</td>
+            <td><?= isset($row_actual['a2']) ? $row_actual['a2'] : '0' ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <a class="btn" id="imprimir"
+    href="imprimir_resultado_odontograma.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $fecha ?>&id=<?= $id ?>"
+    target="_paren">Imprimir</a>
+</body>
+<script>
+  window.onpageshow = function () {
+    var contenedor = document.getElementById('contenedor_carga');
+    contenedor.style.visibility = 'hidden';
+    contenedor.style.opacity = '0';
+  } 
+</script>
+<script src="js/entrada_resultado_odontograma.js"></script>
+<script src="js/letras_resultado_odontograma.js"></script>
+<script src="js/color_odontograma.js"></script>
+</html>

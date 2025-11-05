@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración - Dentodesk</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: absolute;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 0.5rem;
+      z-index: 1000;
+      right: 0;
+      min-width: 150px;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover {
+      background: #f3f4f6;
+    }
+
+    /* Contenido principal */
+    .config-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    /* Menú lateral */
+    .config-layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+    }
+
+    .sidebar h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #2563eb;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 0.8rem 1rem;
+      text-decoration: none;
+      color: #6b7280;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Contenido de configuración */
+    .config-content {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+
+    .config-header {
+      margin-bottom: 2rem;
+    }
+
+    .config-header h1 {
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .config-header p {
+      color: #6b7280;
+    }
+
+    /* Grid de opciones principales */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .option-card {
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid #e5e7eb;
+    }
+
+    .option-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: #2563eb;
+    }
+
+    .option-icon {
+      font-size: 2rem;
+      color: #2563eb;
+      margin-bottom: 1rem;
+    }
+
+    .option-card h3 {
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .option-card p {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    /* Formularios generales */
+    .config-form {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-section h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-group input.error {
+      border-color: #ef4444;
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    /* Botones de acción */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+
+    .btn-success {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    /* Notificaciones */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transform: translateX(150%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background: #10b981;
+    }
+
+    .notification.error {
+      background: #ef4444;
+    }
+
+    /* Utilidades */
+    .hidden {
+      display: none !important;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-3 {
+      margin-bottom: 1.5rem;
+    }
+
+    .mt-3 {
+      margin-top: 1.5rem;
+    }
+
+    .required::after {
+      content: " *";
+      color: #ef4444;
+    }
+
+    /* Estilos para la sección de Calendario */
+    .calendario-content {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .submenu-calendario {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 1rem;
+    }
+
+    .submenu-item {
+      padding: 0.8rem 1.5rem;
+      background: #f3f4f6;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: #6b7280;
+    }
+
+    .submenu-item.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .configuracion-casilla {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .warning-box {
+      background: #fef3cd;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .warning-box i {
+      color: #d97706;
+      margin-right: 0.5rem;
+    }
+
+    .tamano-casilla {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .tamano-casilla select {
+      padding: 0.8rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .tabla-configuracion {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .tabla-configuracion th,
+    .tabla-configuracion td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tabla-configuracion th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .tabla-configuracion select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+
+    /* Estilos para Feriados */
+    .feriados-container {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .nuevo-feriado-form {
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .tabla-feriados {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+    }
+
+    .tabla-feriados th,
+    .tabla-feriados td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tabla-feriados th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .control-icon {
+      color: #10b981;
+      font-size: 1.2rem;
+    }
+
+    .btn-eliminar {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .select-anio {
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      margin-left: 1rem;
+    }
+
+    /* Estilos para tablas de datos */
+    .tabla-datos {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .tabla-datos th,
+    .tabla-datos td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tabla-datos th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .estado-activo {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .estado-inactivo {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    /* Estilos para backup */
+    .backup-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .backup-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .backup-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 6px;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Estilos para API */
+    .api-key {
+      background: #1f2937;
+      color: #10b981;
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: monospace;
+      margin: 1rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .endpoint-list {
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      margin: 1.5rem 0;
+    }
+
+    .endpoint-item {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .endpoint-item:last-child {
+      border-bottom: none;
+    }
+
+    .endpoint-method {
+      background: #2563eb;
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .method-get { background: #10b981; }
+    .method-post { background: #f59e0b; }
+    .method-put { background: #8b5cf6; }
+    .method-delete { background: #ef4444; }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <div class="logo">🦷 Dentodesk</div>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+      <a href="pacientes.html"><i class="fa-solid fa-users"></i> Pacientes</a>
+      <a href="administrador.html"><i class="fa-solid fa-user-tie"></i> Administrador</a>
+      <a href="reportes.html"><i class="fa-solid fa-chart-line"></i> Reportes</a>
+      <a href="configuracion.html" class="active"><i class="fa-solid fa-cog"></i> Configuración</a>
+    </nav>
+    <div class="user-menu">
+      <button class="user-btn" onclick="toggleUserMenu()"><i class="fa-solid fa-user"></i> ⌄</button>
+      <div class="dropdown hidden" id="dropdown">
+        <a href="#"><i class="fa-solid fa-user-edit"></i> Mi perfil</a>
+        <a href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notificación -->
+  <div id="notification" class="notification hidden">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="notification-text"></span>
+  </div>
+
+  <!-- Contenido principal -->
+  <main class="config-container">
+    <div class="config-layout">
+      
+      <!-- Menú lateral -->
+      <aside class="sidebar">
+        <h3><i class="fa-solid fa-sliders"></i> Configuración</h3>
+        <ul class="sidebar-menu">
+          <li><a href="#empresa" class="active" onclick="mostrarSeccion('empresa')"><i class="fa-solid fa-building"></i> Empresa</a></li>
+          <li><a href="#calendario" onclick="mostrarSeccion('calendario')"><i class="fa-solid fa-calendar"></i> Calendario</a></li>
+          <li><a href="#correos" onclick="mostrarSeccion('correos')"><i class="fa-solid fa-envelope"></i> Correos</a></li>
+          <li><a href="#presupuestos" onclick="mostrarSeccion('presupuestos')"><i class="fa-solid fa-file-invoice-dollar"></i> Presupuestos</a></li>
+          <li><a href="#pagos" onclick="mostrarSeccion('pagos')"><i class="fa-solid fa-credit-card"></i> Pagos / Facturación</a></li>
+          <li><a href="#usuarios" onclick="mostrarSeccion('usuarios')"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+          <li><a href="#backup" onclick="mostrarSeccion('backup')"><i class="fa-solid fa-database"></i> Backup</a></li>
+          <li><a href="#api" onclick="mostrarSeccion('api')"><i class="fa-solid fa-code"></i> API</a></li>
+        </ul>
+      </aside>
+
+      <!-- Contenido -->
+      <div class="config-content">
+        
+        <!-- Sección Empresa (por defecto) -->
+        <div id="seccion-empresa" class="seccion-configuracion">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-building"></i> Configuración de Empresa</h1>
+            <p>Gestiona la información de tu clínica dental y sucursales</p>
+          </div>
+
+          <!-- Opciones principales -->
+          <div class="options-grid">
+            <div class="option-card" onclick="mostrarSeccion('empresa')">
+              <div class="option-icon"><i class="fa-solid fa-building"></i></div>
+              <h3>Empresa</h3>
+              <p>Datos principales de la clínica</p>
+            </div>
+            <div class="option-card" onclick="mostrarSeccion('calendario')">
+              <div class="option-icon"><i class="fa-solid fa-calendar"></i></div>
+              <h3>Calendario</h3>
+              <p>Configuración de horarios</p>
+            </div>
+            <div class="option-card" onclick="mostrarSeccion('correos')">
+              <div class="option-icon"><i class="fa-solid fa-envelope"></i></div>
+              <h3>Correos</h3>
+              <p>Configuración de email</p>
+            </div>
+            <div class="option-card" onclick="mostrarSeccion('presupuestos')">
+              <div class="option-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+              <h3>Presupuestos</h3>
+              <p>Configuración de cotizaciones</p>
+            </div>
+            <div class="option-card" onclick="mostrarSeccion('pagos')">
+              <div class="option-icon"><i class="fa-solid fa-credit-card"></i></div>
+              <h3>Pagos</h3>
+              <p>Facturación y pagos</p>
+            </div>
+          </div>
+
+          <!-- Formulario de Empresa -->
+          <div class="config-form">
+            <h2><i class="fa-solid fa-location-dot"></i> SUCURSAL BELLAVISTA (Sucursal Principal)</h2>
+            <p class="mb-3">Complete los datos de la sucursal principal</p>
+
+            <div class="form-section">
+              <h3>Información Básica</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="nombreEmpresa" class="required">Nombre de la Empresa</label>
+                  <input type="text" id="nombreEmpresa" placeholder="Ingrese el nombre de la empresa" required>
+                </div>
+                <div class="form-group">
+                  <label for="rutEmpresa" class="required">RUT</label>
+                  <input type="text" id="rutEmpresa" placeholder="Ingrese el RUT de la empresa" required>
+                </div>
+                <div class="form-group">
+                  <label for="giroEmpresa">Giro</label>
+                  <input type="text" id="giroEmpresa" placeholder="Ingrese el giro de la empresa">
+                </div>
+                <div class="form-group">
+                  <label for="telefonoEmpresa">Teléfono</label>
+                  <input type="tel" id="telefonoEmpresa" placeholder="Ingrese el teléfono de contacto">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Dirección</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="direccionEmpresa">Dirección</label>
+                  <input type="text" id="direccionEmpresa" placeholder="Ingrese la dirección">
+                </div>
+                <div class="form-group">
+                  <label for="comunaEmpresa">Comuna</label>
+                  <input type="text" id="comunaEmpresa" placeholder="Ingrese la comuna">
+                </div>
+                <div class="form-group">
+                  <label for="ciudadEmpresa">Ciudad</label>
+                  <input type="text" id="ciudadEmpresa" placeholder="Ingrese la ciudad">
+                </div>
+                <div class="form-group">
+                  <label for="regionEmpresa">Región</label>
+                  <input type="text" id="regionEmpresa" placeholder="Ingrese la región">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Información de Contacto</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="emailEmpresa">Email</label>
+                  <input type="email" id="emailEmpresa" placeholder="Ingrese el email de contacto">
+                </div>
+                <div class="form-group">
+                  <label for="sitioWeb">Sitio Web</label>
+                  <input type="url" id="sitioWeb" placeholder="Ingrese la URL del sitio web">
+                </div>
+                <div class="form-group">
+                  <label for="horarioAtencion">Horario de Atención</label>
+                  <input type="text" id="horarioAtencion" placeholder="Ej: Lunes a Viernes 8:00 - 19:00">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-secondary" onclick="cancelarEdicion()">
+                <i class="fa-solid fa-times"></i> Cancelar
+              </button>
+              <button class="btn-primary" onclick="guardarConfiguracionEmpresa()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección Calendario -->
+        <div id="seccion-calendario" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-calendar"></i> Configuración de Calendario</h1>
+            <p>Configura los parámetros de tu agenda y calendario</p>
+          </div>
+
+          <!-- Submenú de Calendario -->
+          <div class="submenu-calendario">
+            <div class="submenu-item active" onclick="mostrarSubseccion('general')">General</div>
+            <div class="submenu-item" onclick="mostrarSubseccion('feriados')">Feriados</div>
+            <div class="submenu-item" onclick="mostrarSubseccion('boton-agenda')">Botón Agenda Online</div>
+            <div class="submenu-item" onclick="mostrarSubseccion('tope-box')">Tope por Box</div>
+          </div>
+
+          <!-- Contenido de General -->
+          <div id="subseccion-general" class="calendario-content">
+            <h3>Configuración Casilla de la Agenda</h3>
+            <p>El tamaño por defecto de cada casilla de la agenda es de 15 minutos, usted puede cambiar esto seleccionando otra opción y apretando el botón Guardar.</p>
+            
+            <div class="warning-box">
+              <i class="fa-solid fa-exclamation-triangle"></i>
+              <strong>ATENCIÓN:</strong> Al cambiar esta opción los horarios de los profesionales deben ser reconfigurados.
+            </div>
+
+            <div class="tamano-casilla">
+              <label for="tamanoCasilla">Tamaño de casilla:</label>
+              <select id="tamanoCasilla">
+                <option value="15">15 minutos</option>
+                <option value="30">30 minutos</option>
+                <option value="60">60 minutos</option>
+                <option value="90">90 minutos</option>
+                <option value="120">120 minutos</option>
+              </select>
+            </div>
+
+            <h3>Otras configuraciones de la Agenda</h3>
+            
+            <table class="tabla-configuracion">
+              <tr>
+                <td><strong>Primer día de la semana</strong></td>
+                <td>
+                  <select id="primerDiaSemana">
+                    <option value="domingo">Domingo</option>
+                    <option value="lunes">Lunes</option>
+                    <option value="sabado">Sábado</option>
+                  </select>
+                </td>
+                <td><strong>Hora de Inicio de la Agenda</strong></td>
+                <td>
+                  <select id="horaInicio">
+                    <option value="6:00">6:00</option>
+                    <option value="7:00">7:00</option>
+                    <option value="8:00">8:00</option>
+                    <option value="9:00">9:00</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Formato de la Hora</strong></td>
+                <td>
+                  <select id="formatoHora">
+                    <option value="12">12 hrs.</option>
+                    <option value="24">24 hrs.</option>
+                  </select>
+                </td>
+                <td><strong>Hora Final de la Agenda</strong></td>
+                <td>
+                  <select id="horaFinal">
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionCalendario()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar
+              </button>
+            </div>
+          </div>
+
+          <!-- Subsección Feriados -->
+          <div id="subseccion-feriados" class="calendario-content hidden">
+            <h3>Configuración de Feriados</h3>
+            <p>Gestiona los días feriados y festivos de tu clínica.</p>
+
+            <div class="feriados-container">
+              <div class="nuevo-feriado-form">
+                <h4><i class="fa-solid fa-plus"></i> Nuevo Feriado</h4>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="fechaFeriado">Fecha</label>
+                    <input type="date" id="fechaFeriado">
+                  </div>
+                  <div class="form-group">
+                    <label for="nombreFeriado">Nombre del Feriado</label>
+                    <input type="text" id="nombreFeriado" placeholder="Ingrese el nombre del feriado">
+                  </div>
+                </div>
+                <button class="btn-success" onclick="agregarFeriado()">
+                  <i class="fa-solid fa-plus"></i> Agregar Feriado
+                </button>
+              </div>
+
+              <h4>Configuración de Feriados</h4>
+              
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span><strong>Feriados Año:</strong></span>
+                <select class="select-anio" id="anioFeriados">
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+              </div>
+
+              <table class="tabla-feriados">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Nombre del Feriado</th>
+                    <th>Año</th>
+                    <th>Controles</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-feriados">
+                  <!-- Los feriados se cargan dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Otras subsecciones (ocultas por defecto) -->
+          <div id="subseccion-boton-agenda" class="calendario-content hidden">
+            <h3>Botón Agenda Online</h3>
+            <p>Configura el botón de agenda online para tu sitio web.</p>
+            
+            <div class="form-group">
+              <label for="urlAgendaOnline">URL del Botón</label>
+              <input type="url" id="urlAgendaOnline" placeholder="https://ejemplo.com/agenda-online">
+            </div>
+            
+            <div class="form-group">
+              <label for="estadoAgendaOnline">Estado</label>
+              <select id="estadoAgendaOnline">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionAgendaOnline()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar
+              </button>
+            </div>
+          </div>
+
+          <div id="subseccion-tope-box" class="calendario-content hidden">
+            <h3>Tope por Box</h3>
+            <p>Configura los límites de atención por box.</p>
+            
+            <table class="tabla-configuracion">
+              <thead>
+                <tr>
+                  <th>Box</th>
+                  <th>Profesional</th>
+                  <th>Pacientes Máximos por Día</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Box 1</td>
+                  <td>Dr. Juan Pérez</td>
+                  <td><input type="number" value="8" min="1" max="20"></td>
+                  <td><span class="estado-activo">Activo</span></td>
+                </tr>
+                <tr>
+                  <td>Box 2</td>
+                  <td>Dra. María González</td>
+                  <td><input type="number" value="10" min="1" max="20"></td>
+                  <td><span class="estado-activo">Activo</span></td>
+                </tr>
+                <tr>
+                  <td>Box 3</td>
+                  <td>Dr. Carlos López</td>
+                  <td><input type="number" value="6" min="1" max="20"></td>
+                  <td><span class="estado-inactivo">Inactivo</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionTopeBox()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección Correos -->
+        <div id="seccion-correos" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-envelope"></i> Configuración de Correos</h1>
+            <p>Configura los parámetros de correo electrónico</p>
+          </div>
+
+          <div class="config-form">
+            <div class="form-section">
+              <h3>Configuración SMTP</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="smtpServidor">Servidor SMTP</label>
+                  <input type="text" id="smtpServidor" placeholder="smtp.gmail.com">
+                </div>
+                <div class="form-group">
+                  <label for="smtpPuerto">Puerto</label>
+                  <input type="number" id="smtpPuerto" placeholder="587">
+                </div>
+                <div class="form-group">
+                  <label for="smtpUsuario">Usuario</label>
+                  <input type="text" id="smtpUsuario" placeholder="usuario@ejemplo.com">
+                </div>
+                <div class="form-group">
+                  <label for="smtpPassword">Contraseña</label>
+                  <input type="password" id="smtpPassword" placeholder="Ingrese la contraseña">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Plantillas de Correo</h3>
+              <div class="form-group">
+                <label for="plantillaConfirmacion">Plantilla Confirmación Cita</label>
+                <textarea id="plantillaConfirmacion" rows="6" placeholder="Ingrese la plantilla para confirmación de citas"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="plantillaRecordatorio">Plantilla Recordatorio</label>
+                <textarea id="plantillaRecordatorio" rows="6" placeholder="Ingrese la plantilla para recordatorios"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionCorreos()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+              </button>
+              <button class="btn-success" onclick="probarConfiguracionCorreos()">
+                <i class="fa-solid fa-paper-plane"></i> Probar Configuración
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección Presupuestos -->
+        <div id="seccion-presupuestos" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-file-invoice-dollar"></i> Configuración de Presupuestos</h1>
+            <p>Configura los parámetros de presupuestos y cotizaciones</p>
+          </div>
+
+          <div class="config-form">
+            <div class="form-section">
+              <h3>Configuración General</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="validezPresupuesto">Validez del Presupuesto (días)</label>
+                  <input type="number" id="validezPresupuesto" placeholder="30" min="1" max="365">
+                </div>
+                <div class="form-group">
+                  <label for="ivaPresupuesto">IVA (%)</label>
+                  <input type="number" id="ivaPresupuesto" placeholder="19" step="0.1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                  <label for="monedaPresupuesto">Moneda</label>
+                  <select id="monedaPresupuesto">
+                    <option value="CLP">Peso Chileno (CLP)</option>
+                    <option value="USD">Dólar Americano (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Plantilla de Presupuesto</h3>
+              <div class="form-group">
+                <label for="encabezadoPresupuesto">Encabezado</label>
+                <textarea id="encabezadoPresupuesto" rows="4" placeholder="Ingrese el encabezado del presupuesto"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="piePresupuesto">Pie de Página</label>
+                <textarea id="piePresupuesto" rows="4" placeholder="Ingrese el pie de página del presupuesto"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionPresupuestos()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección Pagos -->
+        <div id="seccion-pagos" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-credit-card"></i> Configuración de Pagos</h1>
+            <p>Configura los parámetros de pagos y facturación</p>
+          </div>
+
+          <div class="config-form">
+            <div class="form-section">
+              <h3>Métodos de Pago</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="efectivo"> Efectivo
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="transferencia"> Transferencia
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="tarjetaCredito"> Tarjeta de Crédito
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="tarjetaDebito"> Tarjeta de Débito
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Integración Transbank</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="transbankComercio">Código Comercio</label>
+                  <input type="text" id="transbankComercio" placeholder="Ingrese código comercio">
+                </div>
+                <div class="form-group">
+                  <label for="transbankApiKey">API Key</label>
+                  <input type="password" id="transbankApiKey" placeholder="Ingrese API key">
+                </div>
+                <div class="form-group">
+                  <label for="transbankAmbiente">Ambiente</label>
+                  <select id="transbankAmbiente">
+                    <option value="produccion">Producción</option>
+                    <option value="pruebas">Pruebas</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Configuración Facturación</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="folioInicial">Folio Inicial</label>
+                  <input type="number" id="folioInicial" placeholder="1">
+                </div>
+                <div class="form-group">
+                  <label for="resolucionSII">Resolución SII</label>
+                  <input type="text" id="resolucionSII" placeholder="Número de resolución">
+                </div>
+                <div class="form-group">
+                  <label for="fechaResolucion">Fecha Resolución</label>
+                  <input type="date" id="fechaResolucion">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionPagos()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+              </button>
+              <button class="btn-success" onclick="probarTransbank()">
+                <i class="fa-solid fa-vial"></i> Probar Transbank
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección Usuarios -->
+        <div id="seccion-usuarios" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-users"></i> Gestión de Usuarios</h1>
+            <p>Administra los usuarios y permisos del sistema</p>
+          </div>
+
+          <div class="config-form">
+            <div class="form-section">
+              <h3>Nuevo Usuario</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="nombreUsuario">Nombre Completo</label>
+                  <input type="text" id="nombreUsuario" placeholder="Ingrese nombre completo">
+                </div>
+                <div class="form-group">
+                  <label for="emailUsuario">Email</label>
+                  <input type="email" id="emailUsuario" placeholder="Ingrese email">
+                </div>
+                <div class="form-group">
+                  <label for="rolUsuario">Rol</label>
+                  <select id="rolUsuario">
+                    <option value="administrador">Administrador</option>
+                    <option value="odontologo">Odontólogo</option>
+                    <option value="asistente">Asistente</option>
+                    <option value="recepcion">Recepción</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="sucursalUsuario">Sucursal</label>
+                  <select id="sucursalUsuario">
+                    <option value="bellavista">Bellavista</option>
+                    <option value="providencia">Providencia</option>
+                    <option value="lascondes">Las Condes</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-success" onclick="agregarUsuario()">
+                <i class="fa-solid fa-user-plus"></i> Agregar Usuario
+              </button>
+            </div>
+
+            <div class="form-section">
+              <h3>Usuarios del Sistema</h3>
+              <table class="tabla-datos">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Sucursal</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-usuarios">
+                  <tr>
+                    <td>Dr. Juan Pérez</td>
+                    <td>juan.perez@dentodesk.cl</td>
+                    <td>Odontólogo</td>
+                    <td>Bellavista</td>
+                    <td><span class="estado-activo">Activo</span></td>
+                    <td>
+                      <button class="btn-eliminar" onclick="eliminarUsuario(1)">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Dra. María González</td>
+                    <td>maria.gonzalez@dentodesk.cl</td>
+                    <td>Odontólogo</td>
+                    <td>Providencia</td>
+                    <td><span class="estado-activo">Activo</span></td>
+                    <td>
+                      <button class="btn-eliminar" onclick="eliminarUsuario(2)">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Ana Silva</td>
+                    <td>ana.silva@dentodesk.cl</td>
+                    <td>Asistente</td>
+                    <td>Bellavista</td>
+                    <td><span class="estado-inactivo">Inactivo</span></td>
+                    <td>
+                      <button class="btn-eliminar" onclick="eliminarUsuario(3)">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección Backup -->
+        <div id="seccion-backup" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-database"></i> Sistema de Backup</h1>
+            <p>Gestiona las copias de seguridad de tu sistema</p>
+          </div>
+
+          <div class="config-form">
+            <div class="backup-card">
+              <div class="backup-info">
+                <h3><i class="fa-solid fa-cloud-arrow-down"></i> Backup Automático</h3>
+                <span class="estado-activo">Activo</span>
+              </div>
+              <p>El sistema realiza backups automáticos cada 24 horas.</p>
+              
+              <div class="backup-stats">
+                <div class="stat-item">
+                  <div class="stat-number">156</div>
+                  <div>Backups Realizados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">2.3 GB</div>
+                  <div>Espacio Utilizado</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">15 días</div>
+                  <div>Retención</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">3:00 AM</div>
+                  <div>Próximo Backup</div>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="frecuenciaBackup">Frecuencia</label>
+                  <select id="frecuenciaBackup">
+                    <option value="diario">Diario</option>
+                    <option value="semanal">Semanal</option>
+                    <option value="mensual">Mensual</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="horaBackup">Hora Programada</label>
+                  <input type="time" id="horaBackup" value="03:00">
+                </div>
+                <div class="form-group">
+                  <label for="retencionBackup">Días de Retención</label>
+                  <input type="number" id="retencionBackup" placeholder="15" min="1" max="365">
+                </div>
+              </div>
+            </div>
+
+            <div class="backup-card">
+              <h3><i class="fa-solid fa-download"></i> Backup Manual</h3>
+              <p>Realiza una copia de seguridad manual del sistema.</p>
+              
+              <div class="form-actions">
+                <button class="btn-primary" onclick="realizarBackupManual()">
+                  <i class="fa-solid fa-download"></i> Realizar Backup Ahora
+                </button>
+                <button class="btn-success" onclick="programarBackup()">
+                  <i class="fa-solid fa-calendar-plus"></i> Programar Backup
+                </button>
+              </div>
+            </div>
+
+            <div class="backup-card">
+              <h3><i class="fa-solid fa-history"></i> Historial de Backups</h3>
+              <table class="tabla-datos">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Tamaño</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15/06/2024 03:00</td>
+                    <td>45.2 MB</td>
+                    <td>Automático</td>
+                    <td><span class="estado-activo">Completado</span></td>
+                    <td>
+                      <button class="btn-primary" style="padding: 0.3rem 0.6rem;">
+                        <i class="fa-solid fa-download"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>14/06/2024 03:00</td>
+                    <td>44.8 MB</td>
+                    <td>Automático</td>
+                    <td><span class="estado-activo">Completado</span></td>
+                    <td>
+                      <button class="btn-primary" style="padding: 0.3rem 0.6rem;">
+                        <i class="fa-solid fa-download"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>13/06/2024 15:30</td>
+                    <td>45.1 MB</td>
+                    <td>Manual</td>
+                    <td><span class="estado-activo">Completado</span></td>
+                    <td>
+                      <button class="btn-primary" style="padding: 0.3rem 0.6rem;">
+                        <i class="fa-solid fa-download"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección API -->
+        <div id="seccion-api" class="seccion-configuracion hidden">
+          <div class="config-header">
+            <h1><i class="fa-solid fa-code"></i> API y Integraciones</h1>
+            <p>Configura las integraciones y API del sistema</p>
+          </div>
+
+          <div class="config-form">
+            <div class="form-section">
+              <h3>API Key</h3>
+              <p>Utilice esta clave para integrar con otros sistemas.</p>
+              <div class="api-key">
+                <span id="apiKeyValue">sk_live_1234567890abcdefghijklmnopqrstuvwxyz</span>
+                <button class="btn-secondary" onclick="copiarApiKey()">
+                  <i class="fa-solid fa-copy"></i> Copiar
+                </button>
+              </div>
+              <button class="btn-danger" onclick="regenerarApiKey()">
+                <i class="fa-solid fa-refresh"></i> Regenerar API Key
+              </button>
+            </div>
+
+            <div class="form-section">
+              <h3>Endpoints Disponibles</h3>
+              <div class="endpoint-list">
+                <div class="endpoint-item">
+                  <div>
+                    <strong>/api/pacientes</strong>
+                    <div style="color: #6b7280; font-size: 0.9rem;">Gestión de pacientes</div>
+                  </div>
+                  <span class="endpoint-method method-get">GET</span>
+                </div>
+                <div class="endpoint-item">
+                  <div>
+                    <strong>/api/citas</strong>
+                    <div style="color: #6b7280; font-size: 0.9rem;">Gestión de citas</div>
+                  </div>
+                  <span class="endpoint-method method-post">POST</span>
+                </div>
+                <div class="endpoint-item">
+                  <div>
+                    <strong>/api/tratamientos</strong>
+                    <div style="color: #6b7280; font-size: 0.9rem;">Gestión de tratamientos</div>
+                  </div>
+                  <span class="endpoint-method method-get">GET</span>
+                </div>
+                <div class="endpoint-item">
+                  <div>
+                    <strong>/api/facturacion</strong>
+                    <div style="color: #6b7280; font-size: 0.9rem;">Sistema de facturación</div>
+                  </div>
+                  <span class="endpoint-method method-post">POST</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Webhooks</h3>
+              <div class="form-group">
+                <label for="webhookUrl">URL de Webhook</label>
+                <input type="url" id="webhookUrl" placeholder="https://tusistema.com/webhook">
+              </div>
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="webhookCitas"> Notificar nuevos eventos de citas
+                </label>
+              </div>
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="webhookPagos"> Notificar nuevos pagos
+                </label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-primary" onclick="guardarConfiguracionAPI()">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // ==== Variables globales ====
+    let seccionActual = 'empresa';
+    let subseccionCalendarioActual = 'general';
+    let feriados = [];
+
+    // ==== Dropdown perfil ====
+    function toggleUserMenu() {
+      document.getElementById("dropdown").classList.toggle("hidden");
+    }
+
+    // ==== Mostrar sección principal ====
+    function mostrarSeccion(seccion) {
+      // Ocultar todas las secciones
+      document.querySelectorAll('.seccion-configuracion').forEach(sec => {
+        sec.classList.add('hidden');
+      });
+      
+      // Mostrar la sección seleccionada
+      document.getElementById(`seccion-${seccion}`).classList.remove('hidden');
+      
+      // Actualizar menú lateral
+      document.querySelectorAll('.sidebar-menu a').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.querySelector(`.sidebar-menu a[href="#${seccion}"]`).classList.add('active');
+      
+      // Actualizar variable global
+      seccionActual = seccion;
+      
+      // Si es calendario, mostrar subsección general por defecto
+      if (seccion === 'calendario') {
+        mostrarSubseccion('general');
+      }
+      
+      // Cargar datos guardados para la sección
+      cargarDatosSeccion(seccion);
+      
+      mostrarNotificacion(`Mostrando configuración: ${seccion}`);
+    }
+
+    // ==== Cargar datos guardados para cada sección ====
+    function cargarDatosSeccion(seccion) {
+      const datosGuardados = localStorage.getItem(`configuracion${capitalizeFirstLetter(seccion)}`);
+      
+      if (datosGuardados) {
+        const config = JSON.parse(datosGuardados);
+        
+        switch(seccion) {
+          case 'empresa':
+            document.getElementById('nombreEmpresa').value = config.nombre || '';
+            document.getElementById('rutEmpresa').value = config.rut || '';
+            document.getElementById('giroEmpresa').value = config.giro || '';
+            document.getElementById('telefonoEmpresa').value = config.telefono || '';
+            document.getElementById('direccionEmpresa').value = config.direccion || '';
+            document.getElementById('comunaEmpresa').value = config.comuna || '';
+            document.getElementById('ciudadEmpresa').value = config.ciudad || '';
+            document.getElementById('regionEmpresa').value = config.region || '';
+            document.getElementById('emailEmpresa').value = config.email || '';
+            document.getElementById('sitioWeb').value = config.sitioWeb || '';
+            document.getElementById('horarioAtencion').value = config.horario || '';
+            break;
+            
+          case 'calendario':
+            document.getElementById('tamanoCasilla').value = config.tamanoCasilla || "15";
+            document.getElementById('primerDiaSemana').value = config.primerDiaSemana || "lunes";
+            document.getElementById('horaInicio').value = config.horaInicio || "8:00";
+            document.getElementById('formatoHora').value = config.formatoHora || "24";
+            document.getElementById('horaFinal').value = config.horaFinal || "19:00";
+            break;
+            
+          case 'correos':
+            document.getElementById('smtpServidor').value = config.servidor || '';
+            document.getElementById('smtpPuerto').value = config.puerto || '';
+            document.getElementById('smtpUsuario').value = config.usuario || '';
+            document.getElementById('plantillaConfirmacion').value = config.plantillaConfirmacion || '';
+            document.getElementById('plantillaRecordatorio').value = config.plantillaRecordatorio || '';
+            break;
+            
+          case 'presupuestos':
+            document.getElementById('validezPresupuesto').value = config.validez || '';
+            document.getElementById('ivaPresupuesto').value = config.iva || '';
+            document.getElementById('monedaPresupuesto').value = config.moneda || 'CLP';
+            document.getElementById('encabezadoPresupuesto').value = config.encabezado || '';
+            document.getElementById('piePresupuesto').value = config.pie || '';
+            break;
+            
+          case 'pagos':
+            document.getElementById('efectivo').checked = config.efectivo || false;
+            document.getElementById('transferencia').checked = config.transferencia || false;
+            document.getElementById('tarjetaCredito').checked = config.tarjetaCredito || false;
+            document.getElementById('tarjetaDebito').checked = config.tarjetaDebito || false;
+            document.getElementById('transbankComercio').value = config.transbankComercio || '';
+            document.getElementById('transbankAmbiente').value = config.transbankAmbiente || 'pruebas';
+            document.getElementById('folioInicial').value = config.folioInicial || '';
+            document.getElementById('resolucionSII').value = config.resolucionSII || '';
+            document.getElementById('fechaResolucion').value = config.fechaResolucion || '';
+            break;
+            
+          case 'api':
+            document.getElementById('apiKeyValue').textContent = config.apiKey || 'sk_live_1234567890abcdefghijklmnopqrstuvwxyz';
+            document.getElementById('webhookUrl').value = config.webhookUrl || '';
+            document.getElementById('webhookCitas').checked = config.webhookCitas || false;
+            document.getElementById('webhookPagos').checked = config.webhookPagos || false;
+            break;
+        }
+      }
+    }
+
+    // ==== Mostrar subsección de calendario ====
+    function mostrarSubseccion(subseccion) {
+      // Ocultar todas las subsecciones de calendario
+      document.querySelectorAll('.calendario-content').forEach(sub => {
+        sub.classList.add('hidden');
+      });
+      
+      // Mostrar la subsección seleccionada
+      document.getElementById(`subseccion-${subseccion}`).classList.remove('hidden');
+      
+      // Actualizar submenú
+      document.querySelectorAll('.submenu-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.querySelector(`.submenu-item[onclick="mostrarSubseccion('${subseccion}')"]`).classList.add('active');
+      
+      // Actualizar variable global
+      subseccionCalendarioActual = subseccion;
+
+      // Si es feriados, cargar la lista
+      if (subseccion === 'feriados') {
+        cargarFeriados();
+      }
+    }
+
+    // ==== Funciones de Feriados ====
+    function cargarFeriados() {
+      const listaFeriados = document.getElementById('lista-feriados');
+      const anioSeleccionado = document.getElementById('anioFeriados').value;
+      
+      // Cargar feriados desde localStorage
+      const feriadosGuardados = localStorage.getItem('feriados');
+      if (feriadosGuardados) {
+        feriados = JSON.parse(feriadosGuardados);
+      }
+      
+      // Filtrar feriados por año seleccionado
+      const feriadosFiltrados = feriados.filter(feriado => feriado.año === anioSeleccionado);
+      
+      listaFeriados.innerHTML = '';
+      
+      if (feriadosFiltrados.length === 0) {
+        listaFeriados.innerHTML = '<tr><td colspan="4" class="text-center">No hay feriados configurados para este año</td></tr>';
+      } else {
+        feriadosFiltrados.forEach((feriado, index) => {
+          const fila = document.createElement('tr');
+          fila.innerHTML = `
+            <td>${feriado.fecha}</td>
+            <td>${feriado.nombre}</td>
+            <td>${feriado.año}</td>
+            <td>
+              <span class="control-icon">${feriado.activo ? '✅' : '❌'}</span>
+              <button class="btn-eliminar" onclick="eliminarFeriado(${index})">
+                <i class="fa-solid fa-trash"></i> Eliminar
+              </button>
+            </td>
+          `;
+          listaFeriados.appendChild(fila);
+        });
+      }
+    }
+
+    function agregarFeriado() {
+      const fechaInput = document.getElementById('fechaFeriado');
+      const nombreInput = document.getElementById('nombreFeriado');
+      const anioSeleccionado = document.getElementById('anioFeriados').value;
+      
+      if (!fechaInput.value || !nombreInput.value) {
+        mostrarNotificacion('Por favor, complete todos los campos', 'error');
+        return;
+      }
+      
+      // Formatear fecha
+      const fecha = new Date(fechaInput.value);
+      const fechaFormateada = `${fecha.getDate()}/${fecha.getMonth() + 1}`;
+      
+      const nuevoFeriado = {
+        fecha: fechaFormateada,
+        nombre: nombreInput.value,
+        año: anioSeleccionado,
+        activo: true
+      };
+      
+      feriados.push(nuevoFeriado);
+      localStorage.setItem('feriados', JSON.stringify(feriados));
+      
+      // Limpiar formulario
+      fechaInput.value = '';
+      nombreInput.value = '';
+      
+      // Recargar lista
+      cargarFeriados();
+      
+      mostrarNotificacion('Feriado agregado correctamente');
+    }
+
+    function eliminarFeriado(index) {
+      if (confirm('¿Está seguro de que desea eliminar este feriado?')) {
+        feriados.splice(index, 1);
+        localStorage.setItem('feriados', JSON.stringify(feriados));
+        cargarFeriados();
+        mostrarNotificacion('Feriado eliminado correctamente');
+      }
+    }
+
+    // ==== Funciones de Empresa ====
+    function guardarConfiguracionEmpresa() {
+      const nombreEmpresa = document.getElementById('nombreEmpresa').value;
+      const rutEmpresa = document.getElementById('rutEmpresa').value;
+      
+      if (!nombreEmpresa || !rutEmpresa) {
+        mostrarNotificacion('Por favor, complete los campos obligatorios', 'error');
+        return;
+      }
+      
+      const configEmpresa = {
+        nombre: nombreEmpresa,
+        rut: rutEmpresa,
+        giro: document.getElementById('giroEmpresa').value,
+        telefono: document.getElementById('telefonoEmpresa').value,
+        direccion: document.getElementById('direccionEmpresa').value,
+        comuna: document.getElementById('comunaEmpresa').value,
+        ciudad: document.getElementById('ciudadEmpresa').value,
+        region: document.getElementById('regionEmpresa').value,
+        email: document.getElementById('emailEmpresa').value,
+        sitioWeb: document.getElementById('sitioWeb').value,
+        horario: document.getElementById('horarioAtencion').value
+      };
+      
+      localStorage.setItem('configuracionEmpresa', JSON.stringify(configEmpresa));
+      mostrarNotificacion('Configuración de empresa guardada exitosamente');
+    }
+
+    // ==== Funciones de Calendario ====
+    function guardarConfiguracionCalendario() {
+      const configCalendario = {
+        tamanoCasilla: document.getElementById('tamanoCasilla').value,
+        primerDiaSemana: document.getElementById('primerDiaSemana').value,
+        horaInicio: document.getElementById('horaInicio').value,
+        formatoHora: document.getElementById('formatoHora').value,
+        horaFinal: document.getElementById('horaFinal').value
+      };
+      
+      localStorage.setItem('configuracionCalendario', JSON.stringify(configCalendario));
+      mostrarNotificacion('Configuración de calendario guardada exitosamente');
+    }
+
+    function guardarConfiguracionAgendaOnline() {
+      const urlAgendaOnline = document.getElementById('urlAgendaOnline').value;
+      const estadoAgendaOnline = document.getElementById('estadoAgendaOnline').value;
+      
+      if (!urlAgendaOnline) {
+        mostrarNotificacion('Por favor, ingrese la URL de la agenda online', 'error');
+        return;
+      }
+      
+      const configAgendaOnline = {
+        url: urlAgendaOnline,
+        estado: estadoAgendaOnline
+      };
+      
+      localStorage.setItem('configuracionAgendaOnline', JSON.stringify(configAgendaOnline));
+      mostrarNotificacion('Configuración de agenda online guardada exitosamente');
+    }
+
+    function guardarConfiguracionTopeBox() {
+      const inputs = document.querySelectorAll('#subseccion-tope-box input[type="number"]');
+      let configTopeBox = [];
+      
+      inputs.forEach((input, index) => {
+        configTopeBox.push({
+          box: `Box ${index + 1}`,
+          pacientesMaximos: input.value
+        });
+      });
+      
+      localStorage.setItem('configuracionTopeBox', JSON.stringify(configTopeBox));
+      mostrarNotificacion('Configuración de tope por box guardada exitosamente');
+    }
+
+    // ==== Funciones de Correos ====
+    function guardarConfiguracionCorreos() {
+      const smtpServidor = document.getElementById('smtpServidor').value;
+      const smtpPuerto = document.getElementById('smtpPuerto').value;
+      const smtpUsuario = document.getElementById('smtpUsuario').value;
+      
+      if (!smtpServidor || !smtpPuerto || !smtpUsuario) {
+        mostrarNotificacion('Por favor, complete los campos obligatorios de SMTP', 'error');
+        return;
+      }
+      
+      const configCorreos = {
+        servidor: smtpServidor,
+        puerto: smtpPuerto,
+        usuario: smtpUsuario,
+        plantillaConfirmacion: document.getElementById('plantillaConfirmacion').value,
+        plantillaRecordatorio: document.getElementById('plantillaRecordatorio').value
+      };
+      
+      localStorage.setItem('configuracionCorreos', JSON.stringify(configCorreos));
+      mostrarNotificacion('Configuración de correos guardada exitosamente');
+    }
+
+    function probarConfiguracionCorreos() {
+      const smtpServidor = document.getElementById('smtpServidor').value;
+      const smtpUsuario = document.getElementById('smtpUsuario').value;
+      
+      if (!smtpServidor || !smtpUsuario) {
+        mostrarNotificacion('Por favor, complete la configuración SMTP antes de probar', 'error');
+        return;
+      }
+      
+      mostrarNotificacion('Enviando correo de prueba...');
+      setTimeout(() => {
+        mostrarNotificacion('Correo de prueba enviado correctamente');
+      }, 2000);
+    }
+
+    // ==== Funciones de Presupuestos ====
+    function guardarConfiguracionPresupuestos() {
+      const validezPresupuesto = document.getElementById('validezPresupuesto').value;
+      const ivaPresupuesto = document.getElementById('ivaPresupuesto').value;
+      
+      if (!validezPresupuesto || !ivaPresupuesto) {
+        mostrarNotificacion('Por favor, complete los campos obligatorios', 'error');
+        return;
+      }
+      
+      const configPresupuestos = {
+        validez: validezPresupuesto,
+        iva: ivaPresupuesto,
+        moneda: document.getElementById('monedaPresupuesto').value,
+        encabezado: document.getElementById('encabezadoPresupuesto').value,
+        pie: document.getElementById('piePresupuesto').value
+      };
+      
+      localStorage.setItem('configuracionPresupuestos', JSON.stringify(configPresupuestos));
+      mostrarNotificacion('Configuración de presupuestos guardada exitosamente');
+    }
+
+    // ==== Funciones de Pagos ====
+    function guardarConfiguracionPagos() {
+      const configPagos = {
+        efectivo: document.getElementById('efectivo').checked,
+        transferencia: document.getElementById('transferencia').checked,
+        tarjetaCredito: document.getElementById('tarjetaCredito').checked,
+        tarjetaDebito: document.getElementById('tarjetaDebito').checked,
+        transbankComercio: document.getElementById('transbankComercio').value,
+        transbankAmbiente: document.getElementById('transbankAmbiente').value,
+        folioInicial: document.getElementById('folioInicial').value,
+        resolucionSII: document.getElementById('resolucionSII').value,
+        fechaResolucion: document.getElementById('fechaResolucion').value
+      };
+      
+      localStorage.setItem('configuracionPagos', JSON.stringify(configPagos));
+      mostrarNotificacion('Configuración de pagos guardada exitosamente');
+    }
+
+    function probarTransbank() {
+      const transbankComercio = document.getElementById('transbankComercio').value;
+      
+      if (!transbankComercio) {
+        mostrarNotificacion('Por favor, complete el código de comercio antes de probar', 'error');
+        return;
+      }
+      
+      mostrarNotificacion('Probando conexión con Transbank...');
+      setTimeout(() => {
+        mostrarNotificacion('Conexión con Transbank exitosa');
+      }, 2000);
+    }
+
+    // ==== Funciones de Usuarios ====
+    function agregarUsuario() {
+      const nombre = document.getElementById('nombreUsuario').value;
+      const email = document.getElementById('emailUsuario').value;
+      const rol = document.getElementById('rolUsuario').value;
+      const sucursal = document.getElementById('sucursalUsuario').value;
+      
+      if (!nombre || !email) {
+        mostrarNotificacion('Por favor, complete todos los campos', 'error');
+        return;
+      }
+      
+      // Obtener usuarios existentes
+      const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+      
+      // Agregar nuevo usuario
+      usuarios.push({
+        nombre: nombre,
+        email: email,
+        rol: rol,
+        sucursal: sucursal,
+        estado: 'activo'
+      });
+      
+      // Guardar en localStorage
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      
+      mostrarNotificacion(`Usuario ${nombre} agregado correctamente`);
+      
+      // Limpiar formulario
+      document.getElementById('nombreUsuario').value = '';
+      document.getElementById('emailUsuario').value = '';
+      
+      // Actualizar tabla de usuarios
+      cargarUsuarios();
+    }
+
+    function eliminarUsuario(id) {
+      if (confirm('¿Está seguro de que desea eliminar este usuario?')) {
+        // Obtener usuarios existentes
+        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        
+        // Eliminar usuario
+        usuarios.splice(id, 1);
+        
+        // Guardar en localStorage
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        
+        mostrarNotificacion('Usuario eliminado correctamente');
+        
+        // Actualizar tabla de usuarios
+        cargarUsuarios();
+      }
+    }
+
+    function cargarUsuarios() {
+      const listaUsuarios = document.getElementById('lista-usuarios');
+      const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+      
+      listaUsuarios.innerHTML = '';
+      
+      if (usuarios.length === 0) {
+        listaUsuarios.innerHTML = '<tr><td colspan="6" class="text-center">No hay usuarios registrados</td></tr>';
+      } else {
+        usuarios.forEach((usuario, index) => {
+          const fila = document.createElement('tr');
+          fila.innerHTML = `
+            <td>${usuario.nombre}</td>
+            <td>${usuario.email}</td>
+            <td>${usuario.rol}</td>
+            <td>${usuario.sucursal}</td>
+            <td><span class="${usuario.estado === 'activo' ? 'estado-activo' : 'estado-inactivo'}">${usuario.estado === 'activo' ? 'Activo' : 'Inactivo'}</span></td>
+            <td>
+              <button class="btn-eliminar" onclick="eliminarUsuario(${index})">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          `;
+          listaUsuarios.appendChild(fila);
+        });
+      }
+    }
+
+    // ==== Funciones de Backup ====
+    function realizarBackupManual() {
+      mostrarNotificacion('Iniciando backup manual...');
+      setTimeout(() => {
+        mostrarNotificacion('Backup manual completado exitosamente');
+      }, 3000);
+    }
+
+    function programarBackup() {
+      const frecuencia = document.getElementById('frecuenciaBackup').value;
+      const hora = document.getElementById('horaBackup').value;
+      const retencion = document.getElementById('retencionBackup').value;
+      
+      if (!frecuencia || !hora || !retencion) {
+        mostrarNotificacion('Por favor, complete todos los campos de programación', 'error');
+        return;
+      }
+      
+      const configBackup = {
+        frecuencia: frecuencia,
+        hora: hora,
+        retencion: retencion
+      };
+      
+      localStorage.setItem('configuracionBackup', JSON.stringify(configBackup));
+      mostrarNotificacion(`Backup programado: ${frecuencia} a las ${hora}`);
+    }
+
+    // ==== Funciones de API ====
+    function copiarApiKey() {
+      const apiKey = document.getElementById('apiKeyValue').textContent;
+      navigator.clipboard.writeText(apiKey).then(() => {
+        mostrarNotificacion('API Key copiada al portapapeles');
+      }).catch(err => {
+        mostrarNotificacion('Error al copiar la API Key', 'error');
+      });
+    }
+
+    function regenerarApiKey() {
+      if (confirm('¿Está seguro de que desea regenerar la API Key? Esto invalidará la clave actual.')) {
+        const nuevaApiKey = 'sk_live_' + Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+        document.getElementById('apiKeyValue').textContent = nuevaApiKey;
+        
+        // Guardar en localStorage
+        const configAPI = JSON.parse(localStorage.getItem('configuracionApi') || '{}');
+        configAPI.apiKey = nuevaApiKey;
+        localStorage.setItem('configuracionApi', JSON.stringify(configAPI));
+        
+        mostrarNotificacion('API Key regenerada exitosamente');
+      }
+    }
+
+    function guardarConfiguracionAPI() {
+      const configAPI = {
+        apiKey: document.getElementById('apiKeyValue').textContent,
+        webhookUrl: document.getElementById('webhookUrl').value,
+        webhookCitas: document.getElementById('webhookCitas').checked,
+        webhookPagos: document.getElementById('webhookPagos').checked
+      };
+      
+      localStorage.setItem('configuracionApi', JSON.stringify(configAPI));
+      mostrarNotificacion('Configuración de API guardada exitosamente');
+    }
+
+    // ==== Funciones generales ====
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      
+      notificationText.textContent = mensaje;
+      notification.className = `notification ${tipo}`;
+      notification.classList.remove('hidden');
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          notification.classList.add('hidden');
+        }, 300);
+      }, 3000);
+    }
+
+    function cancelarEdicion() {
+      // Recargar datos guardados para la sección actual
+      cargarDatosSeccion(seccionActual);
+      mostrarNotificacion('Cambios cancelados');
+    }
+
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // ==== Cargar configuraciones al iniciar ====
+    function cargarConfiguraciones() {
+      // Cargar usuarios
+      cargarUsuarios();
+      
+      // Cargar feriados
+      cargarFeriados();
+    }
+
+    // ==== Event Listeners ====
+    document.getElementById('anioFeriados').addEventListener('change', cargarFeriados);
+
+    // Cerrar dropdown al hacer clic fuera
+    window.onclick = function(event) {
+      if (!event.target.matches('.user-btn')) {
+        const dropdown = document.getElementById('dropdown');
+        if (!dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    }
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarConfiguraciones();
+    });
+  </script>
+</body>
+</html>

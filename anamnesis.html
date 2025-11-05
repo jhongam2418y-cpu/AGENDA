@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Anamnesis</title>
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0077b6;
+      padding: 10px;
+      text-align: center;
+      color: white;
+      font-size: 20px;
+    }
+    nav {
+      background: #eaf4fc;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: bold;
+    }
+    nav a:hover { color: #005f87; }
+    h2 { text-align: center; color: #0077b6; }
+    form {
+      width: 80%;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    label { display: block; margin: 10px 0 5px; font-weight: 600; }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #0077b6;
+      border-radius: 5px;
+    }
+    button {
+      background: #0077b6;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    :root{
+      --primary:#0ea5a4; /* celeste/verde agua */
+      --accent:#0369a1; /* azul oscuro */
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#f5fbfc;
+      --glass: rgba(255,255,255,0.7);
+      --radius:12px;
+      --shadow: 0 6px 18px rgba(2,6,23,0.08);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#eef9fb)}
+
+    .container{
+      max-width:980px;margin:28px auto;padding:20px;
+    }
+
+    /* ====== NAVBAR ====== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: #0077b6;
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-radius: 0 0 18px 18px;
+    }
+    .navbar .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #00b4d8;
+      color: #fff;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .main-btn {
+      background: #00b4d8;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    .main-btn:hover {
+      background: #2DA4E3;
+    }
+    .user-menu {
+      position: relative;
+    }
+    .user-btn {
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #fff;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    .user-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1001;
+    }
+    .dropdown a {
+      padding: 10px 16px;
+      text-decoration: none;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s ease;
+    }
+    .dropdown a:hover {
+      background: #f5f7fa;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .search-bar input {
+      border: none;
+      padding: 8px 12px;
+      outline: none;
+      min-width: 200px;
+    }
+    .search-bar button {
+      border: none;
+      background: #00b4d8;
+      color: #fff;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .search-bar button:hover {
+      background: #2DA4E3;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#eef9fb)}
+
+    .container{
+      max-width:980px;margin:28px auto;padding:20px;
+    }
+
+    form.anamnesis{background:var(--glass);backdrop-filter: blur(6px);padding:18px;border-radius:16px;box-shadow:var(--shadow)}
+
+    .grid{display:grid;gap:12px}
+    .grid.cols-2{grid-template-columns:1fr 1fr}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"],input[type="date"],input[type="email"],input[type="tel"],select,textarea{
+      width:100%;padding:10px 12px;border-radius:10px;border:1px solid #dfeff2;background:white;font-size:14px;color:#073642
+    }
+    textarea{min-height:92px;resize:vertical}
+
+    .card{background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(3,7,18,0.03)}
+
+    .section-title{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .section-title h2{font-size:15px;margin:0;color:var(--accent)}
+
+    .small{font-size:13px;color:var(--muted)}
+
+    .row{display:flex;gap:10px}
+    .row .chip{padding:8px 10px;border-radius:999px;border:1px solid #e6f2f2;background:#fbffff;cursor:pointer;font-size:13px}
+    .chip.active{background:var(--primary);color:white;border-color:var(--primary)}
+
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    button{padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--primary);color:white}
+    .btn-outline{background:transparent;border:1px solid var(--muted);color:var(--muted)}
+
+    footer.note{margin-top:12px;color:var(--muted);font-size:13px}
+
+    /* responsive */
+    @media (max-width:720px){
+      .grid.cols-2{grid-template-columns:1fr}
+      .grid.cols-3{grid-template-columns:1fr}
+      header.site-header{flex-direction:row}
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+      .actions {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .search-bar input {
+        min-width: 150px;
+      }
+    }
+
+    /* print */
+    @media print{
+      body{background:white}
+      .container{box-shadow:none}
+      .actions, header.site-header, footer.note{display:none}
+    }
+
+    button {
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    }
+
+    button:hover {
+    background: #005f87;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar (igual que reportes) -->
+  <header>📋 ANAMNESIS</header>
+  <nav>
+    <a href="odontograma.html">🦷 Odontograma</a>
+    <a href="periodontograma.html">🪥 Periodontograma</a>
+    <a href="ortodoncia.html">🧩 Ortodoncia</a>
+    <a href="orofacial.html">😊 Orofacial</a>
+    <a href="endodoncia.html">🪡 Endodoncia</a>
+    <a href="imagenes.html">🖼️ Imágenes</a>
+  </nav>
+
+  <button onclick="window.location.href='pacientes.html'">← Volver a Pacientes</button>
+
+  <header class="site-header">
+    <div class="logo">CD</div>
+    <div>
+      <h1>Anamnesis - Clínica Dental</h1>
+      <p class="lead">Formulario para recoger antecedentes médicos y dentales del paciente.</p>
+    </div>
+  </header>
+
+    <form class="anamnesis" id="anamnesisForm">
+
+      <!-- Datos personales -->
+      <section class="card" aria-labelledby="datos">
+        <div class="section-title"><h2 id="datos">1. Datos personales</h2></div>
+        <div class="grid cols-2">
+          <div>
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" placeholder="Ej. Juan Pérez" required>
+          </div>
+          <div>
+            <label>Fecha de nacimiento</label>
+            <input type="date" name="fecha_nac" required>
+          </div>
+          <div>
+            <label>Teléfono</label>
+            <input type="tel" name="telefono" placeholder="+51 9xxxxxxxx">
+          </div>
+          <div>
+            <label>Correo electrónico</label>
+            <input type="email" name="email" placeholder="ejemplo@correo.com">
+          </div>
+          <div>
+            <label>Dirección</label>
+            <input type="text" name="direccion" placeholder="Dirección completa">
+          </div>
+          <div>
+            <label>Ocupación</label>
+            <input type="text" name="ocupacion" placeholder="Profesión / trabajo">
+          </div>
+        </div>
+      </section>
+
+      <!-- Historial médico -->
+      <section class="card" aria-labelledby="medico" style="margin-top:12px">
+        <div class="section-title"><h2 id="medico">2. Historia médica</h2></div>
+        <div class="grid cols-2">
+          <div>
+            <label>¿Tiene alguna enfermedad crónica?</label>
+            <select name="cronica">
+              <option value="">-- Seleccione --</option>
+              <option>Hipertensión</option>
+              <option>Diabetes</option>
+              <option>Enfermedad cardíaca</option>
+              <option>Asma / EPOC</option>
+              <option>Otra</option>
+            </select>
+          </div>
+          <div>
+            <label>¿Está tomando medicamentos actualmente?</label>
+            <select name="medicamento">
+              <option value="">-- Seleccione --</option>
+              <option>Sí</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div style="grid-column:1 / -1">
+            <label>Si respondió sí, anote los medicamentos y dosis</label>
+            <textarea name="lista_medicamentos" placeholder="Especifique medicamentos, dosis, frecuencia..."></textarea>
+          </div>
+          <div>
+            <label>Alergias</label>
+            <select name="alergias">
+              <option value="">-- Seleccione --</option>
+              <option>Ninguna conocida</option>
+              <option>Penicilina</option>
+              <option>Latex</option>
+              <option>Anestésicos</option>
+              <option>Otra</option>
+            </select>
+          </div>
+          <div>
+            <label>¿Ha sido hospitalizado en los últimos 12 meses?</label>
+            <select name="hospitalizado">
+              <option value="">-- Seleccione --</option>
+              <option>Sí</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Historia dental -->
+      <section class="card" aria-labelledby="dental" style="margin-top:12px">
+        <div class="section-title"><h2 id="dental">3. Historia dental</h2></div>
+        <div class="grid cols-2">
+          <div>
+            <label>Motivo de consulta</label>
+            <input type="text" name="motivo" placeholder="Dolor, estética, control, etc.">
+          </div>
+          <div>
+            <label>¿Cada cuánto visita al dentista?</label>
+            <select name="frecuencia">
+              <option value="">-- Seleccione --</option>
+              <option>Regular (cada 6-12 meses)</option>
+              <option>Ocasional (cuando hay problema)</option>
+              <option>No acude</option>
+            </select>
+          </div>
+          <div>
+            <label>¿Sangrado de encías?</label>
+            <select name="sangrado">
+              <option value="">-- Seleccione --</option>
+              <option>Sí</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div>
+            <label>Hábitos (bruxismo, fumar, alcohol)</label>
+            <input type="text" name="habitos" placeholder="Ej. Bruxismo nocturno, fuma 5/día">
+          </div>
+          <div style="grid-column:1 / -1">
+            <label>Tratamientos dentales previos</label>
+            <textarea name="previos" placeholder="Rellenos, endodoncias, prótesis, implantes, etc."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Examen y consentimiento -->
+      <section class="card" aria-labelledby="consent" style="margin-top:12px">
+        <div class="section-title"><h2 id="consent">4. Consentimiento y observaciones</h2></div>
+        <div class="grid cols-2">
+          <div style="grid-column:1 / -1">
+            <label>Observaciones del clínico</label>
+            <textarea name="observaciones" placeholder="Notas del profesional"></textarea>
+          </div>
+          <div>
+            <label>Consentimiento informado</label>
+            <div class="small">Acepto que la información anterior es veraz y autorizo la realización de procedimientos diagnósticos.</div>
+          </div>
+          <div>
+            <label>Firma del paciente (nombre completo)</label>
+            <input type="text" name="firma" placeholder="Nombre para firma electrónica" required>
+          </div>
+          <div>
+            <label>Fecha</label>
+            <input type="date" name="fecha_firma" required>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="button" class="btn-outline" id="exportBtn">Exportar (JSON)</button>
+        <button type="button" class="btn-outline" id="printBtn">Imprimir</button>
+        <button type="submit" class="btn-primary">Guardar</button>
+      </div>
+
+      <p class="note">* Los campos marcados como obligatorios deben completarse. La información se guardará localmente en el dispositivo del usuario si el navegador lo permite.</p>
+
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('anamnesisForm');
+    const exportBtn = document.getElementById('exportBtn');
+    const printBtn = document.getElementById('printBtn');
+
+    // Guardar localmente al enviar
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Guardar en localStorage (opcional)
+      try{localStorage.setItem('anamnesis_data', JSON.stringify(data)); alert('Anamnesis guardada localmente.');}
+      catch(err){console.error(err);alert('No se pudo guardar localmente.');}
+    });
+
+    // Exportar JSON
+    exportBtn.addEventListener('click', ()=>{
+      const data = Object.fromEntries(new FormData(form).entries());
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'anamnesis.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Imprimir
+    printBtn.addEventListener('click', ()=>{window.print();});
+
+    // Autocompletar si hay datos previos
+    window.addEventListener('DOMContentLoaded', ()=>{
+      try{
+        const raw = localStorage.getItem('anamnesis_data');
+        if(raw){
+          const obj = JSON.parse(raw);
+          for(const [k,v] of Object.entries(obj)){
+            const el = form.elements[k];
+            if(el) el.value = v;
+          }
+        }
+      } catch(e){/* ignore */}
+    });
+
+    // ==== Dropdown perfil ====
+    function toggleUserMenu() {
+      document.getElementById("dropdown").classList.toggle("hidden");
+    }
+    // ==== Modal cita (dummy, no implementado aquí) ====
+    function abrirModalCita() {
+      alert("Funcionalidad de cita no implementada en este formulario.");
+    }
+  </script>
+</body>
+</html>

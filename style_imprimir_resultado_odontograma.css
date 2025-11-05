@@ -1,0 +1,82 @@
+
+#divtable {
+    display: flex;
+    margin: auto;
+    margin-top: 30px;
+    width: 80%;
+}
+.dato {
+  width: 16px;
+  border: none;
+  text-align: center;
+}
+#resultado1 {
+    width: 15%;
+}
+
+#permanente {
+  width: 70%;
+  margin: auto;
+  font-size: 12px;
+}
+#superficie {
+  width: 70%;
+  margin: auto;
+  font-size: 12px;
+  margin-top: 20px;
+}
+#nectrat {
+  width: 70%;
+  margin: auto;
+  font-size: 12px;
+  margin-top: 20px;
+}
+#pufa {
+  width: 70%;
+  margin: auto;
+  font-size: 12px;
+  margin-top: 20px;
+}
+#resultado2 {
+    width: 70%;
+    padding: 10px;
+}
+
+#principal1 {
+  text-align: center;
+  font-size: 12px;
+}
+#principal2 {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+  font-size: 12px;
+}
+#principal3 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+}
+#principal4 {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+  font-size: 12px;
+}
+
+
+#resultado3 {
+    width: 15%;
+}
+#deciduos {
+  width: 70%;
+  margin: auto;
+  font-size: 12px;
+}
+#imprimir {
+  background-color: #5dade2;
+  color: white;
+  position: absolute;
+  bottom: 2%;
+  right: 1%;
+}

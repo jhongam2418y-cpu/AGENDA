@@ -1,0 +1,27 @@
+<?php
+include("../../datos/bd.php");
+
+// Añadir la columna id_paciente
+$sql = "ALTER TABLE datos_grupal ADD COLUMN id_paciente INT NOT NULL AFTER id";
+if (mysqli_query($conn, $sql)) {
+    echo "Columna id_paciente añadida correctamente<br>";
+} else {
+    echo "Error al añadir la columna: " . mysqli_error($conn) . "<br>";
+}
+
+// Añadir la llave foránea
+$sql = "ALTER TABLE datos_grupal ADD FOREIGN KEY (id_paciente) REFERENCES pacientes(id)";
+if (mysqli_query($conn, $sql)) {
+    echo "Llave foránea creada correctamente<br>";
+} else {
+    echo "Error al crear la llave foránea: " . mysqli_error($conn) . "<br>";
+}
+
+// Actualizar los registros existentes
+$sql = "UPDATE datos_grupal SET id_paciente = id";
+if (mysqli_query($conn, $sql)) {
+    echo "Registros actualizados correctamente<br>";
+} else {
+    echo "Error al actualizar los registros: " . mysqli_error($conn) . "<br>";
+}
+?> 
