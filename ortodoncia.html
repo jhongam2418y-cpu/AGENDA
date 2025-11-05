@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ortodoncia - Dentodesk</title>
+  <style>
+    body {
+      font-family: 'Segoe UI';
+      background: #f5fbff;
+      margin: 0;
+    }
+    header {
+      background: #0077b6;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+    nav {
+      background: #eaf4fc;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: bold;
+    }
+    nav a:hover { color: #005f87; }
+    main {
+      width: 80%;
+      margin: 30px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+    h2 { color: #0077b6; text-align: center; }
+    label { display: block; margin: 10px 0 5px; font-weight: 600; }
+    select, textarea, input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #0077b6;
+      border-radius: 6px;
+    }
+    button {
+      background: #0077b6;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #005f87; }
+  </style>
+</head>
+<body>
+  <header>🧩 ORTODONCIA</header>
+  <button onclick="window.location.href='pacientes.html'">← Volver a Pacientes</button>
+
+  <nav>
+    <a href="anamnesis.html">📋 Anamnesis</a>
+    <a href="odontograma.html">🦷 Odontograma</a>
+    <a href="periodontograma.html">🪥 Periodontograma</a>
+    <a href="orofacial.html">😊 Orofacial</a>
+    <a href="endodoncia.html">🪡 Endodoncia</a>
+    <a href="imagenes.html">🖼️ Imágenes</a>
+  </nav>
+
+  <main>
+    <h2>Evaluación Ortodóntica</h2>
+    <form id="formOrtodoncia">
+      <label>ID del Paciente:</label>
+      <input type="text" id="idPaciente" placeholder="Ej: P001" required>
+
+      <label>Tipo de maloclusión:</label>
+      <select id="maloclusion">
+        <option>Clase I</option><option>Clase II</option><option>Clase III</option>
+      </select>
+
+      <label>Mordida:</label>
+      <select id="mordida">
+        <option>Normal</option><option>Abierta</option><option>Cruzada</option><option>Profunda</option>
+      </select>
+
+      <label>Desviación de línea media:</label>
+      <input type="text" id="desviacion" placeholder="Ej: 2mm derecha">
+
+      <label>Apiñamiento dental:</label>
+      <select id="apiñamiento">
+        <option>No</option><option>Leve</option><option>Moderado</option><option>Severo</option>
+      </select>
+
+      <label>Espaciamiento:</label>
+      <select id="espaciamiento">
+        <option>No</option><option>Leve</option><option>Moderado</option><option>Severo</option>
+      </select>
+
+      <label>Hábitos orales:</label>
+      <textarea id="habitos" rows="2" placeholder="Ej: respiración bucal, succión digital..."></textarea>
+
+      <label>Plan de Tratamiento:</label>
+      <textarea id="plan" rows="4" placeholder="Ej: brackets metálicos, alineadores..."></textarea>
+
+      <button type="submit">💾 Guardar Ortodoncia</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById("formOrtodoncia").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        idPaciente: document.getElementById("idPaciente").value,
+        maloclusion: document.getElementById("maloclusion").value,
+        mordida: document.getElementById("mordida").value,
+        desviacion: document.getElementById("desviacion").value,
+        apiñamiento: document.getElementById("apiñamiento").value,
+        espaciamiento: document.getElementById("espaciamiento").value,
+        habitos: document.getElementById("habitos").value,
+        plan: document.getElementById("plan").value,
+        fecha: new Date().toLocaleString()
+      };
+
+      const response = await fetch("guardar_ortodoncia.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.text();
+      alert(result);
+    });
+  </script>
+</body>
+</html>

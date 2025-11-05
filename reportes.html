@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reportes - Dentodesk</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: absolute;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 0.5rem;
+      z-index: 1000;
+      right: 0;
+      min-width: 150px;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover {
+      background: #f3f4f6;
+    }
+
+    /* Contenido principal */
+    .reportes-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    /* Subpestañas principales */
+    .subpestanas {
+      display: flex;
+      gap: 0;
+      background: white;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 0;
+      overflow: hidden;
+    }
+
+    .subpestana {
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+      font-weight: 500;
+    }
+
+    .subpestana.active {
+      background: #2563eb;
+      color: white;
+      border-bottom-color: #1d4ed8;
+    }
+
+    .subpestana:hover:not(.active) {
+      background: #f8fafc;
+    }
+
+    /* Subpestañas secundarias */
+    .subpestanas-secundarias {
+      display: flex;
+      gap: 0;
+      background: #f8fafc;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 0;
+      overflow: hidden;
+    }
+
+    .subpestana-secundaria {
+      padding: 0.8rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .subpestana-secundaria.active {
+      background: white;
+      color: #2563eb;
+      border-bottom-color: #2563eb;
+    }
+
+    .subpestana-secundaria:hover:not(.active) {
+      background: #f0f4f8;
+    }
+
+    /* Header de reportes */
+    .reportes-header {
+      background: white;
+      padding: 2rem;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .reportes-header h1 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filtros-rapidos {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filtro-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filtro-item input,
+    .filtro-item select {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .btn-generar {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-exportar {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Selector de tipo de reporte */
+    .selector-tipo-reporte {
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .selector-tipo-reporte h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .selector-tipo-reporte select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    /* Grid de reportes */
+    .reportes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .reporte-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .reporte-card h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    /* Estadísticas principales */
+    .estadisticas-principales {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .estadistica-item {
+      text-align: center;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 6px;
+    }
+
+    .numero-grande {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #2563eb;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .etiqueta {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .periodo {
+      color: #9ca3af;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Recaudado */
+    .recaudado-section {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .recaudado-titulo {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .recaudado-total {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* Estados de citas */
+    .estados-citas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .estado-item {
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 6px;
+      text-align: center;
+      border-left: 4px solid #e5e7eb;
+    }
+
+    .estado-item.activo {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .estado-item.inactivo {
+      background: #f3f4f6;
+      color: #9ca3af;
+    }
+
+    /* Gráfico circular */
+    .grafico-circular-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .grafico-circular {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #3b82f6 0% 25%,
+        #10b981 25% 50%,
+        #f59e0b 50% 75%,
+        #ef4444 75% 100%
+      );
+      position: relative;
+    }
+
+    .centro-grafico {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #1f2937;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .leyenda-grafico {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .item-leyenda {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .color-leyenda {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .color-azul { background: #3b82f6; }
+    .color-verde { background: #10b981; }
+    .color-amarillo { background: #f59e0b; }
+    .color-rojo { background: #ef4444; }
+
+    /* Porcentaje section mejorado */
+    .porcentaje-section-mejorada {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .porcentaje-grande {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #10b981;
+      margin-bottom: 1rem;
+    }
+
+    .tipos-recaudacion-mejorada {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tipo-item-mejorada {
+      padding: 0.8rem;
+      background: #f8fafc;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 0.85rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .total-recaudado {
+      background: #1f2937;
+      color: white;
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .total-monto {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #10b981;
+      margin: 0.5rem 0;
+    }
+
+    .btn-ver-detalle {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Egresos section */
+    .egresos-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+
+    .egresos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .egresos-titulo {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .egresos-periodo {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .egresos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .egreso-item {
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .egreso-categoria {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+
+    .egreso-monto {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ef4444;
+    }
+
+    .egreso-porcentaje {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+    }
+
+    /* Total general */
+    .total-general {
+      text-align: center;
+      padding: 1.5rem;
+      background: #1f2937;
+      color: white;
+      border-radius: 8px;
+      margin-top: 2rem;
+    }
+
+    .total-label {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .total-valor {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #10b981;
+    }
+
+    /* Tablas de detalle */
+    .tablas-detalle {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .tabla-detalle {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .tabla-detalle h4 {
+      background: #f8fafc;
+      padding: 1rem;
+      margin: 0;
+      color: #1f2937;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Reportes de pacientes y laboratorio */
+    .reportes-grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .reporte-card-item {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .reporte-card-item:hover {
+      border-color: #2563eb;
+      transform: translateY(-5px);
+    }
+
+    .reporte-card-item h4 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .reporte-card-item p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .reporte-card-item .icono {
+      font-size: 2rem;
+      color: #2563eb;
+      margin-bottom: 1rem;
+    }
+
+    /* Utilidades */
+    .hidden {
+      display: none !important;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-2 {
+      margin-bottom: 1rem;
+    }
+
+    .mt-2 {
+      margin-top: 1rem;
+    }
+
+    /* Agregar estos estilos en la sección CSS */
+
+/* Efectos para el gráfico circular */
+.grafico-circular {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.grafico-circular:hover {
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(59, 130, 246, 0.4));
+    transform: scale(1.02);
+}
+
+.centro-grafico {
+    transition: all 0.3s ease;
+}
+
+.grafico-circular:hover .centro-grafico {
+    background: #f8fafc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Efectos para las tarjetas de reporte */
+.reporte-card {
+    transition: all 0.3s ease;
+}
+
+.reporte-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Estilos para las nuevas secciones */
+.contenido-seccion {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.contenido-seccion h2 {
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.grid-datos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dato-item {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #2563eb;
+}
+
+.dato-valor {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.dato-label {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.lista-items {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.lista-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.lista-item:last-child {
+    border-bottom: none;
+}
+
+.btn-accion {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.btn-accion:hover {
+    background: #2563eb;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-enviar {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.btn-enviar:hover {
+    background: #059669;
+}
+
+/* Estilos para las nuevas secciones de reportes de laboratorio */
+.badge-estado {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.barra-progreso {
+    width: 100%;
+    height: 20px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progreso {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #3b82f6);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.texto-progreso {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.btn-accion-pequeno {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-accion-pequeno:hover {
+    background: #2563eb;
+}
+
+.grafico-circular-tiempos {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #10b981 0% 76%,
+        #f59e0b 76% 91%,
+        #ef4444 91% 100%
+    );
+    position: relative;
+}
+
+.diagrama-flujo {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 2rem 0;
+}
+
+.etapas-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.etapa-item {
+    text-align: center;
+    padding: 1rem;
+    flex: 1;
+    min-width: 120px;
+}
+
+.etapa-icono {
+    width: 60px;
+    height: 60px;
+    background: #3b82f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.conector {
+    color: #6b7280;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.eficiencia {
+    color: #10b981;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.grafico-barras-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 2rem 0;
+}
+
+.barras {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px;
+    margin-top: 2rem;
+}
+
+.barra-item {
+    text-align: center;
+    flex: 1;
+    margin: 0 0.5rem;
+}
+
+.barra {
+    height: 150px;
+    background: #f3f4f6;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.barra-progreso {
+    background: linear-gradient(to top, #3b82f6, #60a5fa);
+    border-radius: 4px 4px 0 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: height 0.3s ease;
+}
+
+.barra-etiqueta {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.barra-valor {
+    font-weight: bold;
+    color: #1f2937;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <div class="logo">🦷 Dentodesk</div>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+      <a href="pacientes.html"><i class="fa-solid fa-users"></i> Pacientes</a>
+      <a href="administrador.html"><i class="fa-solid fa-user-tie"></i> Administrador</a>
+      <a href="reportes.html" class="active"><i class="fa-solid fa-chart-line"></i> Reportes</a>
+      <a href="configuracion.html"><i class="fa-solid fa-cog"></i> Configuración</a>
+    </nav>
+    <div class="user-menu">
+      <button class="user-btn" onclick="toggleUserMenu()"><i class="fa-solid fa-user"></i> ⌄</button>
+      <div class="dropdown hidden" id="dropdown">
+        <a href="#"><i class="fa-solid fa-user-edit"></i> Mi perfil</a>
+        <a href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="reportes-container">
+
+    <!-- Subpestañas principales -->
+    <div class="subpestanas">
+      <div class="subpestana active" onclick="cambiarSubpestana('resumen')">
+        Resumen Reporte
+      </div>
+      <div class="subpestana" onclick="cambiarSubpestana('reportes')">
+        Reportes
+      </div>
+      <div class="subpestana" onclick="cambiarSubpestana('liquidaciones')">
+        Liquidaciones de Sueldo
+      </div>
+      <div class="subpestana" onclick="cambiarSubpestana('encuesta')">
+        Encuesta de Satisfacción
+      </div>
+      <div class="subpestana" onclick="cambiarSubpestana('mailing')">
+        Mailing
+      </div>
+    </div>
+
+    <!-- Subpestañas secundarias (solo visible en pestaña Reportes) -->
+    <div class="subpestanas-secundarias hidden" id="subpestanas-secundarias">
+      <div class="subpestana-secundaria" onclick="cambiarSubpestanaSecundaria('administrativos')">
+        Reportes Administrativos
+      </div>
+      <div class="subpestana-secundaria" onclick="cambiarSubpestanaSecundaria('pacientes')">
+        Reportes de Pacientes
+      </div>
+      <div class="subpestana-secundaria active" onclick="cambiarSubpestanaSecundaria('laboratorio')">
+        Reportes de Laboratorio
+      </div>
+    </div>
+
+    <!-- Selector de tipo de reporte administrativo (solo visible en subpestaña Reportes Administrativos) -->
+    <div class="selector-tipo-reporte hidden" id="selector-tipo-reporte-administrativo">
+      <h3>Tipo de reporte administrativo</h3>
+      <select>
+        <option value="">Seleccione un tipo de reporte</option>
+        <option value="financiero">Reporte Financiero</option>
+        <option value="productividad">Reporte de Productividad</option>
+        <option value="inventario">Reporte de Inventario</option>
+        <option value="personal">Reporte de Personal</option>
+      </select>
+    </div>
+
+    <!-- Selector de tipo de reporte pacientes (solo visible en subpestaña Reportes de Pacientes) -->
+    <div class="selector-tipo-reporte hidden" id="selector-tipo-reporte-pacientes">
+      <h3>Tipo de reporte pacientes</h3>
+      <select id="tipo-reporte-pacientes" onchange="cambiarTipoReportePacientes()">
+        <option value="">Seleccione un tipo de reporte</option>
+        <option value="demografico">Reporte Demográfico</option>
+        <option value="tratamientos">Reporte de Tratamientos</option>
+        <option value="frecuencia">Reporte de Frecuencia</option>
+        <option value="historial">Historial Médico</option>
+        <option value="cumpleanos">Cumpleaños de Pacientes</option>
+        <option value="morosidad">Morosidad</option>
+      </select>
+    </div>
+
+    <!-- Selector de tipo de reporte laboratorio (solo visible en subpestaña Reportes de Laboratorio) -->
+    <div class="selector-tipo-reporte hidden" id="selector-tipo-reporte-laboratorio">
+      <h3>Tipo de reporte laboratorio</h3>
+      <select id="tipo-reporte-laboratorio" onchange="cambiarTipoReporteLaboratorio()">
+        <option value="">Seleccione un tipo de reporte</option>
+        <option value="procesos">Procesos de Laboratorio</option>
+        <option value="materiales">Materiales Utilizados</option>
+        <option value="productividad">Productividad Técnica</option>
+        <option value="calidad">Control de Calidad</option>
+        <option value="inventario">Inventario Laboratorio</option>
+        <option value="costos">Costos y Presupuestos</option>
+      </select>
+    </div>
+
+    <!-- Contenido de Resumen Reporte -->
+    <div id="contenido-resumen">
+      <!-- Header con filtros -->
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-chart-line"></i> RESUMEN REPORTE</h1>
+        <div class="filtros-rapidos">
+          <div class="filtro-item">
+            <label for="fechaInicio">Desde:</label>
+            <input type="date" id="fechaInicio" value="2022-06-01">
+          </div>
+          <div class="filtro-item">
+            <label for="fechaFin">Hasta:</label>
+            <input type="date" id="fechaFin" value="2022-06-22">
+          </div>
+          <div class="filtro-item">
+            <label for="sucursal">Sucursal:</label>
+            <select id="sucursal">
+              <option value="todas">Todas las sucursales</option>
+              <option value="santiago" selected>SUCURSAL SANTIAGO</option>
+              <option value="providencia">Providencia</option>
+            </select>
+          </div>
+          <button class="btn-generar" onclick="generarReporte()">
+            <i class="fa-solid fa-refresh"></i> Generar Reporte
+          </button>
+          <button class="btn-exportar" onclick="exportarReporte()">
+            <i class="fa-solid fa-file-export"></i> Exportar PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de reportes -->
+      <div class="reportes-grid">
+
+        <!-- RESUMEN AGENDA -->
+        <div class="reporte-card">
+          <h3><i class="fa-solid fa-calendar-check"></i> RESUMEN AGENDA</h3>
+          
+          <div class="estadisticas-principales">
+            <div class="estadistica-item">
+              <span class="numero-grande">8</span>
+              <span class="etiqueta">Pacientes nuevos</span>
+            </div>
+            <div class="estadistica-item">
+              <span class="numero-grande">8</span>
+              <span class="etiqueta">Atenciones Realizadas</span>
+            </div>
+            <div class="estadistica-item">
+              <span class="numero-grande">0</span>
+              <span class="etiqueta">Citas anuladas</span>
+            </div>
+            <div class="estadistica-item">
+              <span class="numero-grande">20</span>
+              <span class="etiqueta">Presupuestos</span>
+              <div class="periodo">desde 01-06-2022 hasta 22-06-2022</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUMEN ATENCIONES -->
+        <div class="reporte-card">
+          <h3><i class="fa-solid fa-stethoscope"></i> RESUMEN ATENCIONES</h3>
+          
+          <div class="recaudado-section">
+            <div class="recaudado-titulo">RECAUDADO</div>
+            <div class="periodo">desde 01-06-2022 hasta 22-06-2022</div>
+          </div>
+
+          <!-- Gráfico circular -->
+          <div class="grafico-circular-container">
+            <div class="grafico-circular">
+              <div class="centro-grafico">55%</div>
+            </div>
+            <div class="leyenda-grafico">
+              <div class="item-leyenda">
+                <div class="color-leyenda color-azul"></div>
+                <span>Confirmado por e-mail (25%)</span>
+              </div>
+              <div class="item-leyenda">
+                <div class="color-leyenda color-verde"></div>
+                <span>Atendido (25%)</span>
+              </div>
+              <div class="item-leyenda">
+                <div class="color-leyenda color-amarillo"></div>
+                <span>Confirmado (25%)</span>
+              </div>
+              <div class="item-leyenda">
+                <div class="color-leyenda color-rojo"></div>
+                <span>No Confirmado (25%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estados de citas -->
+          <div class="estados-citas">
+            <div class="estado-item inactivo">
+              <div>No Confirmado</div>
+            </div>
+            <div class="estado-item inactivo">
+              <div>Hora Cancelada</div>
+            </div>
+            <div class="estado-item activo">
+              <div>Confirmado por e-mail</div>
+            </div>
+            <div class="estado-item activo">
+              <div>Atendido</div>
+            </div>
+            <div class="estado-item activo">
+              <div>Confirmado</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIPOS DE RECAUDACIÓN MEJORADO -->
+        <div class="reporte-card">
+          <h3><i class="fa-solid fa-chart-pie"></i> % POR TIPO DE RECAUDACIÓN</h3>
+          
+          <div class="porcentaje-section-mejorada">
+            <div class="porcentaje-grande">56%</div>
+            
+            <div class="tipos-recaudacion-mejorada">
+              <div class="tipo-item-mejorada">Bono</div>
+              <div class="tipo-item-mejorada">Depósito</div>
+              <div class="tipo-item-mejorada">Tarjeta</div>
+              <div class="tipo-item-mejorada">Crédito</div>
+              <div class="tipo-item-mejorada">Banco</div>
+              <div class="tipo-item-mejorada">Transferencia</div>
+            </div>
+
+            <div class="total-recaudado">
+              <div>Total</div>
+              <div class="total-monto">$1.741.310</div>
+            </div>
+
+            <button class="btn-ver-detalle" onclick="verDetalleRecaudacion()">
+              <i class="fa-solid fa-eye"></i> Ver Detalle
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TOTAL GENERAL -->
+      <div class="total-general">
+        <div class="total-label">TOTAL RECAUDADO</div>
+        <div class="total-valor">$1.741.310</div>
+        <div class="periodo">Período: 01-06-2022 al 22-06-2022</div>
+      </div>
+
+      <!-- Tablas de detalle -->
+      <div class="tablas-detalle">
+        
+        <!-- Detalle de atenciones -->
+        <!-- En la sección de Detalle de Atenciones en reportes.html -->
+<div class="tabla-detalle">
+    <h4><i class="fa-solid fa-list"></i> Detalle de Atenciones</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Fecha</th>
+                <th>Procedimiento</th>
+                <th>Monto</th>
+                <th>Método Pago</th> <!-- NUEVA COLUMNA -->
+            </tr>
+        </thead>
+        <tbody id="tbody-atenciones">
+            <!-- Se llenará dinámicamente -->
+        </tbody>
+    </table>
+</div>
+        <!-- Métodos de pago -->
+        <div class="tabla-detalle">
+          <h4><i class="fa-solid fa-credit-card"></i> Métodos de Pago</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Método</th>
+                <th>Cantidad</th>
+                <th>Monto Total</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Transferencia</td>
+                <td>12</td>
+                <td>$950.000</td>
+                <td>55%</td>
+              </tr>
+              <tr>
+                <td>Efectivo</td>
+                <td>8</td>
+                <td>$450.000</td>
+                <td>26%</td>
+              </tr>
+              <tr>
+                <td>Tarjeta Crédito</td>
+                <td>5</td>
+                <td>$341.310</td>
+                <td>19%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Contenido de Reportes Administrativos -->
+    <div id="contenido-reportes-administrativos" class="hidden">
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-file-alt"></i> REPORTES ADMINISTRATIVOS</h1>
+        <p>Seleccione el tipo de reporte administrativo que desea generar</p>
+      </div>
+    </div>
+
+    <!-- Contenido de Reportes de Pacientes -->
+    <div id="contenido-reportes-pacientes" class="hidden">
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-users"></i> REPORTES DE PACIENTES</h1>
+        <p>Seleccione el tipo de reporte de pacientes que desea generar</p>
+      </div>
+
+      <!-- Grid de reportes de pacientes -->
+      <div class="reportes-grid-cards" id="grid-reportes-pacientes">
+        <!-- Los reportes se cargarán dinámicamente según el tipo seleccionado -->
+      </div>
+    </div>
+
+    <!-- Contenido de Reportes de Laboratorio -->
+    <div id="contenido-reportes-laboratorio" class="hidden">
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-flask"></i> REPORTES DE LABORATORIO</h1>
+        <p>Seleccione el tipo de reporte de laboratorio que desea generar</p>
+      </div>
+
+      <!-- Grid de reportes de laboratorio -->
+      <div class="reportes-grid-cards" id="grid-reportes-laboratorio">
+        <!-- Los reportes se cargarán dinámicamente según el tipo seleccionado -->
+      </div>
+    </div>
+
+    <!-- Contenido de Liquidaciones de Sueldo -->
+    <div id="contenido-liquidaciones" class="hidden">
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-money-bill-wave"></i> LIQUIDACIONES DE SUELDO</h1>
+        <p>Gestión y control de liquidaciones de sueldo del personal</p>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-filter"></i> Filtros de Búsqueda</h2>
+        <div class="filtros-rapidos">
+          <div class="filtro-item">
+            <label for="mesLiquidacion">Mes:</label>
+            <select id="mesLiquidacion">
+              <option value="">Seleccionar mes</option>
+              <option value="1">Enero</option>
+              <option value="2">Febrero</option>
+              <option value="3">Marzo</option>
+              <option value="4">Abril</option>
+              <option value="5">Mayo</option>
+              <option value="6">Junio</option>
+              <option value="7">Julio</option>
+              <option value="8">Agosto</option>
+              <option value="9">Septiembre</option>
+              <option value="10">Octubre</option>
+              <option value="11">Noviembre</option>
+              <option value="12">Diciembre</option>
+            </select>
+          </div>
+          <div class="filtro-item">
+            <label for="anioLiquidacion">Año:</label>
+            <select id="anioLiquidacion">
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+          <div class="filtro-item">
+            <label for="empleadoLiquidacion">Empleado:</label>
+            <select id="empleadoLiquidacion">
+              <option value="">Todos los empleados</option>
+              <option value="1">Dr. Juan Pérez</option>
+              <option value="2">Dra. María González</option>
+              <option value="3">Dr. Carlos López</option>
+              <option value="4">Asistente Ana Silva</option>
+            </select>
+          </div>
+          <button class="btn-generar" onclick="generarLiquidaciones()">
+            <i class="fa-solid fa-search"></i> Buscar Liquidaciones
+          </button>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-chart-bar"></i> Resumen Mensual</h2>
+        <div class="grid-datos">
+          <div class="dato-item">
+            <div class="dato-valor">$8.450.000</div>
+            <div class="dato-label">Total Liquidado</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">12</div>
+            <div class="dato-label">Empleados Activos</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">$704.167</div>
+            <div class="dato-label">Promedio por Empleado</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valero">3</div>
+            <div class="dato-label">Liquidaciones Pendientes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-list-check"></i> Liquidaciones del Mes</h2>
+        <div class="lista-items">
+          <div class="lista-item">
+            <div>
+              <strong>Dr. Juan Pérez</strong>
+              <div>Odontólogo General - Sueldo Base: $1.200.000</div>
+            </div>
+            <div>
+              <span style="color: #10b981; font-weight: bold;">$1.450.000</span>
+              <button class="btn-accion" onclick="verDetalleLiquidacion(1)">
+                <i class="fa-solid fa-eye"></i> Ver
+              </button>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Dra. María González</strong>
+              <div>Ortodoncista - Sueldo Base: $1.500.000</div>
+            </div>
+            <div>
+              <span style="color: #10b981; font-weight: bold;">$1.850.000</span>
+              <button class="btn-accion" onclick="verDetalleLiquidacion(2)">
+                <i class="fa-solid fa-eye"></i> Ver
+              </button>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Asistente Ana Silva</strong>
+              <div>Asistente Dental - Sueldo Base: $600.000</div>
+            </div>
+            <div>
+              <span style="color: #10b981; font-weight: bold;">$720.000</span>
+              <button class="btn-accion" onclick="verDetalleLiquidacion(3)">
+                <i class="fa-solid fa-eye"></i> Ver
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-file-export"></i> Acciones</h2>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn-exportar">
+            <i class="fa-solid fa-file-pdf"></i> Exportar a PDF
+          </button>
+          <button class="btn-generar">
+            <i class="fa-solid fa-file-excel"></i> Exportar a Excel
+          </button>
+          <button class="btn-accion" style="background: #10b981;">
+            <i class="fa-solid fa-plus"></i> Nueva Liquidación
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido de Encuesta de Satisfacción -->
+    <div id="contenido-encuesta" class="hidden">
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-clipboard-check"></i> ENCUESTA DE SATISFACCIÓN</h1>
+        <p>Resultados y análisis de encuestas de satisfacción de pacientes</p>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-chart-pie"></i> Resumen General</h2>
+        <div class="grid-datos">
+          <div class="dato-item">
+            <div class="dato-valor">94%</div>
+            <div class="dato-label">Satisfacción General</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">156</div>
+            <div class="dato-label">Encuestas Respondidas</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">4.7/5</div>
+            <div class="dato-label">Puntuación Promedio</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">12</div>
+            <div class="dato-label">Comentarios Negativos</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-star"></i> Puntuación por Categoría</h2>
+        <div class="lista-items">
+          <div class="lista-item">
+            <div>
+              <strong>Atención del Personal</strong>
+              <div>Evaluación del trato recibido</div>
+            </div>
+            <div>
+              <span style="color: #f59e0b; font-weight: bold;">4.8/5</span>
+              <div style="font-size: 0.8rem; color: #6b7280;">96% satisfacción</div>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Tiempo de Espera</strong>
+              <div>Evaluación del tiempo de espera</div>
+            </div>
+            <div>
+              <span style="color: #f59e0b; font-weight: bold;">4.5/5</span>
+              <div style="font-size: 0.8rem; color: #6b7280;">90% satisfacción</div>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Limpieza del Consultorio</strong>
+              <div>Evaluación de la higiene</div>
+            </div>
+            <div>
+              <span style="color: #f59e0b; font-weight: bold;">4.9/5</span>
+              <div style="font-size: 0.8rem; color: #6b7280;">98% satisfacción</div>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Explicación del Tratamiento</strong>
+              <div>Claridad en las explicaciones</div>
+            </div>
+            <div>
+              <span style="color: #f59e0b; font-weight: bold;">4.6/5</span>
+              <div style="font-size: 0.8rem; color: #6b7280;">92% satisfacción</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-comment"></i> Comentarios Recientes</h2>
+        <div class="lista-items">
+          <div class="lista-item">
+            <div>
+              <strong>María González</strong>
+              <div>"Excelente atención, muy profesionales y el consultorio impecable"</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">15 Jun 2024 - ★★★★★</div>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Carlos López</strong>
+              <div>"Buen servicio pero la espera fue un poco larga"</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">14 Jun 2024 - ★★★☆☆</div>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Ana Silva</strong>
+              <div>"El doctor explicó todo muy claro, me siento muy confiada"</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">13 Jun 2024 - ★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-chart-line"></i> Tendencias</h2>
+        <div style="text-align: center; padding: 2rem; background: #f8fafc; border-radius: 8px;">
+          <p style="color: #6b7280; margin-bottom: 1rem;">Gráfico de satisfacción mensual</p>
+          <div style="height: 200px; background: linear-gradient(90deg, #10b981, #3b82f6, #f59e0b); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+            Gráfico de Evolución de Satisfacción
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">
+            <span>Ene: 92%</span>
+            <span>Feb: 93%</span>
+            <span>Mar: 94%</span>
+            <span>Abr: 95%</span>
+            <span>May: 94%</span>
+            <span>Jun: 94%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido de Mailing -->
+    <div id="contenido-mailing" class="hidden">
+      <div class="reportes-header">
+        <h1><i class="fa-solid fa-envelope"></i> MAILING</h1>
+        <p>Gestión de campañas de email marketing y comunicaciones</p>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-plus"></i> Nueva Campaña</h2>
+        <div class="form-group">
+          <label for="asuntoEmail">Asunto del Email:</label>
+          <input type="text" id="asuntoEmail" placeholder="Ingrese el asunto del email">
+        </div>
+        <div class="form-group">
+          <label for="destinatarios">Destinatarios:</label>
+          <select id="destinatarios">
+            <option value="">Seleccionar grupo</option>
+            <option value="todos">Todos los pacientes</option>
+            <option value="activos">Pacientes activos</option>
+            <option value="inactivos">Pacientes inactivos</option>
+            <option value="cumpleanos">Cumpleaños del mes</option>
+            <option value="tratamiento">Por tipo de tratamiento</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mensajeEmail">Mensaje:</label>
+          <textarea id="mensajeEmail" placeholder="Escriba el contenido del email..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="programarEnvio">Programar Envío:</label>
+          <input type="datetime-local" id="programarEnvio">
+        </div>
+        <button class="btn-enviar">
+          <i class="fa-solid fa-paper-plane"></i> Programar Campaña
+        </button>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-chart-bar"></i> Estadísticas de Campañas</h2>
+        <div class="grid-datos">
+          <div class="dato-item">
+            <div class="dato-valor">24</div>
+            <div class="dato-label">Campañas Enviadas</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">68%</div>
+            <div class="dato-label">Tasa de Apertura</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">12%</div>
+            <div class="dato-label">Tasa de Clics</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">2.4%</div>
+            <div class="dato-label">Tasa de Conversión</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-list"></i> Campañas Recientes</h2>
+        <div class="lista-items">
+          <div class="lista-item">
+            <div>
+              <strong>Recordatorio de Control</strong>
+              <div>Enviado: 15 Jun 2024 - 1,245 destinatarios</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">72% apertura - 15% clics</div>
+            </div>
+            <div>
+              <button class="btn-accion">
+                <i class="fa-solid fa-chart-bar"></i> Ver Stats
+              </button>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Promoción Blanqueamiento</strong>
+              <div>Enviado: 10 Jun 2024 - 2,100 destinatarios</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">65% apertura - 8% clics</div>
+            </div>
+            <div>
+              <button class="btn-accion">
+                <i class="fa-solid fa-chart-bar"></i> Ver Stats
+              </button>
+            </div>
+          </div>
+          <div class="lista-item">
+            <div>
+              <strong>Feliz Cumpleaños Junio</strong>
+              <div>Enviado: 1 Jun 2024 - 89 destinatarios</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">85% apertura - 25% clics</div>
+            </div>
+            <div>
+              <button class="btn-accion">
+                <i class="fa-solid fa-chart-bar"></i> Ver Stats
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-seccion">
+        <h2><i class="fa-solid fa-users"></i> Segmentación de Audiencia</h2>
+        <div class="grid-datos">
+          <div class="dato-item">
+            <div class="dato-valor">2,458</div>
+            <div class="dato-label">Total Pacientes</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">1,845</div>
+            <div class="dato-label">Activos (75%)</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">613</div>
+            <div class="dato-label">Inactivos (25%)</div>
+          </div>
+          <div class="dato-item">
+            <div class="dato-valor">89</div>
+            <div class="dato-label">Cumpleaños Mes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // ==== OBTENER DATOS REALES DEL LOCALSTORAGE (ACTUALIZADA) ====
+    function obtenerDatosReales() {
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        
+        // Los "pacientes" son en realidad las citas registradas
+        const pacientesUnicos = [...new Set(citas.map(cita => cita.paciente))];
+        
+        const fechaInicio = new Date(document.getElementById('fechaInicio').value);
+        const fechaFin = new Date(document.getElementById('fechaFin').value);
+        
+        // Filtrar citas del período seleccionado
+        const citasPeriodo = citas.filter(cita => {
+            if (cita.fecha === "-" || cita.fecha === "") return true; // Incluir pacientes sin fecha específica
+            try {
+                const fechaCita = new Date(cita.fecha);
+                return fechaCita >= fechaInicio && fechaCita <= fechaFin;
+            } catch {
+                return true; // Si hay error en la fecha, incluir igual
+            }
+        });
+        
+        return {
+            pacientesNuevos: pacientesUnicos.length,
+            atencionesRealizadas: citas.length, // Todas las citas son atenciones
+            citasAnuladas: citas.filter(c => c.observaciones && 
+                              (c.observaciones.toLowerCase().includes('anulada') || 
+                               c.observaciones.toLowerCase().includes('cancelada'))).length,
+            presupuestos: citas.filter(c => c.presupuesto && c.presupuesto !== "-").length, // ACTUALIZADO: Contar presupuestos reales
+            totalRecaudado: calcularTotalRecaudado(citas),
+            detalleAtenciones: generarDetalleAtenciones(citas),
+            metodosPago: generarMetodosPago(citas),
+            totalCitas: citas.length
+        };
+    }
+
+    // ==== CALCULAR TOTAL RECAUDADO (ACTUALIZADA) ====
+    function calcularTotalRecaudado(citas) {
+        let total = 0;
+        citas.forEach(cita => {
+            let monto = 0;
+            
+            // USAR EL PRESUPUESTO REAL DE LA CITA
+            if (cita.presupuesto && cita.presupuesto !== "-") {
+                const montoMatch = cita.presupuesto.match(/S\/?\s*(\d+(?:\.\d+)?)/);
+                if (montoMatch) {
+                    monto = parseFloat(montoMatch[1]);
+                }
+            }
+            
+            // Si no hay presupuesto, calcular según procedimiento
+            if (monto === 0) {
+                const procedimiento = cita.tarea && cita.tarea !== "-" ? cita.tarea : "Consulta general";
+                switch(procedimiento.toLowerCase()) {
+                    case 'limpieza dental': monto = 85000; break;
+                    case 'ortodoncia': monto = 350000; break;
+                    case 'blanqueamiento': monto = 200000; break;
+                    case 'extracción': monto = 120000; break;
+                    case 'tratamiento de caries':
+                    case 'obturación': monto = 75000; break;
+                    case 'implante dental': monto = 500000; break;
+                    case 'endodoncia': monto = 250000; break;
+                    default: monto = 50000; break;
+                }
+            }
+            
+            total += monto;
+        });
+        return total;
+    }
+
+    // ==== GENERAR MÉTODOS DE PAGO (CORREGIDA) ====
+function generarMetodosPago(citas) {
+    const metodos = [
+        { metodo: 'Transferencia', cantidad: 0, monto: 0 },
+        { metodo: 'Efectivo', cantidad: 0, monto: 0 },
+        { metodo: 'Tarjeta Crédito', cantidad: 0, monto: 0 },
+        { metodo: 'Tarjeta Débito', cantidad: 0, monto: 0 }
+    ];
+    
+    citas.forEach(cita => {
+        let metodoIndex = 0; // Por defecto Transferencia
+        let monto = 0;
+        
+        // 1. USAR MÉTODO DE PAGO REAL DE LA CITA
+        if (cita.metodoPago && cita.metodoPago !== "-") {
+            // Buscar el índice del método de pago
+            const metodoEncontrado = metodos.findIndex(m => 
+                m.metodo.toLowerCase() === cita.metodoPago.toLowerCase()
+            );
+            if (metodoEncontrado !== -1) {
+                metodoIndex = metodoEncontrado;
+            }
+        }
+        
+        // 2. USAR PRESUPUESTO REAL
+        if (cita.presupuesto && cita.presupuesto !== "-") {
+            const montoMatch = cita.presupuesto.match(/S\/?\s*(\d+(?:\.\d+)?)/);
+            if (montoMatch) {
+                monto = parseFloat(montoMatch[1]);
+            }
+        }
+        
+        // 3. Si no hay presupuesto, calcular según procedimiento
+        if (monto === 0) {
+            const procedimiento = cita.tarea && cita.tarea !== "-" ? cita.tarea : "Consulta general";
+            switch(procedimiento.toLowerCase()) {
+                case 'limpieza dental': monto = 85000; break;
+                case 'ortodoncia': monto = 350000; break;
+                case 'blanqueamiento': monto = 200000; break;
+                case 'extracción': monto = 120000; break;
+                case 'tratamiento de caries':
+                case 'obturación': monto = 75000; break;
+                case 'implante dental': monto = 500000; break;
+                case 'endodoncia': monto = 250000; break;
+                default: monto = 50000; break;
+            }
+        }
+        
+        // Incrementar contadores
+        metodos[metodoIndex].cantidad++;
+        metodos[metodoIndex].monto += monto;
+    });
+    
+    // Calcular porcentajes
+    const totalMonto = metodos.reduce((sum, metodo) => sum + metodo.monto, 0);
+    metodos.forEach(metodo => {
+        metodo.porcentaje = totalMonto > 0 ? Math.round((metodo.monto / totalMonto) * 100) : 0;
+    });
+    
+    return metodos;
+}
+
+    // ==== GENERAR DETALLE DE ATENCIONES (ACTUALIZADA CON MÉTODO DE PAGO) ====
+function generarDetalleAtenciones(citas) {
+    if (citas.length === 0) {
+        return [{
+            paciente: "No hay datos",
+            fecha: "-",
+            procedimiento: "Sin atenciones",
+            monto: 0,
+            metodoPago: "-"
+        }];
+    }
+    
+    return citas.map((cita, index) => {
+        // USAR LOS DATOS REALES DE TAREA, PRESUPUESTO Y MÉTODO DE PAGO
+        let procedimiento = cita.tarea && cita.tarea !== "-" ? cita.tarea : "Consulta general";
+        let monto = 0;
+        let metodoPago = cita.metodoPago && cita.metodoPago !== "-" ? cita.metodoPago : "No especificado";
+        
+        // Extraer monto del presupuesto si existe
+        if (cita.presupuesto && cita.presupuesto !== "-") {
+            const montoMatch = cita.presupuesto.match(/S\/?\s*(\d+(?:\.\d+)?)/);
+            if (montoMatch) {
+                monto = parseFloat(montoMatch[1]);
+            }
+        }
+        
+        // Si no hay presupuesto, usar monto por defecto según el procedimiento
+        if (monto === 0) {
+            switch(procedimiento.toLowerCase()) {
+                case 'limpieza dental': monto = 85000; break;
+                case 'ortodoncia': monto = 350000; break;
+                case 'blanqueamiento': monto = 200000; break;
+                case 'extracción': monto = 120000; break;
+                case 'tratamiento de caries':
+                case 'obturación': monto = 75000; break;
+                case 'implante dental': monto = 500000; break;
+                case 'endodoncia': monto = 250000; break;
+                case 'consulta general':
+                default: monto = 50000; break;
+            }
+        }
+        
+        return {
+            paciente: cita.paciente || `Paciente ${index + 1}`,
+            fecha: cita.fecha !== "-" ? formatearFecha(cita.fecha) : "Por agendar",
+            procedimiento: procedimiento,
+            monto: monto,
+            metodoPago: metodoPago
+        };
+    });
+}
+
+    // ==== FUNCIÓN PARA FORMATEAR FECHA ====
+    function formatearFecha(fechaISO) {
+        if (!fechaISO || fechaISO === "-") return "-";
+        try {
+            const fecha = new Date(fechaISO);
+            return fecha.toLocaleDateString('es-CL');
+        } catch {
+            return fechaISO; // Devolver original si hay error
+        }
+    }
+
+    // ==== ACTUALIZAR GRÁFICO CIRCULAR ====
+    function actualizarGraficoCircular(metodosPago) {
+        const centro = document.querySelector('.centro-grafico');
+        const leyenda = document.querySelector('.leyenda-grafico');
+        
+        if (!centro || !leyenda) return;
+        
+        // Calcular porcentaje principal (usar el método con mayor monto)
+        const metodoPrincipal = metodosPago.reduce((max, metodo) => 
+            metodo.monto > max.monto ? metodo : max, metodosPago[0]);
+        
+        const porcentajePrincipal = metodoPrincipal.porcentaje;
+        centro.textContent = `${porcentajePrincipal}%`;
+        
+        // Actualizar leyenda con datos reales
+        leyenda.innerHTML = '';
+        const colores = ['color-azul', 'color-verde', 'color-amarillo', 'color-rojo'];
+        
+        metodosPago.forEach((metodo, index) => {
+            if (metodo.cantidad > 0) {
+                const itemLeyenda = `
+                    <div class="item-leyenda">
+                        <div class="color-leyenda ${colores[index] || 'color-azul'}"></div>
+                        <span>${metodo.metodo} (${metodo.porcentaje}%)</span>
+                    </div>
+                `;
+                leyenda.innerHTML += itemLeyenda;
+            }
+        });
+    }
+
+    // ==== AGREGAR EFECTOS AL GRÁFICO ====
+    function agregarEfectosGrafico() {
+        const grafico = document.querySelector('.grafico-circular');
+        
+        if (!grafico) return;
+        
+        grafico.addEventListener('mouseover', function(e) {
+            this.style.filter = 'brightness(1.2) drop-shadow(0 0 10px rgba(59, 130, 246, 0.5))';
+            this.style.transform = 'scale(1.05)';
+        });
+        
+        grafico.addEventListener('mouseout', function(e) {
+            this.style.filter = 'brightness(1)';
+            this.style.transform = 'scale(1)';
+        });
+    }
+
+    // ==== ACTUALIZAR INTERFAZ CON DATOS REALES (MEJORADA) ====
+    function actualizarReporteConDatosReales() {
+        const datos = obtenerDatosReales();
+        
+        console.log('Datos obtenidos:', datos); // Para debug
+        
+        // Actualizar RESUMEN AGENDA
+        const estadisticas = document.querySelectorAll('.estadistica-item .numero-grande');
+        if (estadisticas.length >= 4) {
+            estadisticas[0].textContent = datos.pacientesNuevos;
+            estadisticas[1].textContent = datos.atencionesRealizadas;
+            estadisticas[2].textContent = datos.citasAnuladas;
+            estadisticas[3].textContent = datos.presupuestos;
+            
+            // Actualizar período en el último ítem
+            const periodoElement = document.querySelector('.estadistica-item:nth-child(4) .periodo');
+            if (periodoElement) {
+                const fechaInicio = document.getElementById('fechaInicio').value;
+                const fechaFin = document.getElementById('fechaFin').value;
+                periodoElement.textContent = `desde ${fechaInicio} hasta ${fechaFin}`;
+            }
+        }
+        
+        // Actualizar TOTALES
+        const totalFormateado = datos.totalRecaudado.toLocaleString('es-CL', {
+            style: 'currency',
+            currency: 'CLP'
+        });
+        
+        const totalValor = document.querySelector('.total-valor');
+        const recaudadoTotal = document.querySelector('.recaudado-total');
+        const totalGeneral = document.querySelector('.total-general .total-valor');
+        
+        if (totalValor) totalValor.textContent = totalFormateado;
+        if (recaudadoTotal) recaudadoTotal.textContent = totalFormateado;
+        if (totalGeneral) totalGeneral.textContent = totalFormateado;
+        
+        // Actualizar período en total general
+        const periodoGeneral = document.querySelector('.total-general .periodo');
+        if (periodoGeneral) {
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const fechaFin = document.getElementById('fechaFin').value;
+            periodoGeneral.textContent = `Período: ${fechaInicio} al ${fechaFin}`;
+        }
+        
+        // En la función actualizarReporteConDatosReales()
+const tablaAtenciones = document.querySelector('#tbody-atenciones');
+if (tablaAtenciones) {
+    tablaAtenciones.innerHTML = '';
+    datos.detalleAtenciones.forEach(atencion => {
+        const fila = `
+            <tr>
+                <td>${atencion.paciente}</td>
+                <td>${atencion.fecha}</td>
+                <td>${atencion.procedimiento}</td>
+                <td>${atencion.monto.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})}</td>
+                <td>${atencion.metodoPago}</td>
+            </tr>
+        `;
+        tablaAtenciones.innerHTML += fila;
+    });
+}
+   
+   // ==== DEBUG: VERIFICAR DATOS DE CITAS ====
+function verificarDatosCitas() {
+    const citas = JSON.parse(localStorage.getItem("citas")) || [];
+    console.log("=== DEBUG: DATOS DE CITAS ===");
+    citas.forEach((cita, index) => {
+        console.log(`Cita ${index + 1}:`, {
+            paciente: cita.paciente,
+            tarea: cita.tarea,
+            presupuesto: cita.presupuesto,
+            metodoPago: cita.metodoPago,  // ← VERIFICAR QUE ESTÉ PRESENTE
+            fecha: cita.fecha
+        });
+    });
+    
+    // Llamar esta función después de guardar una cita
+    setTimeout(actualizarReporteConDatosReales, 100);
+}
+
+// Llamar al debug cuando se cargue la página de reportes
+document.addEventListener('DOMContentLoaded', function() {
+    verificarDatosCitas();
+    setTimeout(() => {
+        actualizarReporteConDatosReales();
+        agregarEfectosGrafico();
+    }, 500);
+});
+     
+        // Actualizar MÉTODOS DE PAGO
+        const tablaMetodos = document.querySelector('.tabla-detalle:last-child tbody');
+        if (tablaMetodos) {
+            tablaMetodos.innerHTML = '';
+            datos.metodosPago.forEach(metodo => {
+                const montoFormateado = metodo.monto.toLocaleString('es-CL', {
+                    style: 'currency', 
+                    currency: 'CLP'
+                });
+                const fila = `
+                    <tr>
+                        <td>${metodo.metodo}</td>
+                        <td>${metodo.cantidad}</td>
+                        <td>${montoFormateado}</td>
+                        <td>${metodo.porcentaje}%</td>
+                    </tr>
+                `;
+                tablaMetodos.innerHTML += fila;
+            });
+        }
+        
+        // Actualizar GRÁFICO con datos reales
+        actualizarGraficoCircular(datos.metodosPago);
+    }
+
+    // ==== INICIALIZAR REPORTE AL CARGAR ====
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar datos reales al abrir la página de reportes
+        setTimeout(() => {
+            actualizarReporteConDatosReales();
+            agregarEfectosGrafico();
+        }, 500);
+    });
+
+    // ==== FUNCIONES PARA LAS NUEVAS SECCIONES ====
+    function generarLiquidaciones() {
+        alert('Generando reporte de liquidaciones...');
+    }
+
+    function verDetalleLiquidacion(id) {
+        alert(`Mostrando detalle de liquidación ID: ${id}`);
+    }
+
+    // ==== CAMBIAR SUBPESTAÑAS PRINCIPALES (ACTUALIZADA) ====
+    function cambiarSubpestana(subpestana) {
+        // Remover clase active de todas las subpestañas principales
+        document.querySelectorAll('.subpestana').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Agregar clase active a la subpestaña clickeada
+        event.target.classList.add('active');
+        
+        // Ocultar todos los contenidos primero
+        const contenidos = [
+            'contenido-resumen',
+            'contenido-reportes-administrativos',
+            'contenido-reportes-pacientes',
+            'contenido-reportes-laboratorio',
+            'contenido-liquidaciones',
+            'contenido-encuesta',
+            'contenido-mailing'
+        ];
+        
+        contenidos.forEach(contenido => {
+            document.getElementById(contenido).classList.add('hidden');
+        });
+        
+        // Mostrar subpestañas secundarias solo para Reportes
+        const subpestanasSecundarias = document.getElementById('subpestanas-secundarias');
+        const selectoresTipoReporte = [
+            'selector-tipo-reporte-administrativo',
+            'selector-tipo-reporte-pacientes',
+            'selector-tipo-reporte-laboratorio'
+        ];
+        
+        if (subpestana === 'reportes') {
+            subpestanasSecundarias.classList.remove('hidden');
+            // Mostrar contenido según la subpestaña secundaria activa
+            const subpestanaSecundariaActiva = document.querySelector('.subpestana-secundaria.active').textContent.trim();
+            if (subpestanaSecundariaActiva === 'Reportes Administrativos') {
+                document.getElementById('selector-tipo-reporte-administrativo').classList.remove('hidden');
+                document.getElementById('contenido-reportes-administrativos').classList.remove('hidden');
+            } else if (subpestanaSecundariaActiva === 'Reportes de Pacientes') {
+                document.getElementById('selector-tipo-reporte-pacientes').classList.remove('hidden');
+                document.getElementById('contenido-reportes-pacientes').classList.remove('hidden');
+                cargarReportesPacientes('demografico');
+            } else if (subpestanaSecundariaActiva === 'Reportes de Laboratorio') {
+                document.getElementById('selector-tipo-reporte-laboratorio').classList.remove('hidden');
+                document.getElementById('contenido-reportes-laboratorio').classList.remove('hidden');
+                cargarReportesLaboratorio('procesos');
+            }
+        } else {
+            subpestanasSecundarias.classList.add('hidden');
+            // Ocultar todos los selectores de tipo de reporte
+            selectoresTipoReporte.forEach(selector => {
+                document.getElementById(selector).classList.add('hidden');
+            });
+            
+            // Mostrar el contenido correspondiente
+            if (subpestana === 'resumen') {
+                document.getElementById('contenido-resumen').classList.remove('hidden');
+            } else if (subpestana === 'liquidaciones') {
+                document.getElementById('contenido-liquidaciones').classList.remove('hidden');
+            } else if (subpestana === 'encuesta') {
+                document.getElementById('contenido-encuesta').classList.remove('hidden');
+            } else if (subpestana === 'mailing') {
+                document.getElementById('contenido-mailing').classList.remove('hidden');
+            }
+        }
+        
+        console.log('Cambiando a subpestaña:', subpestana);
+    }
+
+    // ==== Dropdown perfil ====
+    function toggleUserMenu() {
+      document.getElementById("dropdown").classList.toggle("hidden");
+    }
+
+    // ==== Cambiar subpestañas secundarias ====
+    function cambiarSubpestanaSecundaria(subpestana) {
+      // Remover clase active de todas las subpestañas secundarias
+      document.querySelectorAll('.subpestana-secundaria').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Agregar clase active a la subpestaña clickeada
+      event.target.classList.add('active');
+      
+      // Mostrar/ocultar selectores de tipo de reporte según la subpestaña
+      const selectorTipoReporteAdministrativo = document.getElementById('selector-tipo-reporte-administrativo');
+      const selectorTipoReportePacientes = document.getElementById('selector-tipo-reporte-pacientes');
+      const selectorTipoReporteLaboratorio = document.getElementById('selector-tipo-reporte-laboratorio');
+      const contenidoResumen = document.getElementById('contenido-resumen');
+      const contenidoReportesAdministrativos = document.getElementById('contenido-reportes-administrativos');
+      const contenidoReportesPacientes = document.getElementById('contenido-reportes-pacientes');
+      const contenidoReportesLaboratorio = document.getElementById('contenido-reportes-laboratorio');
+      
+      if (subpestana === 'administrativos') {
+        selectorTipoReporteAdministrativo.classList.remove('hidden');
+        contenidoReportesAdministrativos.classList.remove('hidden');
+        selectorTipoReportePacientes.classList.add('hidden');
+        selectorTipoReporteLaboratorio.classList.add('hidden');
+        contenidoReportesPacientes.classList.add('hidden');
+        contenidoReportesLaboratorio.classList.add('hidden');
+      } else if (subpestana === 'pacientes') {
+        selectorTipoReportePacientes.classList.remove('hidden');
+        contenidoReportesPacientes.classList.remove('hidden');
+        selectorTipoReporteAdministrativo.classList.add('hidden');
+        selectorTipoReporteLaboratorio.classList.add('hidden');
+        contenidoReportesAdministrativos.classList.add('hidden');
+        contenidoReportesLaboratorio.classList.add('hidden');
+        // Cargar reportes de pacientes por defecto
+        cargarReportesPacientes('demografico');
+      } else if (subpestana === 'laboratorio') {
+        selectorTipoReporteLaboratorio.classList.remove('hidden');
+        contenidoReportesLaboratorio.classList.remove('hidden');
+        selectorTipoReporteAdministrativo.classList.add('hidden');
+        selectorTipoReportePacientes.classList.add('hidden');
+        contenidoReportesAdministrativos.classList.add('hidden');
+        contenidoReportesPacientes.classList.add('hidden');
+        // Cargar reportes de laboratorio por defecto
+        cargarReportesLaboratorio('procesos');
+      } else {
+        selectorTipoReporteAdministrativo.classList.add('hidden');
+        selectorTipoReportePacientes.classList.add('hidden');
+        selectorTipoReporteLaboratorio.classList.add('hidden');
+        contenidoReportesAdministrativos.classList.add('hidden');
+        contenidoReportesPacientes.classList.add('hidden');
+        contenidoReportesLaboratorio.classList.add('hidden');
+      }
+      
+      // Aquí iría la lógica para cargar el contenido de cada subpestaña secundaria
+      console.log('Cambiando a subpestaña secundaria:', subpestana);
+    }
+
+    // ==== Cambiar tipo de reporte de pacientes ====
+    function cambiarTipoReportePacientes() {
+      const tipoReporte = document.getElementById('tipo-reporte-pacientes').value;
+      cargarReportesPacientes(tipoReporte);
+    }
+
+    // ==== Cambiar tipo de reporte de laboratorio ====
+    function cambiarTipoReporteLaboratorio() {
+      const tipoReporte = document.getElementById('tipo-reporte-laboratorio').value;
+      cargarReportesLaboratorio(tipoReporte);
+    }
+
+    // ==== Cargar reportes de pacientes según el tipo seleccionado ====
+    function cargarReportesPacientes(tipo) {
+      const grid = document.getElementById('grid-reportes-pacientes');
+      let contenido = '';
+      
+      // Datos de ejemplo para diferentes tipos de reportes
+      const reportesData = {
+        demografico: [
+          { titulo: 'Distribución por Edad', descripcion: 'Análisis de pacientes por grupos de edad', icono: 'fa-user-group' },
+          { titulo: 'Distribución por Género', descripcion: 'Estadísticas de pacientes por género', icono: 'fa-venus-mars' },
+          { titulo: 'Ubicación Geográfica', descripcion: 'Pacientes por zona de residencia', icono: 'fa-map-location-dot' },
+          { titulo: 'Ocupación', descripcion: 'Distribución por tipo de ocupación', icono: 'fa-briefcase' }
+        ],
+        tratamientos: [
+          { titulo: 'Tratamientos Más Solicitados', descripcion: 'Ranking de tratamientos más populares', icono: 'fa-teeth' },
+          { titulo: 'Tratamientos por Especialidad', descripcion: 'Distribución por área odontológica', icono: 'fa-stethoscope' },
+          { titulo: 'Costo Promedio por Tratamiento', descripcion: 'Análisis de precios por procedimiento', icono: 'fa-money-bill-wave' },
+          { titulo: 'Duración de Tratamientos', descripcion: 'Tiempo promedio por tipo de tratamiento', icono: 'fa-clock' }
+        ],
+        frecuencia: [
+          { titulo: 'Pacientes Frecuentes', descripcion: 'Pacientes con más visitas en el período', icono: 'fa-repeat' },
+          { titulo: 'Frecuencia de Visitas', descripcion: 'Promedio de visitas por paciente', icono: 'fa-calendar-check' },
+          { titulo: 'Tiempo Entre Citas', descripcion: 'Análisis de intervalos entre visitas', icono: 'fa-hourglass' },
+          { titulo: 'Pacientes Inactivos', descripcion: 'Pacientes sin visitas recientes', icono: 'fa-user-clock' }
+        ],
+        historial: [
+          { titulo: 'Historial Completo', descripcion: 'Registro completo de atenciones', icono: 'fa-file-medical' },
+          { titulo: 'Alergias y Condiciones', descripcion: 'Resumen de condiciones médicas', icono: 'fa-allergies' },
+          { titulo: 'Medicamentos Recetados', descripcion: 'Historial de medicamentos', icono: 'fa-pills' },
+          { titulo: 'Evolución de Tratamientos', descripcion: 'Progreso de tratamientos activos', icono: 'fa-chart-line' }
+        ],
+        cumpleanos: [
+          { titulo: 'Cumpleaños del Mes', descripcion: 'Pacientes que cumplen años este mes', icono: 'fa-cake-candles' },
+          { titulo: 'Próximos Cumpleaños', descripcion: 'Cumpleaños en los próximos 30 días', icono: 'fa-calendar-days' },
+          { titulo: 'Segmentación por Edad', descripcion: 'Pacientes agrupados por década', icono: 'fa-chart-pie' },
+          { titulo: 'Recordatorios Automáticos', descripcion: 'Programación de felicitaciones', icono: 'fa-bell' }
+        ],
+        morosidad: [
+          { titulo: 'Pacientes Morosos', descripcion: 'Listado de pacientes con deudas', icono: 'fa-money-check-dollar' },
+          { titulo: 'Deuda por Antigüedad', descripcion: 'Análisis por tiempo de mora', icono: 'fa-clock-rotate-left' },
+          { titulo: 'Monto Total Adeudado', descripcion: 'Sumatoria de deudas pendientes', icono: 'fa-sack-dollar' },
+          { titulo: 'Plan de Cobranza', descripcion: 'Estrategias de recuperación', icono: 'fa-phone' }
+        ]
+      };
+      
+      // Generar contenido según el tipo seleccionado
+      const reportes = reportesData[tipo] || [];
+      
+      reportes.forEach(reporte => {
+        contenido += `
+          <div class="reporte-card-item" onclick="generarReportePaciente('${tipo}', '${reporte.titulo}')">
+            <div class="icono">
+              <i class="fa-solid ${reporte.icono}"></i>
+            </div>
+            <h4>${reporte.titulo}</h4>
+            <p>${reporte.descripcion}</p>
+          </div>
+        `;
+      });
+      
+      grid.innerHTML = contenido;
+    }
+
+    // ==== Cargar reportes de laboratorio según el tipo seleccionado ====
+    function cargarReportesLaboratorio(tipo) {
+      const grid = document.getElementById('grid-reportes-laboratorio');
+      let contenido = '';
+      
+      // Datos de ejemplo para diferentes tipos de reportes de laboratorio
+      const reportesData = {
+        procesos: [
+          { titulo: 'Trabajos en Proceso', descripcion: 'Estado actual de trabajos en laboratorio', icono: 'fa-gears', funcion: 'procesos' },
+          { titulo: 'Tiempos de Entrega', descripcion: 'Análisis de cumplimiento de plazos', icono: 'fa-clock', funcion: 'tiempos-entrega' },
+          { titulo: 'Flujo de Trabajo', descripcion: 'Eficiencia en procesos de laboratorio', icono: 'fa-diagram-project', funcion: 'flujo-trabajo' },
+          { titulo: 'Estadísticas de Producción', descripcion: 'Volumen de trabajos realizados', icono: 'fa-chart-bar', funcion: 'estadisticas-produccion' }
+        ],
+        materiales: [
+          { titulo: 'Consumo de Materiales', descripcion: 'Uso de insumos por tipo de trabajo', icono: 'fa-box-open', funcion: 'materiales' },
+          { titulo: 'Stock Crítico', descripcion: 'Materiales con stock bajo o agotado', icono: 'fa-triangle-exclamation', funcion: 'stock-critico' },
+          { titulo: 'Proveedores y Costos', descripcion: 'Análisis de costos por proveedor', icono: 'fa-truck', funcion: 'proveedores' },
+          { titulo: 'Rendimiento de Materiales', descripcion: 'Eficiencia en uso de recursos', icono: 'fa-percent', funcion: 'rendimiento' }
+        ],
+        productividad: [
+          { titulo: 'Productividad por Técnico', descripcion: 'Rendimiento individual del personal', icono: 'fa-user-gear', funcion: 'productividad-tecnico' },
+          { titulo: 'Horas Productivas', descripcion: 'Análisis de tiempo efectivo de trabajo', icono: 'fa-business-time', funcion: 'horas-productivas' },
+          { titulo: 'Trabajos por Tipo', descripcion: 'Distribución de trabajos por especialidad', icono: 'fa-list-check', funcion: 'trabajos-tipo' },
+          { titulo: 'Eficiencia Operativa', descripcion: 'Métricas de productividad general', icono: 'fa-gauge-high', funcion: 'eficiencia' }
+        ],
+        calidad: [
+          { titulo: 'Control de Calidad', descripcion: 'Resultados de inspecciones de calidad', icono: 'fa-award', funcion: 'control-calidad' },
+          { titulo: 'Rechazos y Reprocesos', descripcion: 'Trabajos que no cumplen estándares', icono: 'fa-ban', funcion: 'rechazos' },
+          { titulo: 'Satisfacción Clínica', descripcion: 'Feedback de odontólogos sobre trabajos', icono: 'fa-star', funcion: 'satisfaccion' },
+          { titulo: 'Estándares de Calidad', descripcion: 'Cumplimiento de normativas y protocolos', icono: 'fa-clipboard-check', funcion: 'estandares' }
+        ],
+        inventario: [
+          { titulo: 'Inventario Actual', descripcion: 'Stock completo de materiales y equipos', icono: 'fa-warehouse', funcion: 'inventario' },
+          { titulo: 'Movimientos de Stock', descripcion: 'Entradas y salidas de materiales', icono: 'fa-arrows-rotate', funcion: 'movimientos' },
+          { titulo: 'Caducidad de Materiales', descripcion: 'Materiales próximos a vencer', icono: 'fa-calendar-xmark', funcion: 'caducidad' },
+          { titulo: 'Valoración de Inventario', descripcion: 'Valor económico del stock actual', icono: 'fa-sack-dollar', funcion: 'valoracion' }
+        ],
+        costos: [
+          { titulo: 'Costos por Procedimiento', descripcion: 'Análisis de costos por tipo de trabajo', icono: 'fa-calculator', funcion: 'costos-procedimiento' },
+          { titulo: 'Presupuestos vs Real', descripcion: 'Comparativa de costos estimados y reales', icono: 'fa-scale-balanced', funcion: 'presupuestos-real' },
+          { titulo: 'Margen de Utilidad', descripcion: 'Rentabilidad por tipo de trabajo', icono: 'fa-chart-line', funcion: 'margen' },
+          { titulo: 'Análisis de Rentabilidad', descripcion: 'Estudio de rentabilidad por cliente/procedimiento', icono: 'fa-money-bill-trend-up', funcion: 'rentabilidad' }
+        ]
+      };
+      
+      // Generar contenido según el tipo seleccionado
+      const reportes = reportesData[tipo] || [];
+      
+      reportes.forEach(reporte => {
+        contenido += `
+          <div class="reporte-card-item" onclick="generarReporteLaboratorio('${reporte.funcion}', '${reporte.titulo}')">
+            <div class="icono">
+              <i class="fa-solid ${reporte.icono}"></i>
+            </div>
+            <h4>${reporte.titulo}</h4>
+            <p>${reporte.descripcion}</p>
+          </div>
+        `;
+      });
+      
+      grid.innerHTML = contenido;
+    }
+
+    // ==== Generar reporte específico de paciente ====
+    function generarReportePaciente(tipo, titulo) {
+      alert(`Generando reporte de pacientes: ${titulo}\nTipo: ${tipo}`);
+      // Aquí iría la lógica para generar el reporte específico
+    }
+
+    // ==== Generar reporte específico de laboratorio (ACTUALIZADA) ====
+    function generarReporteLaboratorio(funcion, titulo) {
+        // Ocultar todos los contenidos primero
+        const contenidos = document.querySelectorAll('[id^="contenido-reporte-"]');
+        contenidos.forEach(contenido => contenido.classList.add('hidden'));
+        
+        // Mostrar el contenido específico del reporte
+        const contenidoId = `contenido-reporte-${funcion}`;
+        let contenidoEspecifico = document.getElementById(contenidoId);
+        
+        // Si no existe el contenido, crearlo
+        if (!contenidoEspecifico) {
+            contenidoEspecifico = document.createElement('div');
+            contenidoEspecifico.id = contenidoId;
+            contenidoEspecifico.className = 'contenido-seccion';
+            document.getElementById('contenido-reportes-laboratorio').appendChild(contenidoEspecifico);
+        }
+        
+        // Generar contenido según el tipo de reporte
+        let contenidoHTML = '';
+        
+        switch(funcion) {
+            case 'procesos':
+                contenidoHTML = generarContenidoProcesos(titulo);
+                break;
+            case 'tiempos-entrega':
+                contenidoHTML = generarContenidoTiemposEntrega(titulo);
+                break;
+            case 'flujo-trabajo':
+                contenidoHTML = generarContenidoFlujoTrabajo(titulo);
+                break;
+            case 'estadisticas-produccion':
+                contenidoHTML = generarContenidoEstadisticasProduccion(titulo);
+                break;
+            default:
+                contenidoHTML = `<h2>${titulo}</h2><p>Contenido no disponible para este reporte.</p>`;
+        }
+        
+        contenidoEspecifico.innerHTML = contenidoHTML;
+        contenidoEspecifico.classList.remove('hidden');
+        
+        // Agregar botón de regreso
+        const botonRegreso = document.createElement('button');
+        botonRegreso.className = 'btn-accion mt-2';
+        botonRegreso.innerHTML = '<i class="fa-solid fa-arrow-left"></i> Volver a Reportes';
+        botonRegreso.onclick = function() {
+            contenidoEspecifico.classList.add('hidden');
+        };
+        contenidoEspecifico.appendChild(botonRegreso);
+    }
+
+    // ==== Contenido para Trabajos en Proceso ====
+    function generarContenidoProcesos(titulo) {
+        const trabajos = [
+            { id: 'LAB-001', paciente: 'Juan Pérez', procedimiento: 'Corona Zirconio', estado: 'En diseño', tecnico: 'Carlos Rojas', fechaEntrega: '2024-06-25', progreso: 60 },
+            { id: 'LAB-002', paciente: 'María González', procedimiento: 'Prótesis removible', estado: 'En acabado', tecnico: 'Ana Silva', fechaEntrega: '2024-06-24', progreso: 85 },
+            { id: 'LAB-003', paciente: 'Roberto Díaz', procedimiento: 'Puente fijo', estado: 'En modelado', tecnico: 'Pedro Martínez', fechaEntrega: '2024-06-26', progreso: 40 },
+            { id: 'LAB-004', paciente: 'Laura Mendoza', procedimiento: 'Carilla cerámica', estado: 'En horneado', tecnico: 'Carlos Rojas', fechaEntrega: '2024-06-23', progreso: 75 },
+            { id: 'LAB-005', paciente: 'Diego Castro', procedimiento: 'Implante dental', estado: 'En preparación', tecnico: 'Ana Silva', fechaEntrega: '2024-06-27', progreso: 25 }
+        ];
+
+        let tablaTrabajos = '';
+        trabajos.forEach(trabajo => {
+            tablaTrabajos += `
+                <tr>
+                    <td><strong>${trabajo.id}</strong></td>
+                    <td>${trabajo.paciente}</td>
+                    <td>${trabajo.procedimiento}</td>
+                    <td><span class="badge-estado">${trabajo.estado}</span></td>
+                    <td>${trabajo.tecnico}</td>
+                    <td>${trabajo.fechaEntrega}</td>
+                    <td>
+                        <div class="barra-progreso">
+                            <div class="progreso" style="width: ${trabajo.progreso}%"></div>
+                            <span class="texto-progreso">${trabajo.progreso}%</span>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn-accion-pequeno" onclick="verDetalleTrabajo('${trabajo.id}')">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        return `
+            <h2><i class="fa-solid fa-gears"></i> ${titulo}</h2>
+            <div class="grid-datos">
+                <div class="dato-item">
+                    <div class="dato-valor">${trabajos.length}</div>
+                    <div class="dato-label">Total Trabajos</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">3</div>
+                    <div class="dato-label">En Proceso Crítico</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">78%</div>
+                    <div class="dato-label">Progreso Promedio</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">2</div>
+                    <div class="dato-label">Por Entregar Hoy</div>
+                </div>
+            </div>
+            
+            <div class="tabla-detalle">
+                <h4>Detalle de Trabajos en Proceso</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Trabajo</th>
+                            <th>Paciente</th>
+                            <th>Procedimiento</th>
+                            <th>Estado</th>
+                            <th>Técnico</th>
+                            <th>Fecha Entrega</th>
+                            <th>Progreso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tablaTrabajos}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    // ==== Contenido para Tiempos de Entrega ====
+    function generarContenidoTiemposEntrega(titulo) {
+        return `
+            <h2><i class="fa-solid fa-clock"></i> ${titulo}</h2>
+            <div class="grid-datos">
+                <div class="dato-item">
+                    <div class="dato-valor">94%</div>
+                    <div class="dato-label">Cumplimiento General</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">2.3</div>
+                    <div class="dato-label">Días Promedio de Retraso</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">15%</div>
+                    <div class="dato-label">Trabajos con Retraso</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">5.2</div>
+                    <div class="dato-label">Días Promedio de Proceso</div>
+                </div>
+            </div>
+            
+            <div class="grafico-circular-container">
+                <div class="grafico-circular-tiempos">
+                    <div class="centro-grafico">94%</div>
+                </div>
+                <div class="leyenda-grafico">
+                    <div class="item-leyenda">
+                        <div class="color-leyenda color-verde"></div>
+                        <span>Entregados a Tiempo (76%)</span>
+                    </div>
+                    <div class="item-leyenda">
+                        <div class="color-leyenda color-amarillo"></div>
+                        <span>Retraso Menor (15%)</span>
+                    </div>
+                    <div class="item-leyenda">
+                        <div class="color-leyenda color-rojo"></div>
+                        <span>Retraso Crítico (9%)</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==== Contenido para Flujo de Trabajo ====
+    function generarContenidoFlujoTrabajo(titulo) {
+        const etapas = [
+            { etapa: 'Recepción', tiempo: '2 horas', eficiencia: '95%', trabajos: 45 },
+            { etapa: 'Diseño', tiempo: '6 horas', eficiencia: '88%', trabajos: 42 },
+            { etapa: 'Modelado', tiempo: '8 horas', eficiencia: '92%', trabajos: 39 },
+            { etapa: 'Horneado', tiempo: '12 horas', eficiencia: '85%', trabajos: 35 },
+            { etapa: 'Acabado', tiempo: '4 horas', eficiencia: '90%', trabajos: 38 },
+            { etapa: 'Control Calidad', tiempo: '2 horas', eficiencia: '98%', trabajos: 37 },
+            { etapa: 'Entrega', tiempo: '1 hora', eficiencia: '99%', trabajos: 37 }
+        ];
+
+        let tablaEtapas = '';
+        etapas.forEach(etapa => {
+            tablaEtapas += `
+                <tr>
+                    <td><strong>${etapa.etapa}</strong></td>
+                    <td>${etapa.tiempo}</td>
+                    <td>${etapa.eficiencia}</td>
+                    <td>${etapa.trabajos}</td>
+                </tr>
+            `;
+        });
+
+        return `
+            <h2><i class="fa-solid fa-diagram-project"></i> ${titulo}</h2>
+            <div class="grid-datos">
+                <div class="dato-item">
+                    <div class="dato-valor">7</div>
+                    <div class="dato-label">Etapas del Proceso</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">35 hrs</div>
+                    <div class="dato-label">Tiempo Total Promedio</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">92%</div>
+                    <div class="dato-label">Eficiencia General</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">82%</div>
+                    <div class="dato-label">Tasa de Finalización</div>
+                </div>
+            </div>
+            
+            <div class="diagrama-flujo">
+                <div class="etapas-container">
+                    ${etapas.map(etapa => `
+                        <div class="etapa-item">
+                            <div class="etapa-icono">
+                                <i class="fa-solid fa-${etapa.etapa === 'Recepción' ? 'inbox' : 
+                                                       etapa.etapa === 'Diseño' ? 'pencil' : 
+                                                       etapa.etapa === 'Modelado' ? 'cube' : 
+                                                       etapa.etapa === 'Horneado' ? 'fire' : 
+                                                       etapa.etapa === 'Acabado' ? 'sparkles' : 
+                                                       etapa.etapa === 'Control Calidad' ? 'check-double' : 'truck'}"}"></i>
+                            </div>
+                            <div class="etapa-info">
+                                <strong>${etapa.etapa}</strong>
+                                <div>${etapa.tiempo}</div>
+                                <div class="eficiencia">${etapa.eficiencia}</div>
+                            </div>
+                        </div>
+                    `).join('<div class="conector">→</div>')}
+                </div>
+            </div>
+            
+            <div class="tabla-detalle mt-2">
+                <h4>Métricas por Etapa</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Etapa</th>
+                            <th>Tiempo Promedio</th>
+                            <th>Eficiencia</th>
+                            <th>Trabajos Activos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tablaEtapas}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    // ==== Contenido para Estadísticas de Producción ====
+    function generarContenidoEstadisticasProduccion(titulo) {
+        return `
+            <h2><i class="fa-solid fa-chart-bar"></i> ${titulo}</h2>
+            <div class="grid-datos">
+                <div class="dato-item">
+                    <div class="dato-valor">156</div>
+                    <div class="dato-label">Trabajos Este Mes</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">+12%</div>
+                    <div class="dato-label">Crecimiento Mensual</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">7.8</div>
+                    <div class="dato-label">Trabajos/Día Promedio</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-valor">94%</div>
+                    <div class="dato-label">Tasa de Utilización</div>
+                </div>
+            </div>
+            
+            <div class="grafico-barras-container">
+                <h4>Producción Mensual (Últimos 6 meses)</h4>
+                <div class="barras">
+                    <div class="barra-item">
+                        <div class="barra-etiqueta">Ene</div>
+                        <div class="barra">
+                            <div class="barra-progreso" style="height: 70%"></div>
+                        </div>
+                        <div class="barra-valor">140</div>
+                    </div>
+                    <div class="barra-item">
+                        <div class="barra-etiqueta">Feb</div>
+                        <div class="barra">
+                            <div class="barra-progreso" style="height: 65%"></div>
+                        </div>
+                        <div class="barra-valor">130</div>
+                    </div>
+                    <div class="barra-item">
+                        <div class="barra-etiqueta">Mar</div>
+                        <div class="barra">
+                            <div class="barra-progreso" style="height: 80%"></div>
+                        </div>
+                        <div class="barra-valor">160</div>
+                    </div>
+                    <div class="barra-item">
+                        <div class="barra-etiqueta">Abr</div>
+                        <div class="barra">
+                            <div class="barra-progreso" style="height: 75%"></div>
+                        </div>
+                        <div class="barra-valor">150</div>
+                    </div>
+                    <div class="barra-item">
+                        <div class="barra-etiqueta">May</div>
+                        <div class="barra">
+                            <div class="barra-progreso" style="height: 70%"></div>
+                        </div>
+                        <div class="barra-valor">140</div>
+                    </div>
+                    <div class="barra-item">
+                        <div class="barra-etiqueta">Jun</div>
+                        <div class="barra">
+                            <div class="barra-progreso" style="height: 78%"></div>
+                        </div>
+                        <div class="barra-valor">156</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==== Función auxiliar para ver detalle de trabajo ====
+    function verDetalleTrabajo(idTrabajo) {
+        alert(`Mostrando detalle del trabajo: ${idTrabajo}\n\nEsta funcionalidad mostraría:\n- Información completa del trabajo\n- Historial de procesos\n- Fotos del progreso\n- Comunicaciones con el odontólogo`);
+    }
+
+    // ==== GENERAR REPORTE (ACTUALIZADA) ====
+    function generarReporte() {
+        const fechaInicio = document.getElementById('fechaInicio').value;
+        const fechaFin = document.getElementById('fechaFin').value;
+        const sucursal = document.getElementById('sucursal').value;
+        
+        mostrarCargando();
+        
+        setTimeout(() => {
+            // Usar datos reales en lugar de estáticos
+            actualizarReporteConDatosReales();
+            agregarEfectosGrafico(); // Agregar efectos al gráfico
+            
+            alert(`Reporte actualizado con datos reales\nPeríodo: ${fechaInicio} - ${fechaFin}\nSucursal: ${sucursal}`);
+        }, 1000);
+    }
+
+    // ==== Exportar reporte ====
+    function exportarReporte() {
+      // Simular exportación
+      alert('Generando archivo PDF...');
+      
+      setTimeout(() => {
+        alert('Reporte exportado exitosamente como PDF');
+        // Aquí iría la lógica para generar el PDF
+      }, 1500);
+    }
+
+    // ==== Ver detalle de recaudación ====
+    function verDetalleRecaudacion() {
+      alert('Mostrando detalle de recaudación...');
+      // Aquí iría la lógica para mostrar el detalle de recaudación
+    }
+
+    // ==== Mostrar estado de carga ====
+    function mostrarCargando() {
+      // Aquí podrías mostrar un spinner de carga
+      console.log('Cargando datos del reporte...');
+    }
+
+    // ==== Inicializar fechas ====
+    document.addEventListener('DOMContentLoaded', function() {
+      // Establecer fechas por defecto si no están configuradas
+      document.getElementById('fechaInicio').value = '2022-06-01';
+      document.getElementById('fechaFin').value = '2022-06-22';
+    });
+
+    // Cerrar dropdown al hacer clic fuera
+    window.onclick = function(event) {
+      if (!event.target.matches('.user-btn')) {
+        const dropdown = document.getElementById('dropdown');
+        if (!dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    }
+</script>
+</body>
+</html>

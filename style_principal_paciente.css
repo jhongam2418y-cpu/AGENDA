@@ -1,0 +1,88 @@
+@media only screen and (min-width:1601px) and (max-width:2560px){
+   
+    a {
+        text-decoration: none;
+        color: black;
+        font-family: roman;
+    }
+    #botones {
+        text-align: center;
+        margin-top: 5px;
+    }
+    
+    .myFrames{
+        position: absolute;
+        height: 97.5%;
+        width: 100%;
+        right: 0%;
+        bottom: 0;
+        border: none;
+        background-color: #ffffff;
+    }
+}
+@media only screen and (min-width:1251px) and (max-width:1600px) {
+
+
+a {
+    text-decoration: none;
+    color: black;
+    font-family: roman;
+}
+#botones {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.myFrames{
+    position: absolute;
+    height: 95%;
+    width: 100%;
+    right: 0%;
+    bottom: 0;
+    border: none;
+    background-color: #ffffff;
+}
+}
+@media only screen and (min-width:871px) and (max-width:1250px) {
+   
+    
+    a {
+        text-decoration: none;
+        color: black;
+        font-family: roman;
+    }
+    #botones {
+        text-align: center;
+        margin-top: 5px;
+    }
+    
+    .myFrames{
+        position: absolute;
+        height: 95%;
+        width: 100%;
+        right: 0%;
+        bottom: 0;
+        border: none;
+        background-color: #ffffff;
+    }
+    }
+    @media only screen and (max-width:870px) {
+       
+        
+        a {
+            margin: 16px;
+            text-decoration: none;
+            color: black;
+            font-family: roman;
+            font-size: 14px;
+        }
+        
+        .myFrames{
+            position: absolute;
+            height: 96%;
+            width: 100%;
+            bottom: 0%;
+            border: none;
+            background-color: #ffffff;
+        }
+        }

@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador - Dentodesk</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: absolute;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 0.5rem;
+      z-index: 1000;
+      right: 0;
+      min-width: 150px;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover {
+      background: #f3f4f6;
+    }
+
+    /* Contenido principal */
+    .admin-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .section-header h1 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-header p {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Controles */
+    .controles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      background: #f8fafc;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .control-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navegación superior */
+    .admin-nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-nav a {
+      text-decoration: none;
+      color: #6b7280;
+      padding: 0.8rem 1.5rem;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+    }
+
+    .admin-nav a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Filtros y búsqueda */
+    .filtros-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .filtros-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .filtros-tabs {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .filtro-tab {
+      padding: 0.5rem 1rem;
+      background: #f3f4f6;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filtro-tab.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-box input {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      min-width: 200px;
+    }
+
+    .search-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .new-user-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Tabla de usuarios */
+    .tabla-usuarios {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .perfil-badge {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .controles-mini {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .control-icon {
+      font-size: 1.2rem;
+      color: #10b981;
+    }
+
+    .acciones {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-editar, .btn-eliminar {
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .btn-editar {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .btn-eliminar {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      color: #1f2937;
+      margin: 0;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    /* Modal Body Actualizado */
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-section:last-child {
+      border-bottom: none;
+    }
+
+    .modal-section h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    .info-text {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: #0369a1;
+    }
+
+    .info-text strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .required::after {
+      content: " *";
+      color: #ef4444;
+    }
+
+    .modal-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btn-cancelar {
+      background: #f3f4f6;
+      color: #374151;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-guardar {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Configuración Global */
+    .config-controls {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .config-title {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .config-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .config-control-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
+
+    /* Utilidades */
+    .hidden {
+      display: none !important;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-2 {
+      margin-bottom: 1rem;
+    }
+
+    .mt-2 {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <div class="logo">🦷 Dentodesk</div>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+      <a href="pacientes.html"><i class="fa-solid fa-users"></i> Pacientes</a>
+      <a href="administrador.html" class="active"><i class="fa-solid fa-user-tie"></i> Administrador</a>
+      <a href="reportes.html"><i class="fa-solid fa-chart-line"></i> Reportes</a>
+      <a href="configuracion.html"><i class="fa-solid fa-cog"></i> Configuración</a>
+    </nav>
+    <div class="user-menu">
+      <button class="user-btn" onclick="toggleUserMenu()"><i class="fa-solid fa-user"></i> ⌄</button>
+      <div class="dropdown hidden" id="dropdown">
+        <a href="#"><i class="fa-solid fa-user-edit"></i> Mi perfil</a>
+        <a href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="admin-container">
+
+    <!-- Encabezado -->
+    <div class="section-header">
+      <h1><i class="fa-solid fa-users-cog"></i> Administrador de Usuarios</h1>
+      <p>En este módulo puede administrar todos los usuarios en la oficina, pasando por los datos personales de cada uno de ellos. Los horarios de elección, normalizadas y utilizadas para el aconseguirnos y procesarlos de pago.</p>
+      
+      <!-- Configuración Global -->
+      <div class="config-controls">
+        <div class="config-title">
+          <i class="fa-solid fa-sliders"></i> Configuración Global del Sistema
+        </div>
+        <div class="config-controls-grid">
+          <div class="config-control-item">
+            <input type="checkbox" id="config-editarDatos" onchange="actualizarConfiguracionGlobal()">
+            <label for="config-editarDatos">Editar Datos</label>
+          </div>
+          <div class="config-control-item">
+            <input type="checkbox" id="config-editarNomenclatura" onchange="actualizarConfiguracionGlobal()" checked>
+            <label for="config-editarNomenclatura">Editar Nomenclatura</label>
+          </div>
+          <div class="config-control-item">
+            <input type="checkbox" id="config-editarHorarios" onchange="actualizarConfiguracionGlobal()">
+            <label for="config-editarHorarios">Editar Horarios</label>
+          </div>
+          <div class="config-control-item">
+            <input type="checkbox" id="config-editarPorcentaje" onchange="actualizarConfiguracionGlobal()" checked>
+            <label for="config-editarPorcentaje">Editar Porcentaje de Pago</label>
+          </div>
+          <div class="config-control-item">
+            <input type="checkbox" id="config-editarPagoHora" onchange="actualizarConfiguracionGlobal()" checked>
+            <label for="config-editarPagoHora">Editar Pago por Hora</label>
+          </div>
+          <div class="config-control-item">
+            <input type="checkbox" id="config-desactivarUsuario" onchange="actualizarConfiguracionGlobal()" checked>
+            <label for="config-desactivarUsuario">Desactivar Usuario</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegación de módulos -->
+    <div class="admin-nav">
+      <a href="usuarios.html">Usuarios</a>
+      <a href="motivos.html">Motivos</a>
+      <a href="estados.html">Estados</a>
+      <a href="convenios.html">Convenios</a>
+      <a href="prestaciones.html">Prestaciones</a>
+      <a href="documentos.html">Documentos Clínicos</a>
+      <a href="referidos.html">Referidos</a>
+      <a href="egresos.html">Egresos</a>
+      <a href="insumos.html">Insumos</a>
+    </div>
+
+    <!-- Sección de Filtros y Búsqueda -->
+    <div class="filtros-section">
+      <div class="filtros-header">
+        <div class="filtros-tabs">
+          <div class="filtro-tab active" onclick="filtrarPorTab('todos')">Todos los Usuarios</div>
+          <div class="filtro-tab" onclick="filtrarPorTab('agenda')">Usuarios con Agenda</div>
+          <div class="filtro-tab" onclick="filtrarPorTab('sin-agenda')">Usuarios sin Agenda</div>
+          <div class="filtro-tab" onclick="filtrarPorTab('inactivos')">Usuarios inactivos</div>
+        </div>
+        <div class="search-box">
+          <input type="text" id="buscarUsuario" placeholder="Buscar usuario...">
+          <button class="search-btn" onclick="buscarUsuario()"><i class="fa-solid fa-search"></i></button>
+        </div>
+        <button class="new-user-btn" onclick="abrirModalNuevoUsuario()">
+          <i class="fa-solid fa-user-plus"></i> Nuevo Usuario
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabla de usuarios -->
+    <div class="tabla-usuarios">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Perfiles</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-usuarios-body">
+          <!-- Los usuarios se cargarán aquí dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Modal para crear/editar usuario -->
+  <div class="modal" id="modalUsuario">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitulo">Datos Usuario</h2>
+        <button class="close-modal" onclick="cerrarModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="info-text">
+          <strong>Su nuevo usuario recibirá un correo electrónico con el Nombre de Usuario designado para ingresar a DENTIDESK.</strong>
+          Una vez el usuario confirme su cuenta, podrá crear su propia clave de acceso.
+        </div>
+
+        <form id="formUsuario">
+          <!-- Sección Nombre y Apellidos -->
+          <div class="modal-section">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="nombres" class="required">Nombre</label>
+                <input type="text" id="nombres" placeholder="Nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="apellidos" class="required">Apellidos</label>
+                <input type="text" id="apellidos" placeholder="Apellidos" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Correo y Usuario -->
+          <div class="modal-section">
+            <div class="form-group">
+              <label for="email" class="required">Correo Electrónico</label>
+              <input type="email" id="email" placeholder="correo@ejemplo.com" required>
+            </div>
+            <div class="form-group">
+              <label for="usuario" class="required">Nombre de Usuario</label>
+              <input type="text" id="usuario" placeholder="Nombre de Usuario" required>
+            </div>
+          </div>
+
+          <!-- Sección Perfil de Usuario -->
+          <div class="modal-section">
+            <h3>Perfil de Usuario</h3>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="perfil-masculino" name="perfil">
+                <label for="perfil-masculino">Masculino</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="perfil-femenino" name="perfil">
+                <label for="perfil-femenino">Femenino</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Sucursales -->
+          <div class="modal-section">
+            <h3>Sucursales</h3>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="sucursal-fecha">
+                <label for="sucursal-fecha">Fecha de Nacimiento</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección RUT -->
+          <div class="modal-section">
+            <h3>RUT</h3>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label for="rut-dia">Día</label>
+                <input type="number" id="rut-dia" placeholder="DD" min="1" max="31">
+              </div>
+              <div class="form-group">
+                <label for="rut-mes">Mes</label>
+                <input type="number" id="rut-mes" placeholder="MM" min="1" max="12">
+              </div>
+              <div class="form-group">
+                <label for="rut-anio">Año</label>
+                <input type="number" id="rut-anio" placeholder="AAAA" min="1900" max="2024">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Teléfonos -->
+          <div class="modal-section">
+            <h3>Teléfono</h3>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="telefono-celular">Teléfono Celular</label>
+                <input type="tel" id="telefono-celular" placeholder="+569 1234 5678">
+              </div>
+              <div class="form-group">
+                <label for="telefono-fijo">Teléfono Fijo</label>
+                <input type="tel" id="telefono-fijo" placeholder="+569 1234 5678">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Región y Comuna -->
+          <div class="modal-section">
+            <h3>Región</h3>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="region">Región</label>
+                <select id="region">
+                  <option value="">Seleccione región</option>
+                  <option value="rm">RM - Metropolitana</option>
+                  <option value="v">Valparaíso</option>
+                  <option value="viii">Biobío</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="comuna">Comuna</label>
+                <select id="comuna">
+                  <option value="">Seleccione comuna</option>
+                  <option value="santiago">Santiago</option>
+                  <option value="providencia">Providencia</option>
+                  <option value="las-condes">Las Condes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Dirección -->
+          <div class="modal-section">
+            <h3>Dirección</h3>
+            <div class="form-group">
+              <label for="direccion">Dirección</label>
+              <input type="text" id="direccion" placeholder="Dirección">
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="ajuntamiento-online">
+              <label for="ajuntamiento-online">Ajuntamiento Online?</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn-guardar" onclick="guardarUsuario()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==== Variables globales ====
+    let usuarios = [
+      {
+        id: 0,
+        nombres: "ALEJANDRO",
+        apellidos: "MENDEZ",
+        perfiles: ["Profesional Doctor", "Administrador Gr."],
+        email: "alejandro@dentodesk.com",
+        telefono: "+569 1234 5678",
+        usuario: "alejandro.mendez",
+        estado: "activo",
+        tieneAgenda: true
+      },
+      {
+        id: 1,
+        nombres: "Carla",
+        apellidos: "Vásquez Jarry",
+        perfiles: ["Profesional Doctor", "Administrador Gr."],
+        email: "carla@dentodesk.com",
+        telefono: "+569 8765 4321",
+        usuario: "carla.vasquez",
+        estado: "activo",
+        tieneAgenda: false
+      },
+      {
+        id: 2,
+        nombres: "Cecilia",
+        apellidos: "Calderon",
+        perfiles: ["Profesional Doctor"],
+        email: "cecilia@dentodesk.com",
+        telefono: "+569 5555 6666",
+        usuario: "cecilia.calderon",
+        estado: "inactivo",
+        tieneAgenda: false
+      },
+    ];
+
+    let configuracionGlobal = {
+      editarDatos: false,
+      editarNomenclatura: true,
+      editarHorarios: false,
+      editarPorcentaje: true,
+      editarPagoHora: true,
+      desactivarUsuario: true
+    };
+
+    let usuarioEditando = null;
+    let siguienteId = 3;
+    let filtroActivo = 'todos';
+
+    // ==== Inicialización ====
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarConfiguracionDesdeLocalStorage();
+      cargarTablaUsuarios();
+      inicializarModal();
+    });
+
+    // ==== Funciones de la tabla ====
+    function cargarTablaUsuarios() {
+      const tablaBody = document.getElementById('tabla-usuarios-body');
+      tablaBody.innerHTML = '';
+
+      let usuariosFiltrados = usuarios;
+
+      // Aplicar filtros según la pestaña activa
+      if (filtroActivo === 'agenda') {
+        usuariosFiltrados = usuarios.filter(u => u.tieneAgenda);
+      } else if (filtroActivo === 'sin-agenda') {
+        usuariosFiltrados = usuarios.filter(u => !u.tieneAgenda);
+      } else if (filtroActivo === 'inactivos') {
+        usuariosFiltrados = usuarios.filter(u => u.estado === 'inactivo');
+      }
+
+      if (usuariosFiltrados.length === 0) {
+        tablaBody.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center">
+              No hay usuarios que coincidan con los criterios de búsqueda
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      usuariosFiltrados.forEach(usuario => {
+        const estadoClase = usuario.estado === 'activo' ? 'status-activo' : 'status-inactivo';
+        const estadoTexto = usuario.estado === 'activo' ? 'Activo' : 'Inactivo';
+        
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td><strong>${usuario.nombres}</strong></td>
+          <td>${usuario.apellidos}</td>
+          <td>
+            ${usuario.perfiles.map(perfil => `<span class="perfil-badge">${perfil}</span>`).join('')}
+          </td>
+          <td>
+            <span class="${estadoClase}">${estadoTexto}</span>
+            ${usuario.tieneAgenda ? '<span class="perfil-badge" style="background:#d1fae5;color:#065f46;">Con Agenda</span>' : ''}
+          </td>
+          <td class="acciones">
+            <button class="btn-editar" onclick="editarUsuario(${usuario.id})" ${!configuracionGlobal.editarDatos ? 'disabled' : ''}>
+              <i class="fa-solid fa-pen"></i> Editar
+            </button>
+            <button class="btn-eliminar" onclick="eliminarUsuario(${usuario.id})" ${!configuracionGlobal.desactivarUsuario ? 'disabled' : ''}>
+              <i class="fa-solid fa-trash"></i> ${usuario.estado === 'activo' ? 'Desactivar' : 'Activar'}
+            </button>
+          </td>
+        `;
+        tablaBody.appendChild(fila);
+      });
+    }
+
+    // ==== Dropdown perfil ====
+    function toggleUserMenu() {
+      document.getElementById("dropdown").classList.toggle("hidden");
+    }
+
+    // ==== Funciones de búsqueda y filtros ====
+    function buscarUsuario() {
+      const busqueda = document.getElementById('buscarUsuario').value.toLowerCase();
+      const filas = document.querySelectorAll('#tabla-usuarios-body tr');
+      
+      filas.forEach(fila => {
+        const textoFila = fila.textContent.toLowerCase();
+        fila.style.display = textoFila.includes(busqueda) ? '' : 'none';
+      });
+    }
+
+    function filtrarPorTab(tipo) {
+      // Actualizar tabs activos
+      document.querySelectorAll('.filtro-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      filtroActivo = tipo;
+      cargarTablaUsuarios();
+    }
+
+    // ==== Funciones CRUD ====
+    function editarUsuario(id) {
+      if (!configuracionGlobal.editarDatos) {
+        mostrarNotificacion('La edición de datos está deshabilitada en la configuración global', 'error');
+        return;
+      }
+
+      usuarioEditando = usuarios.find(u => u.id === id);
+      
+      if (!usuarioEditando) return;
+      
+      document.getElementById('modalTitulo').textContent = 'Editar Usuario';
+      document.getElementById('nombres').value = usuarioEditando.nombres;
+      document.getElementById('apellidos').value = usuarioEditando.apellidos;
+      document.getElementById('email').value = usuarioEditando.email;
+      document.getElementById('usuario').value = usuarioEditando.usuario;
+      document.getElementById('telefono-celular').value = usuarioEditando.telefono || '';
+      
+      abrirModal();
+    }
+
+    function eliminarUsuario(id) {
+      if (!configuracionGlobal.desactivarUsuario) {
+        mostrarNotificacion('La desactivación de usuarios está deshabilitada en la configuración global', 'error');
+        return;
+      }
+
+      const usuario = usuarios.find(u => u.id === id);
+      if (!usuario) return;
+      
+      const accion = usuario.estado === 'activo' ? 'desactivar' : 'activar';
+      
+      if (confirm(`¿Está seguro de que desea ${accion} al usuario ${usuario.nombres} ${usuario.apellidos}?`)) {
+        usuario.estado = usuario.estado === 'activo' ? 'inactivo' : 'activo';
+        cargarTablaUsuarios();
+        mostrarNotificacion(`Usuario ${usuario.nombres} ${usuario.apellidos} ${accion}do correctamente`, 'success');
+      }
+    }
+
+    // ==== Funciones del modal ====
+    function abrirModal() {
+      document.getElementById('modalUsuario').style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      document.getElementById('modalUsuario').style.display = 'none';
+      document.getElementById('formUsuario').reset();
+      usuarioEditando = null;
+    }
+
+    function abrirModalNuevoUsuario() {
+      document.getElementById('modalTitulo').textContent = 'Nuevo Usuario';
+      usuarioEditando = null;
+      document.getElementById('formUsuario').reset();
+      abrirModal();
+    }
+
+    function guardarUsuario() {
+      const nombres = document.getElementById('nombres').value;
+      const apellidos = document.getElementById('apellidos').value;
+      const email = document.getElementById('email').value;
+      const usuario = document.getElementById('usuario').value;
+      const telefono = document.getElementById('telefono-celular').value;
+      
+      // Validaciones básicas
+      if (!nombres || !apellidos || !email || !usuario) {
+        mostrarNotificacion('Por favor, complete todos los campos obligatorios (*)', 'error');
+        return;
+      }
+      
+      // Validar email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        mostrarNotificacion('Por favor, ingrese un correo electrónico válido', 'error');
+        return;
+      }
+      
+      // Crear o actualizar usuario
+      if (usuarioEditando) {
+        // Actualizar usuario existente
+        usuarioEditando.nombres = nombres;
+        usuarioEditando.apellidos = apellidos;
+        usuarioEditando.email = email;
+        usuarioEditando.usuario = usuario;
+        usuarioEditando.telefono = telefono;
+        
+        mostrarNotificacion(`Usuario ${nombres} ${apellidos} actualizado correctamente`, 'success');
+      } else {
+        // Crear nuevo usuario
+        const nuevoUsuario = {
+          id: siguienteId++,
+          nombres,
+          apellidos,
+          email,
+          telefono,
+          usuario,
+          perfiles: ["Profesional Doctor"],
+          estado: "activo",
+          tieneAgenda: false
+        };
+        
+        usuarios.push(nuevoUsuario);
+        mostrarNotificacion(`Usuario ${nombres} ${apellidos} creado correctamente`, 'success');
+      }
+      
+      cargarTablaUsuarios();
+      cerrarModal();
+    }
+
+    // ==== Configuración Global ====
+    function actualizarConfiguracionGlobal() {
+      configuracionGlobal.editarDatos = document.getElementById('config-editarDatos').checked;
+      configuracionGlobal.editarNomenclatura = document.getElementById('config-editarNomenclatura').checked;
+      configuracionGlobal.editarHorarios = document.getElementById('config-editarHorarios').checked;
+      configuracionGlobal.editarPorcentaje = document.getElementById('config-editarPorcentaje').checked;
+      configuracionGlobal.editarPagoHora = document.getElementById('config-editarPagoHora').checked;
+      configuracionGlobal.desactivarUsuario = document.getElementById('config-desactivarUsuario').checked;
+      
+      guardarConfiguracionEnLocalStorage();
+      cargarTablaUsuarios(); // Actualizar tabla para reflejar cambios en botones
+      
+      mostrarNotificacion('Configuración global actualizada correctamente', 'success');
+    }
+
+    function cargarConfiguracionDesdeLocalStorage() {
+      const configGuardada = localStorage.getItem('dentodesk-configuracion');
+      if (configGuardada) {
+        configuracionGlobal = JSON.parse(configGuardada);
+      }
+      
+      // Actualizar checkboxes
+      document.getElementById('config-editarDatos').checked = configuracionGlobal.editarDatos;
+      document.getElementById('config-editarNomenclatura').checked = configuracionGlobal.editarNomenclatura;
+      document.getElementById('config-editarHorarios').checked = configuracionGlobal.editarHorarios;
+      document.getElementById('config-editarPorcentaje').checked = configuracionGlobal.editarPorcentaje;
+      document.getElementById('config-editarPagoHora').checked = configuracionGlobal.editarPagoHora;
+      document.getElementById('config-desactivarUsuario').checked = configuracionGlobal.desactivarUsuario;
+    }
+
+    function guardarConfiguracionEnLocalStorage() {
+      localStorage.setItem('dentodesk-configuracion', JSON.stringify(configuracionGlobal));
+    }
+
+    // ==== Funciones auxiliares para el modal ====
+    function inicializarModal() {
+      // Event listener para checkboxes de perfil (solo uno seleccionado)
+      document.querySelectorAll('input[name="perfil"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            document.querySelectorAll('input[name="perfil"]').forEach(cb => {
+              if (cb !== this) cb.checked = false;
+            });
+          }
+        });
+      });
+    }
+
+    function mostrarNotificacion(mensaje, tipo) {
+      // Crear notificación temporal
+      const notificacion = document.createElement('div');
+      notificacion.textContent = mensaje;
+      notificacion.style.position = 'fixed';
+      notificacion.style.top = '20px';
+      notificacion.style.right = '20px';
+      notificacion.style.padding = '1rem 1.5rem';
+      notificacion.style.borderRadius = '6px';
+      notificacion.style.color = 'white';
+      notificacion.style.zIndex = '1001';
+      notificacion.style.fontWeight = '500';
+      notificacion.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+      
+      if (tipo === 'success') {
+        notificacion.style.background = '#10b981';
+      } else if (tipo === 'error') {
+        notificacion.style.background = '#ef4444';
+      } else {
+        notificacion.style.background = '#6b7280';
+      }
+      
+      document.body.appendChild(notificacion);
+      
+      // Remover después de 3 segundos
+      setTimeout(() => {
+        document.body.removeChild(notificacion);
+      }, 3000);
+    }
+
+    // ==== Event Listeners ====
+    // Cerrar dropdown al hacer clic fuera
+    window.onclick = function(event) {
+      if (!event.target.matches('.user-btn')) {
+        const dropdown = document.getElementById('dropdown');
+        if (!dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+      
+      // Cerrar modal al hacer clic fuera del contenido
+      const modal = document.getElementById('modalUsuario');
+      if (event.target === modal) {
+        cerrarModal();
+      }
+    }
+
+    // Estilos para estados
+    const style = document.createElement('style');
+    style.textContent = `
+      .status-activo {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+      .status-inactivo {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

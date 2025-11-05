@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="MobileOptimized" content="width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos del Paciente</title>
+    <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/style_datos_paciente.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div id="contenedor_carga">
+     <div id="carga"></div>
+  </div>
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+      <a id="btn1" href="#" class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Datos</a>
+      <a id="btn2" href="odontograma.html" class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen odontológico</a>
+      <a id="btn3" href="nutricion.html" class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen Nutricional</a>
+      <a id="btn4" href="psicologia.html" class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen Psicologico</a>
+      <a id="btn5" href="examen_psicologico.html" class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Imagenes</a>
+      <a id="btn6" href="img_r.html" class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Radiografias</a>
+      <a id="btn7" href="documentos.html" class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html" class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+  
+    <form id="formPaciente">
+        <input type="hidden" name="idpaciente" id="idpaciente" value="">
+        <div class="container-fluid pt-4 px-4">
+                <p>Información Personal</p>
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-6">
+                    <label>Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Apellidos:</label>
+                    <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" name="apellidos" required>
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Dni:</label>
+                    <input type="text" class="form-control" id="dni" placeholder="DNI" name="dni">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Genero:</label>
+                    <select id="genero" name="genero" class="form-select" autocomplete="off">
+                        <option value="Femenino">Femenino</option>
+                        <option value="Masculino">Masculino</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Fecha de Nacimiento:</label>
+                    <input type="date" id="nacimiento" class="form-control" oninput="calcularEdad()" name="fecha">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Nacionalidad:</label>
+                    <select id="nacionalidad" name="nacionalidad" class="form-select" autocomplete="off">
+                        <option value="Peruano">Peruano</option>
+                        <option value="Venezolano">Venezolano</option>
+                        <option value="Colombiano">Colombiano</option>
+                        <option value="Ecuatoriano">Ecuatoriano</option>
+                        <option value="Chileno">Chileno</option>
+                        <option value="Otro">Otro...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid pt-4 px-4">
+            <p>Información Académica</p>
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-6">
+                    <label>Escuela:</label>
+                    <select id="escuela" class="form-select" name="escuela">
+                        <option value="Escuela Primaria San Martín">Escuela Primaria San Martín</option>
+                        <option value="Colegio Nacional María Parado de Bellido">Colegio Nacional María Parado de Bellido</option>
+                        <option value="Institución Educativa Santa Rosa">Institución Educativa Santa Rosa</option>
+                        <option value="Colegio Peruano Alemán">Colegio Peruano Alemán</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Grado y sección:</label>
+                    <input type="text" class="form-control" id="seccion" name="seccion" style="text-transform: uppercase;">
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid pt-4 px-4">
+            <p>Información del contacto</p>
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-6">
+                    <label>Telefono:</label>
+                    <input type="text" class="form-control" id="telefono" placeholder="Telefono" name="telefono">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Provincia:</label>
+                    <input type="text" class="form-control" id="provincia" placeholder="Provincia" name="provincia">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Distrito:</label>
+                    <input type="text" class="form-control" id="distrito" placeholder="Distrito" name="distrito">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Direccion:</label>
+                    <input type="text" class="form-control" id="direccion" placeholder="Dirección" name="direccion">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Años:</label>
+                    <input type="text" class="form-control" id="edad" name="edad">
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <label>Meses:</label>
+                    <input type="text" class="form-control" id="meses" name="meses">
+                </div>
+            </div>
+        </div>      
+        <input id="actualizar" class="btn" type="submit" value="Actualizar">
+    </form>
+
+    <script>
+        // Obtener parámetro de la URL
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Cargar datos del paciente
+        function cargarDatosPaciente() {
+            const idPaciente = getUrlParameter('idpaciente');
+            
+            if (!idPaciente) {
+                document.body.innerHTML = '<div class="container mt-4"><div class="alert alert-danger">No se encontró el parámetro del paciente</div></div>';
+                return;
+            }
+
+            // Actualizar enlaces con el id del paciente
+            document.querySelectorAll('a[href]:not(#btn1)').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.includes('?')) {
+                    link.setAttribute('href', href + '?idpaciente=' + encodeURIComponent(idPaciente));
+                }
+            });
+
+            document.getElementById('idpaciente').value = idPaciente;
+
+            // Buscar en localStorage
+            const citas = JSON.parse(localStorage.getItem('citas')) || [];
+            const pacienteData = JSON.parse(localStorage.getItem('paciente_' + idPaciente)) || {};
+
+            const cita = citas.find(c => c.paciente === idPaciente);
+            
+            if (!cita && Object.keys(pacienteData).length === 0) {
+                document.body.innerHTML = `<div class="container mt-4"><div class="alert alert-warning">No se encontraron datos para el paciente: ${idPaciente}</div></div>`;
+                return;
+            }
+
+            // Si hay datos guardados, cargarlos
+            if (Object.keys(pacienteData).length > 0) {
+                document.getElementById('nombre').value = pacienteData.nombre || '';
+                document.getElementById('apellidos').value = pacienteData.apellidos || '';
+                document.getElementById('dni').value = pacienteData.dni || '';
+                document.getElementById('genero').value = pacienteData.genero || 'Femenino';
+                document.getElementById('nacimiento').value = pacienteData.fecha || '';
+                document.getElementById('nacionalidad').value = pacienteData.nacionalidad || 'Peruano';
+                document.getElementById('escuela').value = pacienteData.escuela || 'Escuela Primaria San Martín';
+                document.getElementById('seccion').value = pacienteData.seccion || '';
+                document.getElementById('telefono').value = pacienteData.telefono || '';
+                document.getElementById('provincia').value = pacienteData.provincia || '';
+                document.getElementById('distrito').value = pacienteData.distrito || '';
+                document.getElementById('direccion').value = pacienteData.direccion || '';
+                document.getElementById('edad').value = pacienteData.edad || '';
+                document.getElementById('meses').value = pacienteData.meses || '';
+            } else {
+                // Si no hay datos, inicializar con nombre del paciente
+                const nombreCompleto = idPaciente.split(' ');
+                document.getElementById('nombre').value = nombreCompleto[0] || '';
+                document.getElementById('apellidos').value = nombreCompleto.slice(1).join(' ') || '';
+            }
+
+            // Calcular edad si hay fecha de nacimiento
+            if (document.getElementById('nacimiento').value) {
+                calcularEdad();
+            }
+        }
+
+        // Guardar datos del paciente
+        function guardarDatosPaciente(event) {
+            event.preventDefault();
+            
+            const idPaciente = document.getElementById('idpaciente').value;
+            const datosPaciente = {
+                nombre: document.getElementById('nombre').value,
+                apellidos: document.getElementById('apellidos').value,
+                dni: document.getElementById('dni').value,
+                genero: document.getElementById('genero').value,
+                fecha: document.getElementById('nacimiento').value,
+                nacionalidad: document.getElementById('nacionalidad').value,
+                escuela: document.getElementById('escuela').value,
+                seccion: document.getElementById('seccion').value,
+                telefono: document.getElementById('telefono').value,
+                provincia: document.getElementById('provincia').value,
+                distrito: document.getElementById('distrito').value,
+                direccion: document.getElementById('direccion').value,
+                edad: document.getElementById('edad').value,
+                meses: document.getElementById('meses').value
+            };
+
+            localStorage.setItem('paciente_' + idPaciente, JSON.stringify(datosPaciente));
+            alert('Datos guardados correctamente');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDatosPaciente();
+            document.getElementById('formPaciente').addEventListener('submit', guardarDatosPaciente);
+            
+            // Ocultar carga
+            var contenedor = document.getElementById('contenedor_carga');
+            contenedor.style.visibility = 'hidden';
+            contenedor.style.opacity = '0';
+        });
+        
+        function calcularEdad(){
+            var fechaDeNacimiento = new Date(document.getElementById("nacimiento").value);
+            var hoy = new Date();
+            var edad = ((hoy - fechaDeNacimiento) / (1000*60*60*24*365)).toFixed(0);
+            var meses = ((hoy - fechaDeNacimiento) / (1000*60*60*24*365)).toFixed(1);
+            var edadmeses = parseInt(((meses - edad)*10).toFixed(0));
+            
+            if(edadmeses < 0){
+               document.getElementById("edad").value = edad - 1;
+               document.getElementById("meses").value = (12 + edadmeses);
+            } else {
+               document.getElementById("edad").value = edad;
+               document.getElementById("meses").value = edadmeses;
+            }
+        }
+    </script>
+</body>
+</html>

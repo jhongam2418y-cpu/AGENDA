@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examen Psicológico</title>
+  <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    function validarFormulario() {
+      var radioGroups = document.querySelectorAll('input[type="radio"]');
+      var checked = false;
+      
+      // Verificar que cada grupo de radio buttons tenga una opción seleccionada
+      for (var i = 0; i < radioGroups.length; i += 5) {
+        var groupChecked = false;
+        for (var j = 0; j < 5; j++) {
+          if (radioGroups[i + j].checked) {
+            groupChecked = true;
+            break;
+          }
+        }
+        if (!groupChecked) {
+          alert('Por favor, responde todas las preguntas');
+          return false;
+        }
+      }
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+  <style>
+    #btn4 {
+      border-bottom: 2px solid #25eaa4;
+      background-color: #d3d4d5;
+    }
+
+    #guardar {
+      position: fixed;
+      right: 2%;
+      bottom: 12%;
+      background-color: #25eaa4;
+      color: white;
+    }
+  </style>
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+      <a id="btn1" href="datos_personales.php?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Datos</a>
+      <a id="btn2" href="nuevo_odontograma.php?idpaciente=<?= $idpaciente ?>" 
+        class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen odontológico</a>
+      <a id="btn3" href="nutricion.php?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen Nutricional</a>
+      <a id="btn4" href="psicologia.php?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen Psicologico</a>
+      <a id="btn5" href="img.php?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Imagenes</a>
+      <a id="btn6" href="img_r.php?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Radiografias</a>
+      <a id="btn7" href="documentos.php?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.php?idpaciente=<?= $idpaciente ?>"
+          class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-sm-6 col-xl-6">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped text-start align-middle mb-0" id="tablahistoria">
+      <thead>
+        <tr class="table-secondary">
+          <th>Examen Psicológico</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tablita -->
+  <form action="../../logica/agregar/agregar_psicologia.php" method="POST" onsubmit="return validarFormulario()">
+    <input type="hidden" name="idpaciente" value="<?= $idpaciente ?>">
+    <div class="container-fluid pt-4 px-4">
+      <div class="text-center rounded p-4">
+        <div class="table-responsive">
+          <table class="table table-striped text-start align-middle mb-0" id="tablapaciente">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Enunciado</th>
+                <th>Nunca</th>
+                <th>Pocas veces</th>
+                <th>No sabría decir</th>
+                <th>Muchas veces</th>
+                <th>Siempre</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Tengo una cara agradable.</td>
+                <td><input type="radio" name="p1" value="nu1"></td>
+                <td><input type="radio" name="p1" value="po1"></td>
+                <td><input type="radio" name="p1" value="no1"></td>
+                <td><input type="radio" name="p1" value="ve1"></td>
+                <td><input type="radio" name="p1" value="s1"></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Tengo muchos amigos.</td>
+                <td><input type="radio" name="p2" value="nu2"></td>
+                <td><input type="radio" name="p2" value="po2"></td>
+                <td><input type="radio" name="p2" value="no2"></td>
+                <td><input type="radio" name="p2" value="ve2"></td>
+                <td><input type="radio" name="p2" value="s2"></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Creo problema a mi familia.</td>
+                <td><input type="radio" name="p3" value="nu3"></td>
+                <td><input type="radio" name="p3" value="po3"></td>
+                <td><input type="radio" name="p3" value="no3"></td>
+                <td><input type="radio" name="p3" value="ve3"></td>
+                <td><input type="radio" name="p3" value="s3"></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Soy lista (o listo).</td>
+                <td><input type="radio" name="p4" value="nu4"></td>
+                <td><input type="radio" name="p4" value="po4"></td>
+                <td><input type="radio" name="p4" value="no4"></td>
+                <td><input type="radio" name="p4" value="ve4"></td>
+                <td><input type="radio" name="p4" value="s4"></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Soy una persona feliz.</td>
+                <td><input type="radio" name="p5" value="nu5"></td>
+                <td><input type="radio" name="p5" value="po5"></td>
+                <td><input type="radio" name="p5" value="no5"></td>
+                <td><input type="radio" name="p5" value="ve5"></td>
+                <td><input type="radio" name="p5" value="s5"></td>
+              </tr>
+              <tr>
+                <td><b>6</b></td>
+                <td>Soy una persona feliz.</td>
+                <td><input type="radio" name="p6" value="nu6"></td>
+                <td><input type="radio" name="p6" value="po6"></td>
+                <td><input type="radio" name="p6" value="no6"></td>
+                <td><input type="radio" name="p6" value="ve6"></td>
+                <td><input type="radio" name="p6" value="s6"></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Siento que, en general, controlo lo que me pasa.</td>
+                <td><input type="radio" name="p7" value="nu7"></td>
+                <td><input type="radio" name="p7" value="po7"></td>
+                <td><input type="radio" name="p7" value="no7"></td>
+                <td><input type="radio" name="p7" value="ve7"></td>
+                <td><input type="radio" name="p7" value="s7"></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Tengo los ojos bonitos.</td>
+                <td><input type="radio" name="p8" value="nu8"></td>
+                <td><input type="radio" name="p8" value="po8"></td>
+                <td><input type="radio" name="p8" value="no8"></td>
+                <td><input type="radio" name="p8" value="ve8"></td>
+                <td><input type="radio" name="p8" value="s8"></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Mis compañeros se burlan de mí.</td>
+                <td><input type="radio" name="p9" value="nu9"></td>
+                <td><input type="radio" name="p9" value="po9"></td>
+                <td><input type="radio" name="p9" value="no9"></td>
+                <td><input type="radio" name="p9" value="ve9"></td>
+                <td><input type="radio" name="p9" value="s9"></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Mis compañeros se burlan de mí.</td>
+                <td><input type="radio" name="p10" value="nu10"></td>
+                <td><input type="radio" name="p10" value="po10"></td>
+                <td><input type="radio" name="p10" value="no10"></td>
+                <td><input type="radio" name="p10" value="ve10"></td>
+                <td><input type="radio" name="p10" value="s10"></td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Hago bien mi trabajo intelectual.</td>
+                <td><input type="radio" name="p11" value="nu11"></td>
+                <td><input type="radio" name="p11" value="po11"></td>
+                <td><input type="radio" name="p11" value="no11"></td>
+                <td><input type="radio" name="p11" value="ve11"></td>
+                <td><input type="radio" name="p11" value="s11"></td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>Estoy triste muchas veces.</td>
+                <td><input type="radio" name="p12" value="nu12"></td>
+                <td><input type="radio" name="p12" value="po12"></td>
+                <td><input type="radio" name="p12" value="no12"></td>
+                <td><input type="radio" name="p12" value="ve12"></td>
+                <td><input type="radio" name="p12" value="s12"></td>
+              </tr>
+              <tr>
+                <td>13</td>
+                <td>Suelo tener mis cosas en orden.</td>
+                <td><input type="radio" name="p13" value="nu13"></td>
+                <td><input type="radio" name="p13" value="po13"></td>
+                <td><input type="radio" name="p13" value="no13"></td>
+                <td><input type="radio" name="p13" value="ve13"></td>
+                <td><input type="radio" name="p13" value="s13"></td>
+              </tr>
+              <tr>
+                <td>14</td>
+                <td>Tengo el pelo bonito.</td>
+                <td><input type="radio" name="p14" value="nu14"></td>
+                <td><input type="radio" name="p14" value="po14"></td>
+                <td><input type="radio" name="p14" value="no14"></td>
+                <td><input type="radio" name="p14" value="ve14"></td>
+                <td><input type="radio" name="p14" value="s14"></td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td>Me parece fácil encontrar amigos.</td>
+                <td><input type="radio" name="p15" value="nu15"></td>
+                <td><input type="radio" name="p15" value="po15"></td>
+                <td><input type="radio" name="p15" value="no15"></td>
+                <td><input type="radio" name="p15" value="ve15"></td>
+                <td><input type="radio" name="p15" value="s15"></td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td>Mis padres y yo nos divertimos juntos muchas veces.</td>
+                <td><input type="radio" name="p16" value="nu16"></td>
+                <td><input type="radio" name="p16" value="po16"></td>
+                <td><input type="radio" name="p16" value="no16"></td>
+                <td><input type="radio" name="p16" value="ve16"></td>
+                <td><input type="radio" name="p16" value="s16"></td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td>Soy lento haciendo mi trabajo escolar.</td>
+                <td><input type="radio" name="p17" value="nu17"></td>
+                <td><input type="radio" name="p17" value="po17"></td>
+                <td><input type="radio" name="p17" value="no17"></td>
+                <td><input type="radio" name="p17" value="ve17"></td>
+                <td><input type="radio" name="p17" value="s17"></td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td>Soy tímido.</td>
+                <td><input type="radio" name="p18" value="nu18"></td>
+                <td><input type="radio" name="p18" value="po18"></td>
+                <td><input type="radio" name="p18" value="no18"></td>
+                <td><input type="radio" name="p18" value="ve18"></td>
+                <td><input type="radio" name="p18" value="s18"></td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td>Soy capaz de controlarme cuando me provocan.</td>
+                <td><input type="radio" name="p19" value="nu19"></td>
+                <td><input type="radio" name="p19" value="po19"></td>
+                <td><input type="radio" name="p19" value="no19"></td>
+                <td><input type="radio" name="p19" value="ve19"></td>
+                <td><input type="radio" name="p19" value="s19"></td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>Soy guapo.</td>
+                <td><input type="radio" name="p20" value="nu20"></td>
+                <td><input type="radio" name="p20" value="po20"></td>
+                <td><input type="radio" name="p20" value="no20"></td>
+                <td><input type="radio" name="p20" value="ve20"></td>
+                <td><input type="radio" name="p20" value="s20"></td>
+              </tr>
+              <tr>
+                <td>21</td>
+                <td>Me resulta difícil encontrar amigos.</td>
+                <td><input type="radio" name="p21" value="nu21"></td>
+                <td><input type="radio" name="p21" value="po21"></td>
+                <td><input type="radio" name="p21" value="no21"></td>
+                <td><input type="radio" name="p21" value="ve21"></td>
+                <td><input type="radio" name="p21" value="s21"></td>
+              </tr>
+              <tr>
+                <td>22</td>
+                <td>En casa me hacen mucho caso.</td>
+                <td><input type="radio" name="p22" value="nu22"></td>
+                <td><input type="radio" name="p22" value="po22"></td>
+                <td><input type="radio" name="p22" value="no22"></td>
+                <td><input type="radio" name="p22" value="ve22"></td>
+                <td><input type="radio" name="p22" value="s22"></td>
+              </tr>
+              <tr>
+                <td>23</td>
+                <td>Soy un buen lector.</td>
+                <td><input type="radio" name="p23" value="nu23"></td>
+                <td><input type="radio" name="p23" value="po23"></td>
+                <td><input type="radio" name="p23" value="no23"></td>
+                <td><input type="radio" name="p23" value="ve23"></td>
+                <td><input type="radio" name="p23" value="s23"></td>
+              </tr>
+              <tr>
+                <td>24</td>
+                <td>Me gusta ser como soy.</td>
+                <td><input type="radio" name="p24" value="nu24"></td>
+                <td><input type="radio" name="p24" value="po24"></td>
+                <td><input type="radio" name="p24" value="no24"></td>
+                <td><input type="radio" name="p24" value="ve24"></td>
+                <td><input type="radio" name="p24" value="s24"></td>
+              </tr>
+              <tr>
+                <td>25</td>
+                <td>Cuando todo sale mal encuentro formas de no sentirme tan desgraciado.</td>
+                <td><input type="radio" name="p25" value="nu25"></td>
+                <td><input type="radio" name="p25" value="po25"></td>
+                <td><input type="radio" name="p25" value="no25"></td>
+                <td><input type="radio" name="p25" value="ve25"></td>
+                <td><input type="radio" name="p25" value="s25"></td>
+              </tr>
+              <tr>
+                <td>26</td>
+                <td>Tengo un buen cuerpo.</td>
+                <td><input type="radio" name="p26" value="nu26"></td>
+                <td><input type="radio" name="p26" value="po26"></td>
+                <td><input type="radio" name="p26" value="no26"></td>
+                <td><input type="radio" name="p26" value="ve26"></td>
+                <td><input type="radio" name="p26" value="s26"></td>
+              </tr>
+              <tr>
+                <td>27</td>
+                <td>Soy popular entre mis compañeros.</td>
+                <td><input type="radio" name="p27" value="nu27"></td>
+                <td><input type="radio" name="p27" value="po27"></td>
+                <td><input type="radio" name="p27" value="no27"></td>
+                <td><input type="radio" name="p27" value="ve27"></td>
+                <td><input type="radio" name="p27" value="s27"></td>
+              </tr>
+              <tr>
+                <td>28</td>
+                <td>Mis padres me comprenden bien.</td>
+                <td><input type="radio" name="p28" value="nu28"></td>
+                <td><input type="radio" name="p28" value="po28"></td>
+                <td><input type="radio" name="p28" value="no28"></td>
+                <td><input type="radio" name="p28" value="ve28"></td>
+                <td><input type="radio" name="p28" value="s28"></td>
+              </tr>
+              <tr>
+                <td>29</td>
+                <td>Puedo recordar fácilmente las cosas.</td>
+                <td><input type="radio" name="p29" value="nu29"></td>
+                <td><input type="radio" name="p29" value="po29"></td>
+                <td><input type="radio" name="p29" value="no29"></td>
+                <td><input type="radio" name="p29" value="ve29"></td>
+                <td><input type="radio" name="p29" value="s29"></td>
+              </tr>
+              <tr>
+                <td>30</td>
+                <td>Estoy satisfecho conmigo mismo.</td>
+                <td><input type="radio" name="p30" value="nu30"></td>
+                <td><input type="radio" name="p30" value="po30"></td>
+                <td><input type="radio" name="p30" value="no30"></td>
+                <td><input type="radio" name="p30" value="ve30"></td>
+                <td><input type="radio" name="p30" value="s30"></td>
+              </tr>
+              <tr>
+                <td>31</td>
+                <td>Si no consigo algo a la primera, busco otros medios para conseguirlo.</td>
+                <td><input type="radio" name="p31" value="nu31"></td>
+                <td><input type="radio" name="p31" value="po31"></td>
+                <td><input type="radio" name="p31" value="no31"></td>
+                <td><input type="radio" name="p31" value="ve31"></td>
+                <td><input type="radio" name="p31" value="s31"></td>
+              </tr>
+              <tr>
+                <td>32</td>
+                <td>Me gusta mi cuerpo tal como es.</td>
+                <td><input type="radio" name="p32" value="nu32"></td>
+                <td><input type="radio" name="p32" value="po32"></td>
+                <td><input type="radio" name="p32" value="no32"></td>
+                <td><input type="radio" name="p32" value="ve32"></td>
+                <td><input type="radio" name="p32" value="s32"></td>
+              </tr>
+              <tr>
+                <td>33</td>
+                <td>Me gusta la gente.</td>
+                <td><input type="radio" name="p33" value="nu33"></td>
+                <td><input type="radio" name="p33" value="po33"></td>
+                <td><input type="radio" name="p33" value="no33"></td>
+                <td><input type="radio" name="p33" value="ve33"></td>
+                <td><input type="radio" name="p33" value="s33"></td>
+              </tr>
+              <tr>
+                <td>34</td>
+                <td>Muchas veces desearía marcharme de casa.</td>
+                <td><input type="radio" name="p34" value="nu34"></td>
+                <td><input type="radio" name="p34" value="po34"></td>
+                <td><input type="radio" name="p34" value="no34"></td>
+                <td><input type="radio" name="p34" value="ve34"></td>
+                <td><input type="radio" name="p34" value="s34"></td>
+              </tr>
+              <tr>
+                <td>35</td>
+                <td>Respondo bien en clase.</td>
+                <td><input type="radio" name="p35" value="nu35"></td>
+                <td><input type="radio" name="p35" value="po35"></td>
+                <td><input type="radio" name="p35" value="no35"></td>
+                <td><input type="radio" name="p35" value="ve35"></td>
+                <td><input type="radio" name="p35" value="s35"></td>
+              </tr>
+              <tr>
+                <td>36</td>
+                <td>Soy una buena persona.</td>
+                <td><input type="radio" name="p36" value="nu36"></td>
+                <td><input type="radio" name="p36" value="po36"></td>
+                <td><input type="radio" name="p36" value="no36"></td>
+                <td><input type="radio" name="p36" value="ve36"></td>
+                <td><input type="radio" name="p36" value="s36"></td>
+              </tr>
+              <tr>
+                <td>37</td>
+                <td>Puedo conseguir que otros hagan lo que yo quiero.</td>
+                <td><input type="radio" name="p37" value="nu37"></td>
+                <td><input type="radio" name="p37" value="po37"></td>
+                <td><input type="radio" name="p37" value="no37"></td>
+                <td><input type="radio" name="p37" value="ve37"></td>
+                <td><input type="radio" name="p37" value="s37"></td>
+              </tr>
+              <tr>
+                <td>38</td>
+                <td>Me siento bien con el aspecto que tengo.</td>
+                <td><input type="radio" name="p38" value="nu38"></td>
+                <td><input type="radio" name="p38" value="po38"></td>
+                <td><input type="radio" name="p38" value="no38"></td>
+                <td><input type="radio" name="p38" value="ve38"></td>
+                <td><input type="radio" name="p38" value="s38"></td>
+              </tr>
+              <tr>
+                <td>39</td>
+                <td>Tengo todos los amigos que quiero.</td>
+                <td><input type="radio" name="p39" value="nu39"></td>
+                <td><input type="radio" name="p39" value="po39"></td>
+                <td><input type="radio" name="p39" value="no39"></td>
+                <td><input type="radio" name="p39" value="ve39"></td>
+                <td><input type="radio" name="p39" value="s39"></td>
+              </tr>
+              <tr>
+                <td>40</td>
+                <td>En casa me enfado fácilmente.</td>
+                <td><input type="radio" name="p40" value="nu40"></td>
+                <td><input type="radio" name="p40" value="po40"></td>
+                <td><input type="radio" name="p40" value="no40"></td>
+                <td><input type="radio" name="p40" value="ve40"></td>
+                <td><input type="radio" name="p40" value="s40"></td>
+              </tr>
+              <tr>
+                <td>41</td>
+                <td>Termino rápidamente mi trabajo escolar.</td>
+                <td><input type="radio" name="p41" value="nu41"></td>
+                <td><input type="radio" name="p41" value="po41"></td>
+                <td><input type="radio" name="p41" value="no41"></td>
+                <td><input type="radio" name="p41" value="ve41"></td>
+                <td><input type="radio" name="p41" value="s41"></td>
+              </tr>
+              <tr>
+                <td>42</td>
+                <td>Creo que en conjunto soy un desastre.</td>
+                <td><input type="radio" name="p42" value="nu42"></td>
+                <td><input type="radio" name="p42" value="po42"></td>
+                <td><input type="radio" name="p42" value="no42"></td>
+                <td><input type="radio" name="p42" value="ve42"></td>
+                <td><input type="radio" name="p42" value="s42"></td>
+              </tr>
+              <tr>
+                <td>43</td>
+                <td>Suelo tener todo bajo control.</td>
+                <td><input type="radio" name="p43" value="nu43"></td>
+                <td><input type="radio" name="p43" value="po43"></td>
+                <td><input type="radio" name="p43" value="no43"></td>
+                <td><input type="radio" name="p43" value="ve43"></td>
+                <td><input type="radio" name="p43" value="s43"></td>
+              </tr>
+              <tr>
+                <td>44</td>
+                <td>Soy fuerte.</td>
+                <td><input type="radio" name="p44" value="nu44"></td>
+                <td><input type="radio" name="p44" value="po44"></td>
+                <td><input type="radio" name="p44" value="no44"></td>
+                <td><input type="radio" name="p44" value="ve44"></td>
+                <td><input type="radio" name="p44" value="s44"></td>
+              </tr>
+              <tr>
+                <td>45</td>
+                <td>Soy popular entre la gente de tu edad.</td>
+                <td><input type="radio" name="p45" value="nu45"></td>
+                <td><input type="radio" name="p45" value="po45"></td>
+                <td><input type="radio" name="p45" value="no45"></td>
+                <td><input type="radio" name="p45" value="ve45"></td>
+                <td><input type="radio" name="p45" value="s45"></td>
+              </tr>
+              <tr>
+                <td>46</td>
+                <td>En casa abusan de mí.</td>
+                <td><input type="radio" name="p46" value="nu46"></td>
+                <td><input type="radio" name="p46" value="po46"></td>
+                <td><input type="radio" name="p46" value="no46"></td>
+                <td><input type="radio" name="p46" value="ve46"></td>
+                <td><input type="radio" name="p46" value="s46"></td>
+              </tr>
+              <tr>
+                <td>47</td>
+                <td>Creo que soy inteligente.</td>
+                <td><input type="radio" name="p47" value="nu47"></td>
+                <td><input type="radio" name="p47" value="po47"></td>
+                <td><input type="radio" name="p47" value="no47"></td>
+                <td><input type="radio" name="p47" value="ve47"></td>
+                <td><input type="radio" name="p47" value="s47"></td>
+              </tr>
+              <tr>
+                <td>48</td>
+                <td>Me entiendo bien a mí mismo.</td>
+                <td><input type="radio" name="p48" value="nu48"></td>
+                <td><input type="radio" name="p48" value="po48"></td>
+                <td><input type="radio" name="p48" value="no48"></td>
+                <td><input type="radio" name="p48" value="ve48"></td>
+                <td><input type="radio" name="p48" value="s48"></td>
+              </tr>
+              <tr>
+                <td>49</td>
+                <td>Me siento como "una pluma al viento" manejada por otras personas.</td>
+                <td><input type="radio" name="p49" value="nu49"></td>
+                <td><input type="radio" name="p49" value="po49"></td>
+                <td><input type="radio" name="p49" value="no49"></td>
+                <td><input type="radio" name="p49" value="ve49"></td>
+                <td><input type="radio" name="p49" value="s49"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <input id="guardar" class="btn" type="submit" value="Guardar">
+  </form>
+</body>
+<script>
+  window.onpageshow = function () {
+    var contenedor = document.getElementById('contenedor_carga');
+    contenedor.style.visibility = 'hidden';
+    contenedor.style.opacity = '0';
+  }
+</script>
+
+</html>

@@ -1,0 +1,32 @@
+#rounded1 {
+background-color: #2e5a8b;
+}
+#rounded2 {
+background-color: #2e5a8b;
+}
+.text-white {
+color: white;
+}
+#guardar {
+background-color: #25eaa4;
+color: white;
+}
+ul {
+display: flex;
+}
+ul li {
+list-style-type: none;
+margin-right: 5px;
+}
+ul li img {
+width: 70px;
+height: 70px;
+}
+#end {
+margin-bottom: 120px;
+}
+label {
+font-family: sans-serif;
+margin: 10px;
+font-weight: bold;
+}

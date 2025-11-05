@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dentodesk - Agenda</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* ===== TOASTS ===== */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 3000;
+    }
+    .toast {
+      min-width: 250px;
+      padding: 12px 18px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
+    }
+    .toast.success { background: #28a745; }
+    .toast.info    { background: #007bff; }
+    .toast.error   { background: #dc3545; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: translateX(100%); }
+    }
+    
+    /* ===== ESTILOS MEJORADOS PARA CITAS ===== */
+    .cita {
+      background: #e3f2fd;
+      border: 1px solid #2196f3;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin: 3px;
+      font-size: 11px;
+      cursor: pointer;
+      overflow: hidden;
+      max-width: 100%;
+      word-wrap: break-word;
+      min-height: 55px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: auto;
+      flex-grow: 1;
+      line-height: 1.3;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .cita.confirmada { 
+      background: #e8f5e9; 
+      border-color: #4caf50; 
+    }
+    
+    .cita.pendiente { 
+      background: #fff3e0; 
+      border-color: #ff9800; 
+    }
+    
+    .cita.cancelada { 
+      background: #ffebee; 
+      border-color: #f44336; 
+    }
+
+    /* NUEVO: Diseño mejorado para información de citas */
+    .cita-header {
+      font-weight: bold;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .cita-paciente {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+    }
+
+    .cita-hora {
+      font-size: 10px;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .cita-details {
+      font-size: 10px;
+      color: #555;
+    }
+
+    .cita-detail-item {
+      display: flex;
+      align-items: center;
+      margin-top: 3px;
+    }
+
+    .cita-detail-label {
+      font-weight: 600;
+      margin-right: 5px;
+      flex-shrink: 0;
+      font-size: 9px;
+      color: #444;
+    }
+
+    .cita-detail-value {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 10px;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    /* MODIFICACIÓN PRINCIPAL: Celdas más grandes y flexibles */
+    .cell {
+      border: 1px solid #e0e0e0;
+      min-height: 80px; /* REDUCIDO de 100px a 80px para mostrar todas las horas */
+      position: relative;
+      cursor: pointer;
+      padding: 3px;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      transition: background-color 0.2s;
+    }
+    
+    .cell:hover {
+      background-color: #f0f8ff;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .close-btn {
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    
+    .main-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .main-btn.danger {
+      background: #dc3545;
+    }
+    
+    .main-btn:hover {
+      opacity: 0.9;
+    }
+    
+    .full-width {
+      width: 100%;
+    }
+    
+    /* MODIFICACIÓN PRINCIPAL: Ajustar tamaño de horas para mostrar TODAS las horas */
+    .agenda-grid {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      grid-template-rows: auto 1fr;
+      height: 1000px; /* AUMENTADO para mostrar todas las horas */
+      border: 1px solid #e0e0e0;
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    .agenda-hours {
+      grid-column: 1;
+      grid-row: 2;
+      display: flex;
+      flex-direction: column;
+      overflow-y: hidden;
+    }
+    
+    .agenda-hours > div {
+      height: 80px; /* REDUCIDO de 100px a 80px para mostrar todas las horas */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 14px;
+      font-weight: 500;
+      background: #f8f9fa;
+      padding: 0 10px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+    
+    .agenda-days {
+      grid-column: 2;
+      grid-row: 1;
+      display: grid;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 1px solid #e0e0e0;
+      overflow-x: hidden;
+    }
+    
+    .agenda-days > div {
+      padding: 15px 10px;
+      border-right: 1px solid #e0e0e0;
+      background: #f8f9fa;
+    }
+    
+    /* MODIFICACIÓN PRINCIPAL: Contenedor de celdas con altura fija y scroll */
+    .agenda-cells {
+      grid-column: 2;
+      grid-row: 2;
+      display: grid;
+      overflow-y: auto;
+      height: 100%;
+    }
+    
+    .agenda-wrapper {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .agenda-sidebar {
+      width: 250px;
+      background: #59F87B;
+      padding: 15px;
+      border-radius: 8px;
+      height: fit-content;
+    }
+    
+    .agenda-item {
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .color-azul { background: #6CE5DD; }
+    .color-rojo { background: #F45D5F; }
+    
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: #0077b6;
+      color: var(--white);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: var(--secondary);
+      color: var(--white);
+    }
+
+    .nav-links a.active {
+      font-weight: 500;
+      color: var(--white);
+      background: var(--secondary);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .main-btn {
+      background: var(--secondary);
+      border: none;
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .main-btn:hover {
+      background: var(--accent);
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--white);
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .user-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: var(--white);
+      color: var(--dark);
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1001;
+    }
+
+    .dropdown a {
+      padding: 10px 16px;
+      text-decoration: none;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown a:hover {
+      background: var(--light);
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .search-bar input {
+      border: none;
+      padding: 8px 12px;
+      outline: none;
+      min-width: 200px;
+    }
+
+    .search-bar button {
+      border: none;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background: var(--accent);
+    }
+
+    :root {
+      --primary: #0077b6;
+      --secondary: #00b4d8;
+      --accent: #2DA4E3;
+      --danger: #d90429;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --light: #f5f7fa;
+      --dark: #333;
+      --gray: #666;
+      --white: #fff;
+    }
+    
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .agenda-container {
+      padding: 20px;
+    }
+    
+    .agenda-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .filtros {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    input, select, textarea {
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    
+    .nav-btn, .hoy-btn {
+      padding: 8px 12px;
+      border: 1px solid #ced4da;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .user-menu {
+      position: relative;
+    }
+    
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .search-bar {
+      display: flex;
+    }
+    
+    .rango-fechas {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    .agenda-list {
+      margin-bottom: 15px;
+    }
+    
+    /* NUEVO: Estilos para formulario de pago */
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .form-row label {
+      flex: 1;
+    }
+    
+    /* ===== NUEVOS ESTILOS PARA SELECTOR DE HORA AM/PM ===== */
+    .hora-selector {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .hora-selector select {
+      flex: 1;
+    }
+    
+    .ampm-selector {
+      display: flex;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+    
+    .ampm-option {
+      flex: 1;
+      padding: 8px 12px;
+      text-align: center;
+      background: white;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s;
+    }
+    
+    .ampm-option.active {
+      background: #007bff;
+      color: white;
+    }
+    
+    .ampm-option:not(.active):hover {
+      background: #f0f0f0;
+    }
+</style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <header class="navbar">
+    <div class="user-info">
+      Bienvenido, <span id="nombrePaciente"></span>
+      <button onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+
+    <div class="logo">Dentodesk</div>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+      <a href="pacientes.html" class="active"><i class="fa-solid fa-users"></i> Pacientes</a>
+      <a href="administrador.html"><i class="fa-solid fa-user-tie"></i> Administrador</a>
+      <a href="reportes.html"><i class="fa-solid fa-chart-line"></i> Reportes</a>
+      <a href="configuracion.html"><i class="fa-solid fa-cog"></i> Configuración</a>
+    </nav>
+    <div class="actions">
+      <button class="main-btn" id="btnRegistrarCita"><i class="fa-solid fa-calendar-plus"></i> Registrar cita</button>
+      <div class="user-menu">
+        <button class="user-btn">👤 ⌄</button>
+        <div class="dropdown hidden">
+          <a href="#">Mi perfil</a>
+          <a href="#">Cerrar sesión</a>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar paciente">
+        <button>🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="agenda-container">
+    <div class="agenda-header">
+      <button class="nav-btn" id="prevBtn">←</button>
+      <button class="nav-btn" id="nextBtn">→</button>
+      <button class="hoy-btn" id="hoyBtn">📅 Hoy</button>
+      <span class="rango-fechas" id="rangoFechas"></span>
+    </div>
+
+    <div class="filtros">
+      <label>Estado
+        <select id="filtroEstado">
+          <option value="Todos">Todos</option>
+          <option value="Confirmado">Confirmados</option>
+          <option value="Pendiente">Pendientes</option>
+          <option value="Cancelado">Cancelados</option>
+        </select>
+      </label>
+      <label>Vista
+        <select id="vistaSelect">
+          <option value="semana">Por semana</option>
+          <option value="dia">Por día</option>
+          <option value="mes">Por mes</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="agenda-wrapper">
+      <div class="agenda-grid">
+        <div class="agenda-hours" id="agendaHours"></div>
+        <div class="agenda-days" id="agendaDays"></div>
+        <div class="agenda-cells" id="agendaCells"></div>
+      </div>
+
+      <aside class="agenda-sidebar">
+        <h3>📋 Todas las agendas</h3>
+        <div class="agenda-list" id="agendaList">
+          <div class="agenda-item color-azul"><span class="nombre">✔️ LUIS SILVA</span></div>
+          <div class="agenda-item color-rojo"><span class="nombre">✔️ Especialistas</span></div>
+        </div>
+        <button class="main-btn full-width" id="btnAgregarAgenda">+ Agregar</button>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Modal Registrar Cita -->
+<div id="modalCita" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn" id="cerrarModal">&times;</span>
+    <h2>Registrar nueva cita</h2>
+
+    <form id="formCita">
+      <label>Apellidos y Nombres:
+        <input type="text" id="paciente" required>
+      </label>
+      <label>DNI:
+        <input type="text" id="dni" maxlength="8" pattern="[0-9]{8}" title="Debe tener 8 dígitos numéricos">
+      </label>
+      <label>Edad:
+        <input type="number" id="edad" min="0" max="120">
+      </label>
+      <label>Género:
+        <select id="genero">
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+      </label>
+      <label>Fecha:
+        <input type="date" id="fecha" required>
+      </label>
+      
+      <!-- NUEVO: Selector de hora con AM/PM -->
+      <label>Hora:
+        <div class="hora-selector">
+          <select id="hora" required>
+            <option value="">Hora</option>
+            <option value="09">9:00</option>
+            <option value="09:30">9:30</option>
+            <option value="10">10:00</option>
+            <option value="10:30">10:30</option>
+            <option value="11">11:00</option>
+            <option value="11:30">11:30</option>
+            <option value="12">12:00</option>
+            <option value="12:30">12:30</option>
+            <option value="13">1:00</option>
+            <option value="13:30">1:30</option>
+            <option value="14">2:00</option>
+            <option value="14:30">2:30</option>
+            <option value="15">3:00</option>
+            <option value="15:30">3:30</option>
+            <option value="16">4:00</option>
+            <option value="16:30">4:30</option>
+            <option value="17">5:00</option>
+            <option value="17:30">5:30</option>
+            <option value="18">6:00</option>
+            <option value="18:30">6:30</option>
+            <option value="19">7:00</option>
+            <option value="19:30">7:30</option>
+            <option value="20">8:00</option>
+          </select>
+          <div class="ampm-selector">
+            <button type="button" class="ampm-option active" data-value="AM">AM</button>
+            <button type="button" class="ampm-option" data-value="PM">PM</button>
+          </div>
+        </div>
+        <small>Horario disponible: 9:00 AM - 8:00 PM</small>
+      </label>
+      
+      <label>Tarea:
+        <select id="tarea">
+          <option value="">Seleccionar tarea</option>
+          <option value="Limpieza dental">Limpieza dental</option>
+          <option value="Extracción">Extracción</option>
+          <option value="Ortodoncia">Ortodoncia</option>
+          <option value="Blanqueamiento">Blanqueamiento</option>
+          <option value="Consulta general">Consulta general</option>
+          <option value="Tratamiento de caries">Tratamiento de caries</option>
+          <option value="Implante dental">Implante dental</option>
+          <option value="Revisión">Revisión</option>
+          <option value="Endodoncia">Endodoncia</option>
+          <option value="Periodoncia">Periodoncia</option>
+          <option value="Prótesis dental">Prótesis dental</option>
+        </select>
+      </label>
+      
+      <div class="form-row">
+        <label>Presupuesto (S/):
+          <input type="number" id="presupuesto" min="0" step="0.01" placeholder="0.00">
+        </label>
+        
+        <label>Método de pago:
+          <select id="metodoPago">
+            <option value="">Seleccionar método</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Transferencia">Transferencia</option>
+            <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+            <option value="Tarjeta de débito">Tarjeta de débito</option>
+          </select>
+        </label>
+      </div>
+      
+      <label>Observaciones:
+        <textarea id="observaciones"></textarea>
+      </label>
+      <label>Representante (si es menor de edad):
+        <input type="text" id="representante" placeholder="Nombre del padre/madre/tutor">
+      </label>
+      <label>Estado:
+        <select id="estado">
+          <option value="Confirmado">Confirmado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+      </label>
+
+      <button type="submit" class="main-btn">Guardar cita</button>
+      <button type="button" id="btnEliminarCita" class="main-btn danger hidden">Eliminar cita</button>
+    </form>
+  </div>
+</div>
+
+  <!-- Contenedor de Toasts -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+<script>
+    // === TOASTS ===
+    function showToast(message, type="info") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(()=> toast.remove(), 3500);
+    }
+
+    // === LOGIN ACTIVO ===
+    const usuarioActivo = localStorage.getItem("usuarioActivo");
+    if (!usuarioActivo) {
+      window.location.href = "login.html";
+    }
+
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || {};
+    const paciente = usuarios[usuarioActivo];
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("nombrePaciente").textContent = paciente?.nombre || "Paciente";
+    });
+
+    function cerrarSesion() {
+      localStorage.removeItem("usuarioActivo");
+      showToast("👋 Sesión cerrada", "info");
+      setTimeout(() => window.location.href = "login.html", 2000);
+    }
+
+    // === NUEVO: Funciones para manejar selector AM/PM ===
+    function convertirHoraAMPM(hora24) {
+      if (!hora24) return { hora: "", ampm: "AM" };
+      
+      const [horas, minutos] = hora24.split(':');
+      let hora = parseInt(horas);
+      let ampm = "AM";
+      
+      if (hora >= 12) {
+        ampm = "PM";
+        if (hora > 12) hora -= 12;
+      }
+      
+      if (hora === 0) hora = 12;
+      
+      return {
+        hora: minutos ? `${hora}:${minutos}` : `${hora}`,
+        ampm: ampm
+      };
+    }
+    
+    function convertirHora24(horaAMPM, ampm) {
+      if (!horaAMPM) return "";
+      
+      let [hora, minutos] = horaAMPM.split(':');
+      let horaNum = parseInt(hora);
+      
+      if (ampm === "PM" && horaNum < 12) {
+        horaNum += 12;
+      } else if (ampm === "AM" && horaNum === 12) {
+        horaNum = 0;
+      }
+      
+      return `${horaNum.toString().padStart(2, '0')}:${minutos || '00'}`;
+    }
+    
+    function actualizarSelectorAMPM() {
+      const ampmOptions = document.querySelectorAll('.ampm-option');
+      ampmOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          ampmOptions.forEach(opt => opt.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    }
+    
+    function obtenerHoraSeleccionada() {
+      const horaSelect = document.getElementById('hora');
+      const ampmActive = document.querySelector('.ampm-option.active');
+      
+      if (!horaSelect.value) return "";
+      
+      return convertirHora24(horaSelect.value, ampmActive.dataset.value);
+    }
+    
+    function establecerHoraSeleccionada(hora24) {
+      const { hora, ampm } = convertirHoraAMPM(hora24);
+      const horaSelect = document.getElementById('hora');
+      const ampmOptions = document.querySelectorAll('.ampm-option');
+      
+      if (hora) {
+        horaSelect.value = hora;
+      }
+      
+      ampmOptions.forEach(option => {
+        option.classList.toggle('active', option.dataset.value === ampm);
+      });
+    }
+
+    // === AGENDA ===
+    document.addEventListener("DOMContentLoaded", () => {
+      const agendaHours = document.getElementById("agendaHours");
+      const agendaCellsContainer = document.getElementById("agendaCells");
+      const agendaDays = document.getElementById("agendaDays");
+      const rangoFechas = document.getElementById("rangoFechas");
+      const vistaSelect = document.getElementById("vistaSelect");
+      const modal = document.getElementById("modalCita");
+      const btnEliminarCita = document.getElementById("btnEliminarCita");
+      const filtroEstado = document.getElementById("filtroEstado");
+
+      // Inicializar selector AM/PM
+      actualizarSelectorAMPM();
+
+      // Array de meses en español
+      const meses = ["ene", "feb", "mar", "abr", "may", "jun", 
+                    "jul", "ago", "sep", "oct", "nov", "dic"];
+      const diasSemana = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+
+      // CORRECCIÓN: Generar horas que coincidan con las celdas - TODAS LAS HORAS (9 AM - 8 PM)
+      function generarHoras(inicio=9, fin=21){ // Cambiado de 20 a 21 para incluir hasta las 8 PM
+        agendaHours.innerHTML="";
+        // Generar 12 filas (todas las horas de 9 AM a 8 PM)
+        for(let h=inicio; h<fin; h++){
+            const div=document.createElement("div");
+            const horaFormateada = (h <= 12 ? h : h-12) + ":00 " + (h < 12 ? "a. m." : "p. m.");
+            div.textContent = horaFormateada;
+            agendaHours.appendChild(div);
+        }
+      }
+
+      function formatearHora(hora24) {
+        let [hora, minutos] = hora24.split(":");
+        hora = parseInt(hora, 10);
+        const ampm = hora >= 12 ? "PM" : "AM";
+        hora = hora % 12 || 12;
+        return `${hora}:${minutos} ${ampm}`;
+      }
+
+      let currentDate = new Date();
+      let vista = "semana";
+
+      function renderVista(){
+        agendaDays.innerHTML="";
+        agendaCellsContainer.innerHTML="";
+        if(vista==="semana"){ generarHoras(9,21); renderSemana(); }
+        else if(vista==="dia"){ generarHoras(9,21); renderDia(); }
+        else{ renderMes(); }
+        mostrarCitas();
+      }
+
+      // Helpers modal
+      function habilitarModoNueva(){
+        delete modal.dataset.editIndex;
+        btnEliminarCita.classList.add("hidden");
+        document.getElementById("formCita").reset();
+      }
+      function habilitarModoEdicion(index){
+        modal.dataset.editIndex = index;
+        btnEliminarCita.classList.remove("hidden");
+      }
+
+      // === Validación de horarios duplicados ===
+      function existeCitaEnHorario(fecha, hora, excluirIndex = null) {
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        return citas.some((cita, index) => {
+          if (excluirIndex === index) return false;
+          return cita.fecha === fecha && cita.hora === hora;
+        });
+      }
+
+      // === Render Semana - CORREGIDO ===
+      function renderSemana() {
+        const start = getStartOfWeek(currentDate);
+        const end = new Date(start); 
+        end.setDate(end.getDate() + 6);
+        
+        rangoFechas.textContent = `${start.getDate()} ${meses[start.getMonth()]} - ${end.getDate()} ${meses[end.getMonth()]}`;
+        
+        agendaDays.style.gridTemplateColumns = "repeat(7,1fr)";
+        for (let i = 0; i < 7; i++) {
+          const dia = new Date(start); 
+          dia.setDate(start.getDate() + i);
+          const div = document.createElement("div");
+          div.innerHTML = `${diasSemana[i]}<span>${dia.getDate()}/${dia.getMonth()+1}</span>`;
+          agendaDays.appendChild(div);
+        }
+        
+        // CORRECCIÓN: 12 filas (todas las horas de 9 AM a 8 PM)
+        agendaCellsContainer.style.gridTemplateColumns = "repeat(7,1fr)";
+        agendaCellsContainer.style.gridTemplateRows = "repeat(12,1fr)"; // 12 horas
+        for (let fila = 0; fila < 12; fila++) {
+          for (let col = 0; col < 7; col++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.addEventListener("click", () => {
+              modal.classList.remove("hidden");
+              habilitarModoNueva();
+              const horaBase = 9 + fila;
+              const fechaSeleccionada = new Date(start); 
+              fechaSeleccionada.setDate(start.getDate() + col);
+              document.getElementById("fecha").value = fechaSeleccionada.toISOString().split("T")[0];
+              establecerHoraSeleccionada(`${horaBase.toString().padStart(2,"0")}:00`);
+            });
+            agendaCellsContainer.appendChild(cell);
+          }
+        }
+      }
+
+      // === Render Día - CORREGIDO ===
+      function renderDia() {
+        rangoFechas.textContent = currentDate.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"short"});
+        agendaDays.style.gridTemplateColumns = "1fr";
+        const div = document.createElement("div");
+        div.textContent = currentDate.toLocaleDateString("es-ES",{weekday:"long"});
+        agendaDays.appendChild(div);
+        agendaCellsContainer.style.gridTemplateColumns = "1fr";
+        agendaCellsContainer.style.gridTemplateRows = "repeat(12,1fr)"; // 12 horas
+        for (let fila = 0; fila < 12; fila++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          cell.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            habilitarModoNueva();
+            const horaBase = 9 + fila;
+            document.getElementById("fecha").value = currentDate.toISOString().split("T")[0];
+            establecerHoraSeleccionada(`${horaBase.toString().padStart(2,"0")}:00`);
+          });
+          agendaCellsContainer.appendChild(cell);
+        }
+      }
+
+      // === Render Mes ===
+      function renderMes(){
+        rangoFechas.textContent = currentDate.toLocaleString("es-ES",{month:"long",year:"numeric"});
+        agendaDays.style.gridTemplateColumns="repeat(7,1fr)";
+        
+        diasSemana.forEach(d=>{ 
+          let div=document.createElement("div"); 
+          div.textContent=d; 
+          agendaDays.appendChild(div); 
+        });
+        
+        agendaCellsContainer.style.gridTemplateColumns="repeat(7,1fr)";
+        agendaCellsContainer.style.gridTemplateRows="repeat(6,1fr)";
+        
+        let primer=new Date(currentDate.getFullYear(),currentDate.getMonth(),1);
+        let start=new Date(primer); 
+        start.setDate(primer.getDate()-(primer.getDay()||7)+1);
+        
+        for(let i=0;i<42;i++){
+          const d=new Date(start); 
+          d.setDate(start.getDate()+i);
+          const cell=document.createElement("div");
+          cell.classList.add("cell"); 
+          cell.dataset.dia=d.getDate(); 
+          cell.textContent=d.getDate();
+          
+          if(d.getMonth()!==currentDate.getMonth()){ 
+            cell.style.color="#aaa"; 
+          } else {
+            cell.addEventListener("click", () => {
+              modal.classList.remove("hidden");
+              habilitarModoNueva();
+              document.getElementById("fecha").value = d.toISOString().split("T")[0];
+            });
+          }
+          agendaCellsContainer.appendChild(cell);
+        }
+      }
+
+      function getStartOfWeek(date){
+        const d=new Date(date); 
+        const day=d.getDay(); 
+        const diff=d.getDate()-day+(day===0?-6:1);
+        return new Date(d.setDate(diff));
+      }
+
+      // === Botones navegación ===
+      document.getElementById("prevBtn").addEventListener("click",()=>{ 
+        if(vista==="semana") currentDate.setDate(currentDate.getDate()-7); 
+        else if(vista==="dia") currentDate.setDate(currentDate.getDate()-1); 
+        else currentDate.setMonth(currentDate.getMonth()-1); 
+        renderVista(); 
+      });
+      
+      document.getElementById("nextBtn").addEventListener("click",()=>{ 
+        if(vista==="semana") currentDate.setDate(currentDate.getDate()+7); 
+        else if(vista==="dia") currentDate.setDate(currentDate.getDate()+1); 
+        else currentDate.setMonth(currentDate.getMonth()+1); 
+        renderVista(); 
+      });
+      
+      document.getElementById("hoyBtn").addEventListener("click",()=>{ 
+        currentDate=new Date(); 
+        renderVista(); 
+      });
+      
+      vistaSelect.addEventListener("change",e=>{ 
+        vista=e.target.value; 
+        renderVista(); 
+      });
+      
+      filtroEstado.addEventListener("change", () => {
+        mostrarCitas();
+      });
+
+      // === Modal ===
+      document.getElementById("btnRegistrarCita").addEventListener("click",()=>{ 
+        modal.classList.remove("hidden"); 
+        habilitarModoNueva(); 
+      });
+      
+      document.getElementById("cerrarModal").addEventListener("click",()=>modal.classList.add("hidden"));
+      window.addEventListener("click",(e)=>{ if(e.target===modal) modal.classList.add("hidden"); });
+
+      // === MODIFICACIÓN PRINCIPAL: Mostrar Citas con nuevo diseño mejorado ===
+      function mostrarCitas(){
+        const citas=JSON.parse(localStorage.getItem("citas"))||[];
+        const estadoFiltro = filtroEstado.value;
+        
+        console.log("Citas encontradas:", citas.length);
+        
+        // Limpiar celdas
+        agendaCellsContainer.querySelectorAll(".cell").forEach(c=>{ 
+            if(vista!=="mes"){ 
+                c.innerHTML=""; 
+            } else { 
+                let numeroDia=c.dataset.dia; 
+                c.innerHTML=numeroDia?numeroDia:""; 
+            } 
+        });
+        
+        // Mostrar citas
+        citas.forEach((cita,index)=>{
+            // Aplicar filtro de estado
+            if (estadoFiltro !== "Todos" && cita.estado !== estadoFiltro) return;
+            
+            console.log("Procesando cita:", cita);
+            
+            const fechaCita = cita.fecha;
+            let div;
+            
+            if(vista==="semana"){
+                const start=getStartOfWeek(currentDate); 
+                const end=new Date(start); 
+                end.setDate(end.getDate()+6);
+                
+                const fechaStr = cita.fecha;
+                const startStr = start.toISOString().split("T")[0];
+                const endStr = end.toISOString().split("T")[0];
+                
+                if (fechaStr >= startStr && fechaStr <= endStr) {
+                    const fechaTemp = new Date(cita.fecha + "T00:00");
+                    const dia = fechaTemp.getDay() === 0 ? 6 : fechaTemp.getDay() - 1;
+
+                    const [horaCita, minutosCita] = cita.hora.split(':');
+                    const hora = parseInt(horaCita);
+                    
+                    // CORRECCIÓN: Cálculo correcto de la fila (12 filas, todas las horas)
+                    const fila = hora - 9;
+                    
+                    console.log(`Cita: ${cita.paciente}, Fecha: ${cita.fecha}, Hora: ${cita.hora}, Hora num: ${hora}, Dia: ${dia}, Fila: ${fila}`);
+                    
+                    if(fila >= 0 && fila < 12){ 
+                        const cell=agendaCellsContainer.children[fila*7+dia]; 
+                        if(cell) {
+                            div=document.createElement("div"); 
+                            div.classList.add("cita", cita.estado.toLowerCase()); 
+                            
+                            // NUEVO DISEÑO MEJORADO PARA CITAS
+                            let nombreMostrar = cita.paciente;
+                            if (nombreMostrar.length > 18) {
+                                nombreMostrar = nombreMostrar.substring(0, 18) + "...";
+                            }
+                            
+                            let tareaMostrar = cita.tarea && cita.tarea !== "-" ? cita.tarea : "";
+                            let presupuestoMostrar = cita.presupuesto && cita.presupuesto !== "-" ? cita.presupuesto : "";
+                            
+                            // Construir HTML con nuevo diseño
+                            div.innerHTML = `
+                                <div class="cita-header">
+                                    <span class="cita-paciente">${nombreMostrar}</span>
+                                    <span class="cita-hora">${formatearHora(cita.hora)}</span>
+                                </div>
+                                <div class="cita-details">
+                                    ${tareaMostrar ? `
+                                    <div class="cita-detail-item">
+                                        <span class="cita-detail-label">Tarea:</span>
+                                        <span class="cita-detail-value">${tareaMostrar}</span>
+                                    </div>` : ''}
+                                    ${presupuestoMostrar ? `
+                                    <div class="cita-detail-item">
+                                        <span class="cita-detail-label">Presupuesto:</span>
+                                        <span class="cita-detail-value">${presupuestoMostrar}</span>
+                                    </div>` : ''}
+                                </div>
+                            `;
+                            
+                            cell.appendChild(div); 
+                        } else {
+                            console.warn(`Celda no encontrada: fila ${fila}, dia ${dia}, índice ${fila*7+dia}`);
+                        }
+                    } else {
+                        console.warn(`Fila fuera de rango: ${fila} para hora ${cita.hora}`);
+                    }
+                }
+            } else if(vista==="dia"){
+                if(fechaCita === currentDate.toISOString().split("T")[0]){
+                    const [horaCita, minutosCita] = cita.hora.split(':');
+                    const hora = parseInt(horaCita);
+                    
+                    // CORRECCIÓN: Mismo cálculo para vista día
+                    const fila = hora - 9;
+                    
+                    if(fila >= 0 && fila < 12){ 
+                        const cell=agendaCellsContainer.children[fila]; 
+                        if(cell) {
+                            div=document.createElement("div"); 
+                            div.classList.add("cita", cita.estado.toLowerCase()); 
+                            
+                            // NUEVO DISEÑO MEJORADO PARA CITAS
+                            let nombreMostrar = cita.paciente;
+                            if (nombreMostrar.length > 18) {
+                                nombreMostrar = nombreMostrar.substring(0, 18) + "...";
+                            }
+                            
+                            let tareaMostrar = cita.tarea && cita.tarea !== "-" ? cita.tarea : "";
+                            let presupuestoMostrar = cita.presupuesto && cita.presupuesto !== "-" ? cita.presupuesto : "";
+                            
+                            // Construir HTML con nuevo diseño
+                            div.innerHTML = `
+                                <div class="cita-header">
+                                    <span class="cita-paciente">${nombreMostrar}</span>
+                                    <span class="cita-hora">${formatearHora(cita.hora)}</span>
+                                </div>
+                                <div class="cita-details">
+                                    ${tareaMostrar ? `
+                                    <div class="cita-detail-item">
+                                        <span class="cita-detail-label">Tarea:</span>
+                                        <span class="cita-detail-value">${tareaMostrar}</span>
+                                    </div>` : ''}
+                                    ${presupuestoMostrar ? `
+                                    <div class="cita-detail-item">
+                                        <span class="cita-detail-label">Presupuesto:</span>
+                                        <span class="cita-detail-value">${presupuestoMostrar}</span>
+                                    </div>` : ''}
+                                </div>
+                            `;
+                            
+                            cell.appendChild(div); 
+                        }
+                    }
+                }
+            } else if(vista==="mes"){
+                agendaCellsContainer.querySelectorAll(".cell").forEach(cell=>{
+                    const numeroDia=parseInt(cell.dataset.dia); 
+                    const cellDate=new Date(currentDate.getFullYear(),currentDate.getMonth(),numeroDia);
+                    const cellDateStr = cellDate.toISOString().split("T")[0];
+                    
+                    if(cell.style.color!=="rgb(170, 170, 170)" && fechaCita === cellDateStr){
+                        div=document.createElement("div"); 
+                        div.classList.add("cita", cita.estado.toLowerCase()); 
+                        
+                        // VISTA MES MÁS COMPACTA
+                        let nombreMostrar = cita.paciente;
+                        if (nombreMostrar.length > 12) {
+                            nombreMostrar = nombreMostrar.substring(0, 12) + "...";
+                        }
+                        
+                        div.innerHTML = `
+                            <div class="cita-header">
+                                <span class="cita-paciente">${nombreMostrar}</span>
+                                <span class="cita-hora">${formatearHora(cita.hora)}</span>
+                            </div>
+                        `;
+                        cell.appendChild(div); 
+                    }
+                });
+            }
+            
+            if(div){
+                div.addEventListener("dblclick",()=>{
+                    modal.classList.remove("hidden");
+                    habilitarModoEdicion(index);
+                    
+                    document.getElementById("paciente").value = cita.paciente;
+                    document.getElementById("dni").value = cita.dni || "";
+                    document.getElementById("edad").value = cita.edad || "";
+                    document.getElementById("genero").value = cita.genero || "M";
+                    document.getElementById("fecha").value = cita.fecha;
+                    establecerHoraSeleccionada(cita.hora);
+                    document.getElementById("tarea").value = cita.tarea || "";
+                    document.getElementById("presupuesto").value = cita.presupuesto ? parseFloat(cita.presupuesto.replace('S/', '')) : "";
+                    document.getElementById("metodoPago").value = cita.metodoPago || "";
+                    document.getElementById("estado").value = cita.estado;
+                    document.getElementById("observaciones").value = cita.observaciones || "";
+                    document.getElementById("representante").value = cita.representante || "";
+                });
+            }
+        });
+      }
+
+      // === Guardar cita - ACTUALIZADO CON TAREA, PRESUPUESTO Y MÉTODO DE PAGO ===
+      document.getElementById("formCita").addEventListener("submit",(e)=>{
+        e.preventDefault();
+
+        const paciente=document.getElementById("paciente").value;
+        const dni=document.getElementById("dni").value;
+        const edad=parseInt(document.getElementById("edad").value) || 0;
+        const genero=document.getElementById("genero").value;
+        const fecha=document.getElementById("fecha").value;
+        const hora=obtenerHoraSeleccionada();
+        const tarea=document.getElementById("tarea").value;
+        const presupuesto=parseFloat(document.getElementById("presupuesto").value) || 0;
+        const metodoPago=document.getElementById("metodoPago").value;
+        const estado=document.getElementById("estado").value;
+        const observaciones=document.getElementById("observaciones").value;
+        const representante=document.getElementById("representante").value;
+
+        // === VALIDACIONES ===
+        
+        // Validar DNI
+        if (dni && (!/^\d+$/.test(dni) || dni.length !== 8)) {
+          showToast("❌ El DNI debe tener 8 dígitos numéricos", "error");
+          return;
+        }
+        
+        // Validar edad y representante
+        if (edad < 18 && !representante.trim()) {
+          showToast("❌ Menores de edad requieren representante", "error");
+          return;
+        }
+        
+        // Validar horario duplicado
+        const index = modal.dataset.editIndex;
+        if (existeCitaEnHorario(fecha, hora, index)) {
+          showToast("❌ Ya existe una cita en este horario", "error");
+          return;
+        }
+
+        let citas=JSON.parse(localStorage.getItem("citas"))||[];
+        const datos = {
+          paciente,
+          dni,
+          edad,
+          genero,
+          fecha,
+          hora,
+          tarea: tarea || "-",
+          presupuesto: presupuesto > 0 ? `S/${presupuesto.toFixed(2)}` : "-",
+          metodoPago: metodoPago || "-",
+          estado,
+          observaciones,
+          representante,
+          ultimaCita: citas[index]?.ultimaCita || "-"
+        };
+
+        if(index !== undefined){
+          citas[index] = datos;
+          showToast("✏️ Cita actualizada correctamente","info");
+        } else {
+          citas.push(datos);
+          showToast("✅ Cita guardada con éxito","success");
+        }
+
+        localStorage.setItem("citas",JSON.stringify(citas));
+        console.log("Cita guardada:", datos);
+
+        modal.classList.add("hidden");
+        e.target.reset();
+        renderVista();
+      });
+
+      // === Eliminar cita ===
+      btnEliminarCita.addEventListener("click", ()=>{
+        let citas=JSON.parse(localStorage.getItem("citas"))||[];
+        const index = modal.dataset.editIndex;
+        if(index !== undefined){
+          citas.splice(index,1);
+          localStorage.setItem("citas",JSON.stringify(citas));
+          showToast("🗑️ Cita eliminada correctamente","error");
+        }
+        modal.classList.add("hidden");
+        renderVista();
+      });
+
+      // SOLUCIÓN PROBLEMA 2: ACTUALIZAR AUTOMÁTICAMENTE AL CAMBIAR LOCALSTORAGE
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'citas') {
+          renderVista();
+          showToast("🔄 Citas actualizadas desde otra pestaña", "info");
+        }
+      });
+
+      // Render inicial
+      renderVista();
+    });
+</script>
+</body>
+</html>

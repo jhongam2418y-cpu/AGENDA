@@ -1,0 +1,50 @@
+.rounded{
+    background-color: #2e5a8b;
+}
+#end {
+    margin-bottom: 60px;
+  }
+  .dt-button.buttons-collection.buttons-page-length.text-white {
+      background-color: #25eaa4;
+      border-left: 2px solid #56baed;
+  }
+  .dt-button.buttons-print.text-white {
+      background-color: #25eaa4;
+      border-left: 2px solid #56baed;
+  }
+  .dt-button.buttons-excel.buttons-html5.text-white {
+      background-color: #25eaa4;
+      border-left: 2px solid #56baed;
+  }
+  .dt-button.buttons-pdf.buttons-html5.text-white {
+      background-color: #25eaa4;
+      border-left: 2px solid #56baed;
+  }
+  #tablapaciente {
+    font-family: sans-serif;
+  }
+
+  div#tablapaciente_info.dataTables_info {
+    color: white;
+ }
+ div#tablapaciente_paginate.dataTables_paginate.paging_simple_numbers {
+     color: white;
+ }
+ .text-white {
+    font-family: sans-serif;
+    text-decoration: none;
+  }
+  .text-celeste {
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #25eaa4;
+  }
+  .form-select {
+    font-family: sans-serif;
+  }
+  input {
+    color: white;
+  }
+  label {
+    color: white;
+ }

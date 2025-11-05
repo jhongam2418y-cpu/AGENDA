@@ -1,0 +1,71 @@
+<?php
+include("../../datos/bd.php");
+date_default_timezone_set("America/Lima");
+date_default_timezone_get();
+$fecha = $_POST['fecha'];
+$idpaciente = $_POST['idpaciente'];
+$nacimiento = $_POST['nacimiento'];
+$edad = $_POST['edad'];
+$meses = $_POST['meses'];
+
+// Validar y formatear valores numéricos
+$peso = empty($_POST['peso']) ? 0 : floatval($_POST['peso']);
+$talla = empty($_POST['talla']) ? 0 : floatval($_POST['talla']);
+$imc = empty($_POST['imc']) ? 0 : floatval($_POST['imc']);
+$pesoedad = empty($_POST['pesoedad']) ? 0 : floatval($_POST['pesoedad']);
+$tallaedad = empty($_POST['tallaedad']) ? 0 : floatval($_POST['tallaedad']);
+$pesotalla = empty($_POST['pesotalla']) ? 0 : floatval($_POST['pesotalla']);
+$imcedad = empty($_POST['imcedad']) ? 0 : floatval($_POST['imcedad']);
+
+// Validar rangos de valores
+$peso = max(0, min(500, $peso)); // Peso entre 0 y 500 kg
+$talla = max(0, min(300, $talla)); // Talla entre 0 y 300 cm
+$imc = max(0, min(50, $imc)); // IMC entre 0 y 50
+$pesoedad = max(0, min(100, $pesoedad)); // Peso/edad entre 0 y 100
+$tallaedad = max(0, min(100, $tallaedad)); // Talla/edad entre 0 y 100
+$pesotalla = max(0, min(100, $pesotalla)); // Peso/talla entre 0 y 100
+$imcedad = max(0, min(100, $imcedad)); // IMC/edad entre 0 y 100
+
+// Formatear todos los valores numéricos a 2 decimales
+$peso = number_format($peso, 2, '.', '');
+$talla = number_format($talla, 2, '.', '');
+$imc = number_format($imc, 2, '.', '');
+$pesoedad = number_format($pesoedad, 2, '.', '');
+$tallaedad = number_format($tallaedad, 2, '.', '');
+$pesotalla = number_format($pesotalla, 2, '.', '');
+$imcedad = number_format($imcedad, 2, '.', '');
+
+$anemia = $_POST['anemia'];
+$diabetes = $_POST['diabetes'];
+$prediabetes = $_POST['prediabetes'];
+
+// Validar y formatear valores de anemia, diabetes y prediabetes
+$anemiavalor = empty($_POST['anemiavalor']) ? 0 : floatval($_POST['anemiavalor']);
+$diabetesvalor = empty($_POST['diabetesvalor']) ? 0 : floatval($_POST['diabetesvalor']);
+$prediabetesvalor = empty($_POST['prediabetesvalor']) ? 0 : floatval($_POST['prediabetesvalor']);
+
+// Validar rangos de valores
+$anemiavalor = max(0, min(100, $anemiavalor)); // Valor entre 0 y 100
+$diabetesvalor = max(0, min(100, $diabetesvalor)); // Valor entre 0 y 100
+$prediabetesvalor = max(0, min(100, $prediabetesvalor)); // Valor entre 0 y 100
+
+// Formatear valores a 2 decimales
+$anemiavalor = number_format($anemiavalor, 2, '.', '');
+$diabetesvalor = number_format($diabetesvalor, 2, '.', '');
+$prediabetesvalor = number_format($prediabetesvalor, 2, '.', '');
+
+$exisnutricion = "Llenado";
+
+$sql = "UPDATE nutricion SET nacimiento='$nacimiento', edad='$edad', meses='$meses', peso='$peso', talla='$talla', imc='$imc' WHERE  idpaciente='$idpaciente' AND fecha='$fecha'";
+$query = mysqli_query($conn, $sql);
+
+//$sql = "UPDATE tratamiento SET exisnutricion='$exisnutricion', peso='$peso', talla='$talla', imc='$imc' WHERE idpaciente='$idpaciente'";
+//$query = mysqli_query($conn, $sql);
+
+if ($query) {
+    Header("Location: ../../ventana/paciente/actualizar_nutricion.php?idpaciente=$idpaciente&id=$id&fecha=$fecha");
+} else {
+    echo ("no se pudo agregar el paciente");
+}
+
+?>
