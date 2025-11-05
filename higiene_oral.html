@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="MobileOptimized" content="width" />
+    <title>Document</title>
+    <!-- Script css -->
+      <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link href="css/style_higiene_oral.css" rel="stylesheet" type="text/css">
+    <!-- Script js -->
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery-3.6.1.min.js"></script>
+      <script type="text/javascript">
+      function confirmacion() {
+        var respuesta=confirm("¿Desea Eliminar la Ficha de Higiene Oral?");
+        if(respuesta==true) {
+          return true;
+        }else {
+          return false;
+        }
+      }
+      </script>
+</head>
+<body>
+  <style>
+  </style>
+  <div id="contenedor_carga">
+     <div id="carga"></div>
+  </div>
+  
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+      <a id="btn1" href="datos_personales.html?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Datos</a>
+      <a id="btn2" href="odontograma.html?idpaciente=<?= $idpaciente ?>" 
+        class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen odontológico</a>
+      <a id="btn3" href="nutricion.html?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen Nutricional</a>
+      <a id="btn4" href="psicologia.html?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-light" tabindex="-1" role="button" aria-disabled="true">Examen Psicologico</a>
+      <a id="btn5" href="img.html?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Imagenes</a>
+      <a id="btn6" href="img_r.html?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Radiografias</a>
+      <a id="btn7" href="documentos.html?idpaciente=<?= $idpaciente ?>"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Documentos</a>
+      <a id="btn8" href="tratamiento.html?idpaciente=<?= $idpaciente ?>" target="_paren"
+        class="btn btn-secondary" tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-sm-6 col-xl-6">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped text-start align-middle mb-0" id="tablahistoria">
+      <thead>
+        <tr class="table-secondary">         
+          <th>Historial Clinico</th>
+        </tr>
+      </thead>
+      <tbody>                
+        <?php while ($row = mysqli_fetch_array($query)): ?>
+        <tr class="table-secondary">
+          <td><?= substr($row['fecha'], -0,-9); ?>
+            <a class="btn btn-sm" href="actualizar_odontograma.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $row['fecha'] ?>&id=<?= $row['id'] ?>">
+              <img class="buttonimg" src="img/historia.png" width="20"></a>
+
+            <a class="btn btn-sm" href="higiene_oral.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $row['fecha'] ?>&id=<?= $row['id'] ?>">
+              <img class="buttonimg" src="img/ioh.png" width="20"></a>
+
+            <a class="btn btn-sm" href="resultado_odontograma.html?idpaciente=<?= $idpaciente ?>&fecha=<?= $row['fecha'] ?>&id=<?= $row['id'] ?>">
+              <img class="buttonimg" src="img/tabla.png" width="20"></a>
+
+            <a class="btn btn-sm" href="eliminar/eliminar_odontograma.html?fecha=<?= $row['fecha'] ?>&idpaciente=<?= $idpaciente ?>" onclick='return confirmacion()'>
+              <img class="buttonimg" src="img/eliminar.png" width="20"></a>
+          </td>
+        </tr>
+        <?php endwhile; ?>
+      </tbody>
+    </table>
+  </div>
+  
+<?php
+    $sql="SELECT * FROM odontograma_uno WHERE idpaciente='$idpaciente' AND fecha='$fecha'";
+    $query=mysqli_query($conn, $sql);
+    $row=mysqli_fetch_array($query);
+?>
+<input type="hidden" name="diente17" id="diente17" value="<?= $row['diente17'] ?>">
+         <input type="hidden" name="cpod17" id="cpod17" value="<?= $row['c17'] ?>">
+         
+         <input type="hidden" name="diente16" id="diente16" value="<?= $row['diente16'] ?>">
+         <input type="hidden" name="cpod16" id="cpod16" value="<?= $row['c16'] ?>">
+
+         <input type="hidden" name="diente55" id="diente55" value="<?= $row['diente55'] ?>">
+         <input type="hidden" name="cpod15" id="cpod15" value="<?= $row['c15'] ?>">
+         <input type="hidden" name="cpod55" id="cpod55" value="<?= $row['c55'] ?>">
+
+         <input type="hidden" name="diente54" id="diente54" value="<?= $row['diente54'] ?>">
+         <input type="hidden" name="cpod14" id="cpod14" value="<?= $row['c14'] ?>">
+         <input type="hidden" name="cpod54" id="cpod54" value="<?= $row['c54'] ?>">
+         
+         <input type="hidden" name="diente53" id="diente53" value="<?= $row['diente53'] ?>">
+         <input type="hidden" name="cpod13" id="cpod13" value="<?= $row['c13'] ?>">
+         <input type="hidden" name="cpod53" id="cpod53" value="<?= $row['c53'] ?>">
+         
+         <input type="hidden" name="diente52" id="diente52" value="<?= $row['diente52'] ?>">
+         <input type="hidden" name="cpod12" id="cpod12" value="<?= $row['c12'] ?>">
+         <input type="hidden" name="cpod52" id="cpod52" value="<?= $row['c52'] ?>">
+         
+         <input type="hidden" name="diente51" id="diente51" value="<?= $row['diente51'] ?>">
+         <input type="hidden" name="cpod11" id="cpod11" value="<?= $row['c11'] ?>">
+         <input type="hidden" name="cpod51" id="cpod51" value="<?= $row['c51'] ?>">
+         
+         <input type="hidden" name="diente61" id="diente61" value="<?= $row['diente61'] ?>">
+         <input type="hidden" name="cpod21" id="cpod21" value="<?= $row['c21'] ?>">
+         <input type="hidden" name="cpod61" id="cpod61" value="<?= $row['c61'] ?>">
+         
+         <input type="hidden" name="diente62" id="diente62" value="<?= $row['diente62'] ?>">
+         <input type="hidden" name="cpod22" id="cpod22" value="<?= $row['c22'] ?>">
+         <input type="hidden" name="cpod62" id="cpod62" value="<?= $row['c62'] ?>">
+         
+         <input type="hidden" name="diente63" id="diente63" value="<?= $row['diente63'] ?>">
+         <input type="hidden" name="cpod23" id="cpod23" value="<?= $row['c23'] ?>">
+         <input type="hidden" name="cpod63" id="cpod63" value="<?= $row['c63'] ?>">
+         
+         <input type="hidden" name="diente64" id="diente64" value="<?= $row['diente64'] ?>">
+         <input type="hidden" name="cpod24" id="cpod24" value="<?= $row['c24'] ?>">
+         <input type="hidden" name="cpod64" id="cpod64" value="<?= $row['c64'] ?>">
+
+         <input type="hidden" name="diente65" id="diente65" value="<?= $row['diente65'] ?>">
+         <input type="hidden" name="cpod25" id="cpod25" value="<?= $row['c25'] ?>">
+         <input type="hidden" name="cpod65" id="cpod65" value="<?= $row['c65'] ?>">
+         
+         <input type="hidden" name="diente26" id="diente26" value="<?= $row['diente26'] ?>">
+         <input type="hidden" name="cpod26" id="cpod26" value="<?= $row['c26'] ?>">
+         
+         <input type="hidden" name="diente27" id="diente27" value="<?= $row['diente27'] ?>">
+         <input type="hidden" name="cpod27" id="cpod27" value="<?= $row['c27'] ?>">
+         
+         <input type="hidden" name="diente47" id="diente47" value="<?= $row['diente47'] ?>">
+         <input type="hidden" name="cpod47" id="cpod47" value="<?= $row['c47'] ?>">
+         
+         <input type="hidden" name="diente46" id="diente46" value="<?= $row['diente46'] ?>">
+         <input type="hidden" name="cpod46" id="cpod46" value="<?= $row['c46'] ?>">
+         
+         <input type="hidden" name="diente85" id="diente85" value="<?= $row['diente85'] ?>">
+         <input type="hidden" name="cpod45" id="cpod45" value="<?= $row['c45'] ?>">
+         <input type="hidden" name="cpod85" id="cpod85" value="<?= $row['c85'] ?>">
+         
+         <input type="hidden" name="diente84" id="diente84" value="<?= $row['diente84'] ?>">
+         <input type="hidden" name="cpod44" id="cpod44" value="<?= $row['c44'] ?>">
+         <input type="hidden" name="cpod84" id="cpod84" value="<?= $row['c84'] ?>">
+         
+         <input type="hidden" name="diente83" id="diente83" value="<?= $row['diente83'] ?>">
+         <input type="hidden" name="cpod43" id="cpod43" value="<?= $row['c43'] ?>">
+         <input type="hidden" name="cpod83" id="cpod83" value="<?= $row['c83'] ?>">
+         
+         <input type="hidden" name="diente82" id="diente82" value="<?= $row['diente82'] ?>">
+         <input type="hidden" name="cpod42" id="cpod42" value="<?= $row['c42'] ?>">
+         <input type="hidden" name="cpod82" id="cpod82" value="<?= $row['c82'] ?>">
+         
+         <input type="hidden" name="diente81" id="diente81" value="<?= $row['diente81'] ?>">
+         <input type="hidden" name="cpod41" id="cpod41" value="<?= $row['c41'] ?>">
+         <input type="hidden" name="cpod81" id="cpod81" value="<?= $row['c81'] ?>">
+
+         <input type="hidden" name="diente71" id="diente71" value="<?= $row['diente71'] ?>">
+         <input type="hidden" name="cpod31" id="cpod31" value="<?= $row['c31'] ?>">
+         <input type="hidden" name="cpod71" id="cpod71" value="<?= $row['c71'] ?>">
+         
+         <input type="hidden" name="diente72" id="diente72" value="<?= $row['diente72'] ?>">
+         <input type="hidden" name="cpod32" id="cpod32" value="<?= $row['c32'] ?>">
+         <input type="hidden" name="cpod72" id="cpod72" value="<?= $row['c72'] ?>">
+         
+         <input type="hidden" name="diente73" id="diente73" value="<?= $row['diente73'] ?>">
+         <input type="hidden" name="cpod33" id="cpod33" value="<?= $row['c33'] ?>">
+         <input type="hidden" name="cpod73" id="cpod73" value="<?= $row['c73'] ?>">
+         
+         <input type="hidden" name="diente74" id="diente74" value="<?= $row['diente74'] ?>">
+         <input type="hidden" name="cpod34" id="cpod34" value="<?= $row['c34'] ?>">
+         <input type="hidden" name="cpod74" id="cpod74" value="<?= $row['c74'] ?>">
+         
+         <input type="hidden" name="diente75" id="diente75" value="<?= $row['diente75'] ?>">
+         <input type="hidden" name="cpod35" id="cpod35" value="<?= $row['c35'] ?>">
+         <input type="hidden" name="cpod75" id="cpod75" value="<?= $row['c75'] ?>">
+         
+         <input type="hidden" name="diente36" id="diente36" value="<?= $row['diente36'] ?>">
+         <input type="hidden" name="cpod36" id="cpod36" value="<?= $row['c36'] ?>">
+         
+         <input type="hidden" name="diente37" id="diente37" value="<?= $row['diente37'] ?>">
+         <input type="hidden" name="cpod37" id="cpod37" value="<?= $row['c37'] ?>">
+<?php
+    $sql="SELECT * FROM higiene_oral WHERE idpaciente='$idpaciente' AND fecha='$fecha'";
+    $query=mysqli_query($conn, $sql);
+    $row=mysqli_fetch_array($query);
+?> 
+    <div id="contenedor">
+    <form action="modificar/modificar_higiene_oral.html" method="POST">
+    <div class="table-responsive">
+    <table class="table table-striped text-start align-middle mb-0" id="tabladato">
+      <thead>
+        <tr class="table-secondary">         
+          <th>Total de dientes</th>       
+          <th>IHO</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>                
+        <tr class="table-secondary">
+          <td><input type="text" class="form-control" id="total" name="total" value="<?= $row['total'] ?>" readonly></td>
+          <td><div id="div_indice" class="input-group flex-nowrap">
+              <input type="number" class="form-control" id="indice" value="0" name="indice" readonly>
+              <span class="input-group-text titulo">%</span></div>
+          </td>
+          <td><input type="text" class="form-control" id="ihovalor" value="" readonly></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <table id="higiene_oral">
+         <input type="hidden" name="id" value="<?= $id ?>">
+         <input type="hidden" name="idpaciente" value="<?= $idpaciente ?>">
+         <input type="hidden" name="fecha" value="<?= $fecha?>" >
+     <tbody>
+     <tr>
+         <td>D</td>
+         <td><input class="diente" id="v17" name="v17" value="<?= $row['v17'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v16" name="v16" value="<?= $row['v16'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v15" name="v15" value="<?= $row['v15'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v14" name="v14" value="<?= $row['v14'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v13" name="v13" value="<?= $row['v13'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v12" name="v12" value="<?= $row['v12'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v11" name="v11" value="<?= $row['v11'] ?>" readonly></td>
+         <td>V</td>
+         
+         <td>V</td>
+         <td><input class="diente" id="v21" name="v21" value="<?= $row['v21'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v22" name="v22" value="<?= $row['v22'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v23" name="v23" value="<?= $row['v23'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v24" name="v24" value="<?= $row['v24'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v25" name="v25" value="<?= $row['v25'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v26" name="v26" value="<?= $row['v26'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v27" name="v27" value="<?= $row['v27'] ?>" readonly></td>
+         <td>M</td>
+        </tr>
+        <tr>
+          <td><input class="diente"  id="d17" name="d17" value="<?= $row['d17'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar17" readonly></td>
+          <td><input class="diente"  id="m17" name="m17" value="<?= $row['m17'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d16" name="d16" value="<?= $row['d16'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar16" readonly></td>
+          <td><input class="diente"  id="m16" name="m16" value="<?= $row['m16'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d15" name="d15" value="<?= $row['d15'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar15" readonly></td>
+          <td><input class="diente"  id="m15" name="m15" value="<?= $row['m15'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d14" name="d14" value="<?= $row['d14'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar14" readonly></td>
+          <td><input class="diente"  id="m14" name="m14" value="<?= $row['m14'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d13" name="d13" value="<?= $row['d13'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar13" readonly></td>
+          <td><input class="diente"  id="m13" name="m13" value="<?= $row['m13'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d12" name="d12" value="<?= $row['d12'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar12" readonly></td>
+          <td><input class="diente"  id="m12" name="m12" value="<?= $row['m12'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d11" name="d11" value="<?= $row['d11']?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar11" readonly></td>
+          <td><input class="diente"  id="m11" name="m11" value="<?= $row['m11'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d21" name="d21" value="<?= $row['d21'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar21" readonly></td>
+          <td><input class="diente"  id="m21" name="m21" value="<?= $row['m21'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d22" name="d22" value="<?= $row['d22'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar22" readonly></td>
+          <td><input class="diente"  id="m22" name="m22" value="<?= $row['m22'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d23" name="d23" value="<?= $row['d23'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar23" readonly></td>
+          <td><input class="diente"  id="m23" name="m23" value="<?= $row['m23'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d24" name="d24" value="<?= $row['d24'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar24" readonly></td>
+          <td><input class="diente"  id="m24" name="m24" value="<?= $row['m24'] ?>" readonly></td>
+        
+          <td><input class="diente"  id="d25" name="d25" value="<?= $row['d25'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar25" readonly></td>
+          <td><input class="diente"  id="m25" name="m25" value="<?= $row['m25'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d26" name="d26" value="<?= $row['d26'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar26" readonly></td>
+          <td><input class="diente"  id="m26" name="m26" value="<?= $row['m26'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d27" name="d27" value="<?= $row['d27'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar27" readonly></td>
+          <td><input class="diente"  id="m27" name="m27" value="<?= $row['m27'] ?>" readonly></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td><input class="diente" id="p17" name="p17" value="<?= $row['p17'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p16" name="p16" value="<?= $row['p16'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p15" name="p15" value="<?= $row['p15'] ?>" readonly></td>
+          <td></td>
+          
+          <td></td>
+          <td><input class="diente" id="p14" name="p14" value="<?= $row['p14'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p13" name="p13" value="<?= $row['p13'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p12" name="p12" value="<?= $row['p12'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p11" name="p11" value="<?= $row['p11'] ?>" readonly></td>
+          <td>P</td>
+
+          <td>P</td>
+          <td><input class="diente" id="p21" name="p21" value="<?= $row['p21'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p22" name="p22" value="<?= $row['p22'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p23" name="p23" value="<?= $row['p23'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p24" name="p24" value="<?= $row['p24'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p25" name="p25" value="<?= $row['p25'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p26" name="p26" value="<?= $row['p26'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p27" name="p27" value="<?= $row['p27'] ?>" readonly></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td>17</td>
+          <td></td>
+          
+          <td></td>
+          <td>16</td>
+          <td></td>
+
+          <td></td>
+          <td>55</td>
+          <td></td>
+          
+          <td></td>
+          <td>54</td>
+          <td></td>
+          
+          <td></td>
+          <td>53</td>
+          <td></td>
+          
+          <td></td>
+          <td>52</td>
+          <td></td>
+          
+          <td></td>
+          <td>51</td>
+          <td></td>
+
+          <td></td>
+          <td>61</td>
+          <td></td>
+
+          <td></td>
+          <td>62</td>
+          <td></td>
+          
+          <td></td>
+          <td>63</td>
+          <td></td>
+          
+          <td></td>
+          <td>64</td>
+          <td></td>
+          
+          <td></td>
+          <td>65</td>
+          <td></td>
+          
+          <td></td>
+          <td>26</td>
+          <td></td>
+          
+          <td></td>
+          <td>27</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>47</td>
+          <td></td>
+          
+          <td></td>
+          <td>46</td>
+          <td></td>
+
+          <td></td>
+          <td>85</td>
+          <td></td>
+          
+          <td></td>
+          <td>84</td>
+          <td></td>
+          
+          <td></td>
+          <td>83</td>
+          <td></td>
+          
+          <td></td>
+          <td>82</td>
+          <td></td>
+          
+          <td></td>
+          <td>81</td>
+          <td></td>
+
+          <td></td>
+          <td>71</td>
+          <td></td>
+
+          <td></td>
+          <td>72</td>
+          <td></td>
+          
+          <td></td>
+          <td>73</td>
+          <td></td>
+          
+          <td></td>
+          <td>74</td>
+          <td></td>
+          
+          <td></td>
+          <td>75</td>
+          <td></td>
+          
+          <td></td>
+          <td>36</td>
+          <td></td>
+          
+          <td></td>
+          <td>37</td>
+          <td></td>
+        </tr>
+
+        <tr>
+         <td></td>
+         <td><input class="diente" id="v47" name="v47" value="<?= $row['v47'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v46" name="v46" value="<?= $row['v46'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v45" name="v45" value="<?= $row['v45'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v44" name="v44" value="<?= $row['v44'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v43" name="v43" value="<?= $row['v43'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v42" name="v42" value="<?= $row['v42'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v41" name="v41" value="<?= $row['v41'] ?>" readonly></td>
+         <td>L</td>
+
+         <td>L</td>
+         <td><input class="diente" id="v31" name="v31" value="<?= $row['v31'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v32" name="v32" value="<?= $row['v32'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v33" name="v33" value="<?= $row['v33'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v34" name="v34" value="<?= $row['v34'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v35" name="v35" value="<?= $row['v35'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v36" name="v36" value="<?= $row['v36'] ?>" readonly></td>
+         <td></td>
+         <td></td>
+         <td><input class="diente" id="v37" name="v37" value="<?= $row['v37'] ?>" readonly></td>
+         <td></td>
+        </tr>
+        
+        <tr>
+          <td><input class="diente"  id="d47" name="d47" value="<?= $row['d47'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar47" readonly></td>
+          <td><input class="diente"  id="m47" name="m47" value="<?= $row['m47'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d46" name="d46" value="<?= $row['d46'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar46" readonly></td>
+          <td><input class="diente"  id="m46" name="m46" value="<?= $row['m46'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d45" name="d45" value="<?= $row['d45'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar45" readonly></td>
+          <td><input class="diente"  id="m45" name="m45" value="<?= $row['m45'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d44" name="d44" value="<?= $row['d44'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar44" readonly></td>
+          <td><input class="diente"  id="m44" name="m44" value="<?= $row['m44'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d43" name="d43" value="<?= $row['d43'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar43" readonly></td>
+          <td><input class="diente"  id="m43" name="m43" value="<?= $row['m43'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d42" name="d42" value="<?= $row['d42'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar42" readonly></td>
+          <td><input class="diente"  id="m42" name="m42" value="<?= $row['m42'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d41" name="d41" value="<?= $row['d41'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar41" readonly></td>
+          <td><input class="diente"  id="m41" name="m41" value="<?= $row['m41'] ?>" readonly></td>
+          
+
+          <td><input class="diente"  id="d31" name="d31" value="<?= $row['d31'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar31" readonly></td>
+          <td><input class="diente"  id="m31" name="m31" value="<?= $row['m31'] ?>" readonly></td>
+
+          <td><input class="diente"  id="d32" name="d32" value="<?= $row['d32'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar32" readonly></td>
+          <td><input class="diente"  id="m32" name="m32" value="<?= $row['m32'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d33" name="d33" value="<?= $row['d33'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar33" readonly></td>
+          <td><input class="diente"  id="m33" name="m33" value="<?= $row['m33'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d34" name="d34" value="<?= $row['d34'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar34" readonly></td>
+          <td><input class="diente"  id="m34" name="m34" value="<?= $row['m34'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d35" name="d35" value="<?= $row['d35'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar35" readonly></td>
+          <td><input class="diente"  id="m35" name="m35" value="<?= $row['m35'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d36" name="d36" value="<?= $row['d36'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar36" readonly></td>
+          <td><input class="diente"  id="m36" name="m36" value="<?= $row['m36'] ?>" readonly></td>
+          
+          <td><input class="diente"  id="d37" name="d37" value="<?= $row['d37'] ?>" readonly></td>
+          <td><input class="dientemarcar" id="marcar37" readonly></td>
+          <td><input class="diente"  id="m37" name="m37" value="<?= $row['m37'] ?>" readonly></td>
+        </tr>
+
+        <tr>
+          <td>D</td>
+          <td><input class="diente" id="p47" name="p47" value="<?= $row['p47'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p46" name="p46" value="<?= $row['p46'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p45" name="p45" value="<?= $row['p45'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p44" name="p44" value="<?= $row['p44'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p43" name="p43" value="<?= $row['p43'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p42" name="p42" value="<?= $row['p42'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p41" name="p41" value="<?= $row['p41'] ?>" readonly></td>
+          <td>V</td>
+          
+          <td>V</td>
+          <td><input class="diente" id="p31" name="p31" value="<?= $row['p31'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p32" name="p32" value="<?= $row['p32'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p33" name="p33" value="<?= $row['p33'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p34" name="p34" value="<?= $row['p34'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p35" name="p35" value="<?= $row['p35'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p36" name="p36" value="<?= $row['p36'] ?>" readonly></td>
+          <td></td>
+          <td></td>
+          <td><input class="diente" id="p37" name="p37" value="<?= $row['p37'] ?>" readonly></td>
+          <td>M</td>
+        </tr>
+        </tbody>
+        
+      </table>
+      <input id="actualizar" class="btn" type="submit" value="Actualizar">
+      </form>
+    </div>
+</body>
+<script src="js/entrada_higiene_oral.js"></script>
+<script src="js/modificar_higiene_oral.js"></script>
+<script src="js/estado_higiene.js"></script>
+<script>  
+    window.onpageshow = function() {
+        var contenedor = document.getElementById('contenedor_carga');
+        contenedor.style.visibility = 'hidden';
+        contenedor.style.opacity = '0';
+          }
+</script>
+
+</html>

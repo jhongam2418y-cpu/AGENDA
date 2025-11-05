@@ -1,0 +1,282 @@
+<?php
+include("../../datos/bd.php");
+date_default_timezone_set("America/Lima");
+date_default_timezone_get();
+$fecha = $_POST['fecha'];
+$idpaciente = $_POST['idpaciente'];
+$nu1 = $_POST['nu1'];
+$nu2 = $_POST['nu2'];
+$nu3 = $_POST['nu3'];
+$nu4 = $_POST['nu4'];
+$nu5 = $_POST['nu5'];
+$nu6 = $_POST['nu6'];
+$nu7 = $_POST['nu7'];
+$nu8 = $_POST['nu8'];
+$nu9 = $_POST['nu9'];
+$nu10 = $_POST['nu10'];
+$nu11 = $_POST['nu11'];
+$nu12 = $_POST['nu12'];
+$nu13 = $_POST['nu13'];
+$nu14 = $_POST['nu14'];
+$nu15 = $_POST['nu15'];
+$nu16 = $_POST['nu16'];
+$nu17 = $_POST['nu17'];
+$nu18 = $_POST['nu18'];
+$nu19 = $_POST['nu19'];
+$nu20 = $_POST['nu20'];
+$nu21 = $_POST['nu21'];
+$nu22 = $_POST['nu22'];
+$nu23 = $_POST['nu23'];
+$nu24 = $_POST['nu24'];
+$nu25 = $_POST['nu25'];
+$nu26 = $_POST['nu26'];
+$nu27 = $_POST['nu27'];
+$nu28 = $_POST['nu28'];
+$nu29 = $_POST['nu29'];
+$nu30 = $_POST['nu30'];
+$nu31 = $_POST['nu31'];
+$nu32 = $_POST['nu32'];
+$nu33 = $_POST['nu33'];
+$nu34 = $_POST['nu34'];
+$nu35 = $_POST['nu35'];
+$nu36 = $_POST['nu36'];
+$nu37 = $_POST['nu37'];
+$nu38 = $_POST['nu38'];
+$nu39 = $_POST['nu39'];
+$nu40 = $_POST['nu40'];
+$nu41 = $_POST['nu41'];
+$nu42 = $_POST['nu42'];
+$nu43 = $_POST['nu43'];
+$nu44 = $_POST['nu44'];
+$nu45 = $_POST['nu45'];
+$nu46 = $_POST['nu46'];
+$nu47 = $_POST['nu47'];
+$nu48 = $_POST['nu48'];
+$nu49 = $_POST['nu49'];
+
+
+
+$po1 = $_POST['po1'];
+$po2 = $_POST['po2'];
+$po3 = $_POST['po3'];
+$po4 = $_POST['po4'];
+$po5 = $_POST['po5'];
+$po6 = $_POST['po6'];
+$po7 = $_POST['po7'];
+$po8 = $_POST['po8'];
+$po9 = $_POST['po9'];
+$po10 = $_POST['po10'];
+$po11 = $_POST['po11'];
+$po12 = $_POST['po12'];
+$po13 = $_POST['po13'];
+$po14 = $_POST['po14'];
+$po15 = $_POST['po15'];
+$po16 = $_POST['po16'];
+$po17 = $_POST['po17'];
+$po18 = $_POST['po18'];
+$po19 = $_POST['po19'];
+$po20 = $_POST['po20'];
+$po21 = $_POST['po21'];
+$po22 = $_POST['po22'];
+$po23 = $_POST['po23'];
+$po24 = $_POST['po24'];
+$po25 = $_POST['po25'];
+$po26 = $_POST['po26'];
+$po27 = $_POST['po27'];
+$po28 = $_POST['po28'];
+$po29 = $_POST['po29'];
+$po30 = $_POST['po30'];
+$po31 = $_POST['po31'];
+$po32 = $_POST['po32'];
+$po33 = $_POST['po33'];
+$po34 = $_POST['po34'];
+$po35 = $_POST['po35'];
+$po36 = $_POST['po36'];
+$po37 = $_POST['po37'];
+$po38 = $_POST['po38'];
+$po39 = $_POST['po39'];
+$po40 = $_POST['po40'];
+$po41 = $_POST['po41'];
+$po42 = $_POST['po42'];
+$po43 = $_POST['po43'];
+$po44 = $_POST['po44'];
+$po45 = $_POST['po45'];
+$po46 = $_POST['po46'];
+$po47 = $_POST['po47'];
+$po48 = $_POST['po48'];
+$po49 = $_POST['po49'];
+
+
+
+$no1 = $_POST['no1'];
+$no2 = $_POST['no2'];
+$no3 = $_POST['no3'];
+$no4 = $_POST['no4'];
+$no5 = $_POST['no5'];
+$no6 = $_POST['no6'];
+$no7 = $_POST['no7'];
+$no8 = $_POST['no8'];
+$no9 = $_POST['no9'];
+$no10 = $_POST['no10'];
+$no11 = $_POST['no11'];
+$no12 = $_POST['no12'];
+$no13 = $_POST['no13'];
+$no14 = $_POST['no14'];
+$no15 = $_POST['no15'];
+$no16 = $_POST['no16'];
+$no17 = $_POST['no17'];
+$no18 = $_POST['no18'];
+$no19 = $_POST['no19'];
+$no20 = $_POST['no20'];
+$no21 = $_POST['no21'];
+$no22 = $_POST['no22'];
+$no23 = $_POST['no23'];
+$no24 = $_POST['no24'];
+$no25 = $_POST['no25'];
+$no26 = $_POST['no26'];
+$no27 = $_POST['no27'];
+$no28 = $_POST['no28'];
+$no29 = $_POST['no29'];
+$no30 = $_POST['no30'];
+$no31 = $_POST['no31'];
+$no32 = $_POST['no32'];
+$no33 = $_POST['no33'];
+$no34 = $_POST['no34'];
+$no35 = $_POST['no35'];
+$no36 = $_POST['no36'];
+$no37 = $_POST['no37'];
+$no38 = $_POST['no38'];
+$no39 = $_POST['no39'];
+$no40 = $_POST['no40'];
+$no41 = $_POST['no41'];
+$no42 = $_POST['no42'];
+$no43 = $_POST['no43'];
+$no44 = $_POST['no44'];
+$no45 = $_POST['no45'];
+$no46 = $_POST['no46'];
+$no47 = $_POST['no47'];
+$no48 = $_POST['no48'];
+$no49 = $_POST['no49'];
+
+
+
+$ve1 = $_POST['ve1'];
+$ve2 = $_POST['ve2'];
+$ve3 = $_POST['ve3'];
+$ve4 = $_POST['ve4'];
+$ve5 = $_POST['ve5'];
+$ve6 = $_POST['ve6'];
+$ve7 = $_POST['ve7'];
+$ve8 = $_POST['ve8'];
+$ve9 = $_POST['ve9'];
+$ve10 = $_POST['ve10'];
+$ve11 = $_POST['ve11'];
+$ve12 = $_POST['ve12'];
+$ve13 = $_POST['ve13'];
+$ve14 = $_POST['ve14'];
+$ve15 = $_POST['ve15'];
+$ve16 = $_POST['ve16'];
+$ve17 = $_POST['ve17'];
+$ve18 = $_POST['ve18'];
+$ve19 = $_POST['ve19'];
+$ve20 = $_POST['ve20'];
+$ve21 = $_POST['ve21'];
+$ve22 = $_POST['ve22'];
+$ve23 = $_POST['ve23'];
+$ve24 = $_POST['ve24'];
+$ve25 = $_POST['ve25'];
+$ve26 = $_POST['ve26'];
+$ve27 = $_POST['ve27'];
+$ve28 = $_POST['ve28'];
+$ve29 = $_POST['ve29'];
+$ve30 = $_POST['ve30'];
+$ve31 = $_POST['ve31'];
+$ve32 = $_POST['ve32'];
+$ve33 = $_POST['ve33'];
+$ve34 = $_POST['ve34'];
+$ve35 = $_POST['ve35'];
+$ve36 = $_POST['ve36'];
+$ve37 = $_POST['ve37'];
+$ve38 = $_POST['ve38'];
+$ve39 = $_POST['ve39'];
+$ve40 = $_POST['ve40'];
+$ve41 = $_POST['ve41'];
+$ve42 = $_POST['ve42'];
+$ve43 = $_POST['ve43'];
+$ve44 = $_POST['ve44'];
+$ve45 = $_POST['ve45'];
+$ve46 = $_POST['ve46'];
+$ve47 = $_POST['ve47'];
+$ve48 = $_POST['ve48'];
+$ve49 = $_POST['ve49'];
+
+
+
+$s1 = $_POST['s1'];
+$s2 = $_POST['s2'];
+$s3 = $_POST['s3'];
+$s4 = $_POST['s4'];
+$s5 = $_POST['s5'];
+$s6 = $_POST['s6'];
+$s7 = $_POST['s7'];
+$s8 = $_POST['s8'];
+$s9 = $_POST['s9'];
+$s10 = $_POST['s10'];
+$s11 = $_POST['s11'];
+$s12 = $_POST['s12'];
+$s13 = $_POST['s13'];
+$s14 = $_POST['s14'];
+$s15 = $_POST['s15'];
+$s16 = $_POST['s16'];
+$s17 = $_POST['s17'];
+$s18 = $_POST['s18'];
+$s19 = $_POST['s19'];
+$s20 = $_POST['s20'];
+$s21 = $_POST['s21'];
+$s22 = $_POST['s22'];
+$s23 = $_POST['s23'];
+$s24 = $_POST['s24'];
+$s25 = $_POST['s25'];
+$s26 = $_POST['s26'];
+$s27 = $_POST['s27'];
+$s28 = $_POST['s28'];
+$s29 = $_POST['s29'];
+$s30 = $_POST['s30'];
+$s31 = $_POST['s31'];
+$s32 = $_POST['s32'];
+$s33 = $_POST['s33'];
+$s34 = $_POST['s34'];
+$s35 = $_POST['s35'];
+$s36 = $_POST['s36'];
+$s37 = $_POST['s37'];
+$s38 = $_POST['s38'];
+$s39 = $_POST['s39'];
+$s40 = $_POST['s40'];
+$s41 = $_POST['s41'];
+$s42 = $_POST['s42'];
+$s43 = $_POST['s43'];
+$s44 = $_POST['s44'];
+$s45 = $_POST['s45'];
+$s46 = $_POST['s46'];
+$s47 = $_POST['s47'];
+$s48 = $_POST['s48'];
+$s49 = $_POST['s49'];
+
+
+$sql = "UPDATE psicologia SET nu1='$nu1', nu2='$nu2', nu3='$nu3', nu4='$nu4', nu5='$nu5', nu6='$nu6', nu7='$nu7', nu8='$nu8', nu9='$nu9', nu10='$nu10', nu11='$nu11', nu12='$nu12', nu13='$nu13', nu14='$nu14', nu15='$nu15', nu16='$nu16', nu17='$nu17', nu18='$nu18', nu19='$nu19', nu20='$nu20', nu21='$nu21', nu22='$nu22', nu23='$nu23', nu24='$nu24', nu25='$nu25', nu26='$nu26', nu27='$nu27', nu28='$nu28',
+                              nu29='$nu29', nu30='$nu30', nu31='$nu31', nu32='$nu32', nu33='$nu33', nu34='$nu34', nu35='$nu35', nu36='$nu36', nu37='$nu37', nu38='$nu38', nu39='$nu39', nu40='$nu40', nu41='$nu41', nu42='$nu42', nu43='$nu43', nu44='$nu44', nu45='$nu45', nu46='$nu46', nu47='$nu47', nu48='$nu48', nu49='$nu49', po1='$po1', po2='$po2', po3='$po3', po4='$po4', po5='$po5', po6='$po6', po7='$po7', po8='$po8', po9='$po9', 
+                              po10='$po10', po11='$po11', po12='$po12', po13='$po13', po14='$po14', po15='$po15', po16='$po16', po17='$po17', po18='$po18', po19='$po19', po20='$po20', po21='$po21', po22='$po22', po23='$po23', po24='$po24', po25='$po25', po26='$po26', po27='$po27', po28='$po28', po29='$po29', po30='$po30', po31='$po31', po32='$po32', po33='$po33', po34='$po34', po35='$po35', po36='$po36', po37='$po37', po38='$po38',
+                              po39='$po39', po40='$po40', po41='$po41', po42='$po42', po43='$po43', po44='$po44', po45='$po45', po46='$po46', po47='$po47', po48='$po48', po49='$po49', no1='$no1', no2='$no2', no3='$no3', no4='$no4', no5='$no5', no6='$no6', no7='$no7', no8='$no8', no9='$no9', no10='$no10', no11='$no11', no12='$no12', no13='$no13', no14='$no14', no15='$no15', no16='$no16', no17='$no17', no18='$no18', no19='$no19', no20='$no20', 
+                              no21='$no21', no22='$no22', no23='$no23', no24='$no24', no25='$no25', no26='$no26', no27='$no27', no28='$no28', no29='$no29', no30='$no30', no31='$no31', no32='$no32', no33='$no33', no34='$no34', no35='$no35', no36='$no36', no37='$no37', no38='$no38', no39='$no39', no40='$no40', no41='$no41', no42='$no42', no43='$no43', no44='$no44', no45='$no45', no46='$no46', no47='$no47', no48='$no48', no49='$no49', ve1='$ve1', 
+                              ve2='$ve2', ve3='$ve3', ve4='$ve4', ve5='$ve5', ve6='$ve6', ve7='$ve7', ve8='$ve8', ve9='$ve9', ve10='$ve10', ve11='$ve11', ve12='$ve12', ve13='$ve13', ve14='$ve14', ve15='$ve15', ve16='$ve16', ve17='$ve17', ve18='$ve18', ve19='$ve19', ve20='$ve20', ve21='$ve21', ve22='$ve22', ve23='$ve23', ve24='$ve24', ve25='$ve25', ve26='$ve26', ve27='$ve27', ve28='$ve28', ve29='$ve29', ve30='$ve30', ve31='$ve31', ve32='$ve32', 
+                              ve33='$ve33', ve34='$ve34', ve35='$ve35', ve36='$ve36', ve37='$ve37', ve38='$ve38', ve39='$ve39', ve40='$ve40', ve41='$ve41', ve42='$ve42', ve43='$ve43', ve44='$ve44', ve45='$ve45', ve46='$ve46', ve47='$ve47', ve48='$ve48', ve49='$ve49', s1='$s1', s2='$s2', s3='$s3', s4='$s4', s5='$s5', s6='$s6', s7='$s7', s8='$s8', s9='$s9', s10='$s10', s11='$s11', s12='$s12', s13='$s13', s14='$s14', s15='$s15', s16='$s16', s17='$s17',
+                              s18='$s18', s19='$s19', s20='$s20', s21='$s21', s22='$s22', s23='$s23', s24='$s24', s25='$s25', s26='$s26', s27='$s27', s28='$s28', s29='$s29', s30='$s30', s31='$s31', s32='$s32', s33='$s33', s34='$s34', s35='$s35', s36='$s36', s37='$s37', s38='$s38', s39='$s39', s40='$s40', s41='$s41', s42='$s42', s43='$s43', s44='$s44', s45='$s45', s46='$s46', s47='$s47', s48='$s48', s49='$s49' WHERE paciente_id='$idpaciente'";
+$query = mysqli_query($conn, $sql);
+
+if ($query) {
+    Header("Location: ../../ventana/paciente/actualizar_psicologia.php?idpaciente=$idpaciente&id=$id&fecha=$fecha");
+} else {
+    echo ("no se pudo agregar el paciente");
+}
+
+?>

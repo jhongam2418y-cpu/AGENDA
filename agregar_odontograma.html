@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesando Odontograma</title>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <style>
+        .loading-container {
+            text-align: center;
+            padding: 50px;
+            font-family: Arial, sans-serif;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0077b6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status-message {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #333;
+        }
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <h2>Procesando Odontograma</h2>
+        <div class="spinner"></div>
+        <div class="status-message" id="status">Guardando información del odontograma...</div>
+        <p>Por favor espere, este proceso puede tomar unos segundos.</p>
+    </div>
+
+    <script>
+        // Simular el proceso de guardado
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusElement = document.getElementById('status');
+            
+            // Simular diferentes etapas del proceso
+            const stages = [
+                "Recopilando datos dentales...",
+                "Procesando información CPOD...",
+                "Guardando datos NT...",
+                "Actualizando registros...",
+                "¡Odontograma guardado exitosamente!"
+            ];
+            
+            let currentStage = 0;
+            
+            function updateStage() {
+                statusElement.textContent = stages[currentStage];
+                currentStage++;
+                
+                if (currentStage < stages.length) {
+                    setTimeout(updateStage, 800);
+                } else {
+                    statusElement.className = 'status-message success-message';
+                    
+                    // Redirigir después de mostrar el mensaje de éxito
+                    setTimeout(function() {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const idpaciente = urlParams.get('idpaciente');
+                        if (idpaciente) {
+                            window.location.href = `odontograma.html?idpaciente=${idpaciente}`;
+                        } else {
+                            window.location.href = 'odontograma.html';
+                        }
+                    }, 1500);
+                }
+            }
+            
+            // Iniciar el proceso
+            setTimeout(updateStage, 500);
+        });
+    </script>
+</body>
+</html>

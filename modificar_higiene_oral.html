@@ -1,0 +1,159 @@
+<?php
+include("../../datos/bd.php");
+$id = $_POST['id'];
+$fecha = $_POST['fecha'];
+$idpaciente = $_POST['idpaciente'];
+
+$indice = $_POST['indice'];
+// Validar y limitar la longitud de IOH1
+$indice = substr($indice, 0, 5); // Limitar a 5 caracteres para IOH1
+
+$v17 = $_POST['v17'];
+$v16 = $_POST['v16'];
+$v15 = $_POST['v15'];
+$v14 = $_POST['v14'];
+$v13 = $_POST['v13'];
+$v12 = $_POST['v12'];
+$v11 = $_POST['v11'];
+$v21 = $_POST['v21'];
+$v22 = $_POST['v22'];
+$v23 = $_POST['v23'];
+$v24 = $_POST['v24'];
+$v25 = $_POST['v25'];
+$v26 = $_POST['v26'];
+$v27 = $_POST['v27'];
+
+$d17 = $_POST['d17'];
+$d16 = $_POST['d16'];
+$d15 = $_POST['d15'];
+$d14 = $_POST['d14'];
+$d13 = $_POST['d13'];
+$d12 = $_POST['d12'];
+$d11 = $_POST['d11'];
+$d21 = $_POST['d21'];
+$d22 = $_POST['d22'];
+$d23 = $_POST['d23'];
+$d24 = $_POST['d24'];
+$d25 = $_POST['d25'];
+$d26 = $_POST['d26'];
+$d27 = $_POST['d27'];
+
+$m17 = $_POST['m17'];
+$m16 = $_POST['m16'];
+$m15 = $_POST['m15'];
+$m14 = $_POST['m14'];
+$m13 = $_POST['m13'];
+$m12 = $_POST['m12'];
+$m11 = $_POST['m11'];
+$m21 = $_POST['m21'];
+$m22 = $_POST['m22'];
+$m23 = $_POST['m23'];
+$m24 = $_POST['m24'];
+$m25 = $_POST['m25'];
+$m26 = $_POST['m26'];
+$m27 = $_POST['m27'];
+
+$p17 = $_POST['p17'];
+$p16 = $_POST['p16'];
+$p15 = $_POST['p15'];
+$p14 = $_POST['p14'];
+$p13 = $_POST['p13'];
+$p12 = $_POST['p12'];
+$p11 = $_POST['p11'];
+$p21 = $_POST['p21'];
+$p22 = $_POST['p22'];
+$p23 = $_POST['p23'];
+$p24 = $_POST['p24'];
+$p25 = $_POST['p25'];
+$p26 = $_POST['p26'];
+$p27 = $_POST['p27'];
+
+
+
+$v47 = $_POST['v47'];
+$v46 = $_POST['v46'];
+$v45 = $_POST['v45'];
+$v44 = $_POST['v44'];
+$v43 = $_POST['v43'];
+$v42 = $_POST['v42'];
+$v41 = $_POST['v41'];
+$v31 = $_POST['v31'];
+$v32 = $_POST['v32'];
+$v33 = $_POST['v33'];
+$v34 = $_POST['v34'];
+$v35 = $_POST['v35'];
+$v36 = $_POST['v36'];
+$v37 = $_POST['v37'];
+
+$d47 = $_POST['d47'];
+$d46 = $_POST['d46'];
+$d45 = $_POST['d45'];
+$d44 = $_POST['d44'];
+$d43 = $_POST['d43'];
+$d42 = $_POST['d42'];
+$d41 = $_POST['d41'];
+$d31 = $_POST['d31'];
+$d32 = $_POST['d32'];
+$d33 = $_POST['d33'];
+$d34 = $_POST['d34'];
+$d35 = $_POST['d35'];
+$d36 = $_POST['d36'];
+$d37 = $_POST['d37'];
+
+$m47 = $_POST['m47'];
+$m46 = $_POST['m46'];
+$m45 = $_POST['m45'];
+$m44 = $_POST['m44'];
+$m43 = $_POST['m43'];
+$m42 = $_POST['m42'];
+$m41 = $_POST['m41'];
+$m31 = $_POST['m31'];
+$m32 = $_POST['m32'];
+$m33 = $_POST['m33'];
+$m34 = $_POST['m34'];
+$m35 = $_POST['m35'];
+$m36 = $_POST['m36'];
+$m37 = $_POST['m37'];
+
+$p47 = $_POST['p47'];
+$p46 = $_POST['p46'];
+$p45 = $_POST['p45'];
+$p44 = $_POST['p44'];
+$p43 = $_POST['p43'];
+$p42 = $_POST['p42'];
+$p41 = $_POST['p41'];
+$p31 = $_POST['p31'];
+$p32 = $_POST['p32'];
+$p33 = $_POST['p33'];
+$p34 = $_POST['p34'];
+$p35 = $_POST['p35'];
+$p36 = $_POST['p36'];
+$p37 = $_POST['p37'];
+
+
+$sql = "UPDATE higiene_oral SET IOH='$indice', v17='$v17', v16='$v16', v15='$v15', v14='$v14', v13='$v13', v12='$v12', v11='$v11', v21='$v21', v22='$v22', v23='$v23', v24='$v24', v25='$v25', v26='$v26', v27='$v27', d17='$d17', d16='$d16', d15='$d15', d14='$d14',
+                                d13='$d13', d12='$d12', d11='$d11', d21='$d21', d22='$d22', d23='$d23', d24='$d24', d25='$d25', d26='$d26', d27='$d27', m17='$m17', m16='$m16', m15='$m15', m14='$m14', m13='$m13', m12='$m12', m11='$m11', m21='$m21', m22='$m22', m23='$m23', m24='$m24', m25='$m25', m26='$m26', m27='$m27', 
+                                p17='$p17', p16='$p16', p15='$p15', p14='$p14', p13='$p13', p12='$p12', p11='$p11', p21='$p21', p22='$p22', p23='$p23', p24='$p24', p25='$p25', p26='$p26', p27='$p27', v47='$v47', v46='$v46', v45='$v45', 
+                                v44='$v44', v43='$v43', v42='$v42', v41='$v41', v31='$v31', v32='$v32', v33='$v33', v34='$v34', v35='$v35', v36='$v36', v37='$v37', d47='$d47', d46='$d46', d45='$d45', d44='$d44', d43='$d43', d42='$d42', d41='$d41', d31='$d31', 
+                                d32='$d32', d33='$d33', d34='$d34', d35='$d35', d36='$d36', d37='$d37', m47='$m47', m46='$m46', m45='$m45', m44='$m44', m43='$m43', m42='$m42', m41='$m41', m31='$m31', m32='$m32', m33='$m33', m34='$m34', m35='$m35', m36='$m36', m37='$m37', p47='$p47', p46='$p46', 
+                                p45='$p45', p44='$p44', p43='$p43', p42='$p42', p41='$p41', p31='$p31', p32='$p32', p33='$p33', p34='$p34', p35='$p35', p36='$p36', p37='$p37' WHERE idpaciente='$idpaciente' AND fecha='$fecha'";
+
+$query = mysqli_query($conn, $sql);
+
+$sql = "UPDATE datos_grupal SET IOH1='$indice' WHERE idpaciente='$idpaciente'";
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+    die("Error al actualizar IOH1: " . mysqli_error($conn));
+}
+
+$sql = "UPDATE tratamiento SET iho='$indice' WHERE idpaciente='$idpaciente'";
+$query = mysqli_query($conn, $sql);
+
+if ($query) {
+    Header("Location: ../../ventana/paciente/higiene_oral.php?idpaciente=$idpaciente&id=$id&fecha=$fecha");
+} else {
+    die("Error al actualizar el tratamiento: " . mysqli_error($conn));
+}
+
+?>

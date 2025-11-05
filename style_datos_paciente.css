@@ -1,0 +1,30 @@
+
+#btn1 {
+    border-bottom: 2px solid #25eaa4;
+    background-color: #565e64;
+}
+form {
+    margin-bottom: 120px;
+}
+p {
+    font-weight: bold;
+    font-family: sans-serif;
+}
+#actualizar {
+    position: fixed;
+    right: 2%;
+    bottom: 12%;
+    background-color: #25eaa4;
+    color: white;
+}
+label {
+    font-family: sans-serif;
+}
+.form-control {
+    font-family: sans-serif;
+    border-bottom: 2px solid #25eaa4;
+}
+.form-select {
+    font-family: sans-serif;
+    border-bottom: 2px solid #25eaa4;
+}
