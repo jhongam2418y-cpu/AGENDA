@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador - Dentodesk</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: absolute;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 0.5rem;
+      z-index: 1000;
+      right: 0;
+      min-width: 150px;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover {
+      background: #f3f4f6;
+    }
+
+    /* Contenido principal */
+    .admin-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .section-header h1 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-header p {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Controles */
+    .controles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      background: #f8fafc;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .control-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navegación superior */
+    .admin-nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-nav a {
+      text-decoration: none;
+      color: #6b7280;
+      padding: 0.8rem 1.5rem;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+    }
+
+    .admin-nav a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Filtros y búsqueda */
+    .filtros-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .filtros-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .filtros-tabs {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .filtro-tab {
+      padding: 0.5rem 1rem;
+      background: #f3f4f6;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filtro-tab.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-box input {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      min-width: 200px;
+    }
+
+    .search-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .new-user-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Grid de módulos */
+    .modulos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .modulo-item {
+      background: white;
+      padding: 1rem;
+      border-radius: 6px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .modulo-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .modulo-icon {
+      font-size: 2rem;
+      color: #2563eb;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Tabla de usuarios */
+    .tabla-usuarios {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .perfil-badge {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .controles-mini {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .control-icon {
+      font-size: 1.2rem;
+      color: #10b981;
+    }
+
+    .acciones {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-editar, .btn-eliminar {
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .btn-editar {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .btn-eliminar {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      color: #1f2937;
+      margin: 0;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    /* Modal Body Actualizado */
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-section:last-child {
+      border-bottom: none;
+    }
+
+    .modal-section h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    .info-text {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: #0369a1;
+    }
+
+    .info-text strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .required::after {
+      content: " *";
+      color: #ef4444;
+    }
+
+    .modal-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btn-cancelar {
+      background: #f3f4f6;
+      color: #374151;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-guardar {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Utilidades */
+    .hidden {
+      display: none !important;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-2 {
+      margin-bottom: 1rem;
+    }
+
+    .mt-2 {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <div class="logo">🦷 Dentodesk</div>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+      <a href="pacientes.html"><i class="fa-solid fa-users"></i> Pacientes</a>
+      <a href="administrador.html" class="active"><i class="fa-solid fa-user-tie"></i> Administrador</a>
+      <a href="reportes.html"><i class="fa-solid fa-chart-line"></i> Reportes</a>
+      <a href="configuracion.html"><i class="fa-solid fa-cog"></i> Configuración</a>
+    </nav>
+    <div class="user-menu">
+      <button class="user-btn" onclick="toggleUserMenu()"><i class="fa-solid fa-user"></i> ⌄</button>
+      <div class="dropdown hidden" id="dropdown">
+        <a href="#"><i class="fa-solid fa-user-edit"></i> Mi perfil</a>
+        <a href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="admin-container">
+    <!-- Navegación de módulos -->
+    <div class="admin-nav">
+      <a href="usuarios.html">Usuarios</a>
+      <a href="motivos.html">Motivos</a>
+      <a href="estados.html">Estados</a>
+      <a href="convenios.html">Convenios</a>
+      <a href="prestaciones.html">Prestaciones</a>
+      <a href="DocumentosClinicos.html">Documentos Clínicos</a>
+      <a href="referidos.html">Referidos</a>
+      <a href="egresos.html">Egresos</a>
+      <a href="insumos.html">Insumos</a>
+    </div>
+
+  
+  </main>
+
+  <!-- Modal para crear/editar usuario ACTUALIZADO -->
+  <div class="modal" id="modalUsuario">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitulo">Datos Usuario</h2>
+        <button class="close-modal" onclick="cerrarModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="info-text">
+          <strong>Su nuevo usuario recibirá un correo electrónico con el Nombre de Usuario designado para ingresar a DENTIDESK.</strong>
+          Una vez el usuario confirme su cuenta, podrá crear su propia clave de acceso.
+        </div>
+
+        <form id="formUsuario">
+          <!-- Sección Nombre y Apellidos -->
+          <div class="modal-section">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="nombres" class="required">Nombre</label>
+                <input type="text" id="nombres" placeholder="Nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="apellidos" class="required">Apellidos</label>
+                <input type="text" id="apellidos" placeholder="Apellidos" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Correo y Usuario -->
+          <div class="modal-section">
+            <div class="form-group">
+              <label for="email" class="required">Correo Electrónico</label>
+              <input type="email" id="email" placeholder="correo@ejemplo.com" required>
+            </div>
+            <div class="form-group">
+              <label for="usuario" class="required">Nombre de Usuario</label>
+              <input type="text" id="usuario" placeholder="Nombre de Usuario" required>
+            </div>
+          </div>
+
+          <!-- Sección Perfil de Usuario -->
+          <div class="modal-section">
+            <h3>Perfil de Usuario</h3>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="perfil-masculino" name="perfil">
+                <label for="perfil-masculino">Masculino</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="perfil-femenino" name="perfil">
+                <label for="perfil-femenino">Femenino</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Sucursales -->
+          <div class="modal-section">
+            <h3>Sucursales</h3>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="sucursal-fecha">
+                <label for="sucursal-fecha">Fecha de Nacimiento</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección RUT -->
+          <div class="modal-section">
+            <h3>RUT</h3>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label for="rut-dia">Día</label>
+                <input type="number" id="rut-dia" placeholder="DD" min="1" max="31">
+              </div>
+              <div class="form-group">
+                <label for="rut-mes">Mes</label>
+                <input type="number" id="rut-mes" placeholder="MM" min="1" max="12">
+              </div>
+              <div class="form-group">
+                <label for="rut-anio">Año</label>
+                <input type="number" id="rut-anio" placeholder="AAAA" min="1900" max="2024">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Teléfonos -->
+          <div class="modal-section">
+            <h3>Teléfono</h3>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="telefono-celular">Teléfono Celular</label>
+                <input type="tel" id="telefono-celular" placeholder="+569 1234 5678">
+              </div>
+              <div class="form-group">
+                <label for="telefono-fijo">Teléfono Fijo</label>
+                <input type="tel" id="telefono-fijo" placeholder="+569 1234 5678">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Región y Comuna -->
+          <div class="modal-section">
+            <h3>Región</h3>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="region">Región</label>
+                <select id="region">
+                  <option value="">Seleccione región</option>
+                  <option value="rm">RM - Metropolitana</option>
+                  <option value="v">Valparaíso</option>
+                  <option value="viii">Biobío</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="comuna">Comuna</label>
+                <select id="comuna">
+                  <option value="">Seleccione comuna</option>
+                  <option value="santiago">Santiago</option>
+                  <option value="providencia">Providencia</option>
+                  <option value="las-condes">Las Condes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección Dirección -->
+          <div class="modal-section">
+            <h3>Dirección</h3>
+            <div class="form-group">
+              <label for="direccion">Dirección</label>
+              <input type="text" id="direccion" placeholder="Dirección">
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="ajuntamiento-online">
+              <label for="ajuntamiento-online">Ajuntamiento Online?</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn-guardar" onclick="guardarUsuario()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==== Variables globales ====
+    let usuarios = [
+      {
+        id: 0,
+        nombres: "ALEJANDRO",
+        apellidos: "MENDEZ",
+        perfiles: ["Profesional Doctor", "Administrador Gr."],
+        email: "alejandro@dentodesk.com",
+        telefono: "",
+        usuario: "alejandro.mendez",
+        controles: [true, true, true, true]
+      },
+      {
+        id: 1,
+        nombres: "Carla",
+        apellidos: "Vásquez Jarry",
+        perfiles: ["Profesional Doctor", "Administrador Gr."],
+        email: "carla@dentodesk.com",
+        telefono: "",
+        usuario: "carla.vasquez",
+        controles: [true, true, true, true]
+      },
+      {
+        id: 2,
+        nombres: "Cecilia",
+        apellidos: "Calderon",
+        perfiles: ["Profesional Doctor"],
+        email: "cecilia@dentodesk.com",
+        telefono: "",
+        usuario: "cecilia.calderon",
+        controles: [true, true, true, true]
+      },
+    ];
+
+    let usuarioEditando = null;
+    let siguienteId = 8;
+
+    // ==== Inicialización ====
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarTablaUsuarios();
+      inicializarModal();
+    });
+
+    // ==== Funciones de la tabla ====
+    function cargarTablaUsuarios() {
+      const tablaBody = document.getElementById('tabla-usuarios-body');
+      tablaBody.innerHTML = '';
+
+      usuarios.forEach(usuario => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td><strong>${usuario.nombres}</strong></td>
+          <td>${usuario.apellidos}</td>
+          <td>
+            ${usuario.perfiles.map(perfil => <span class="perfil-badge">${perfil}</span>).join('')}
+          </td>
+          <td>
+            <div class="controles-mini">
+              ${usuario.controles.map(control => 
+                <span class="control-icon">${control ? '✅' : '❌'}</span>
+              ).join('')}
+            </div>
+          
+  </script>
+</body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Estados - Dentodesk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5fbff;
+      margin: 0;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00aaff, #00c6ff);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .btn-volver {
+      background: white;
+      color: #007acc;
+      padding: 8px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn-volver:hover {
+      background: #007acc;
+      color: white;
+    }
+
+    main {
+      padding: 30px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+
+    h2 {
+      color: #007acc;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .acciones {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .acciones button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.9rem;
+    }
+    .acciones button:hover {
+      background: #005f99;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #e6f4ff;
+      color: #007acc;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f9ff;
+    }
+
+    .resumen {
+      background: #e6f4ff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #007acc;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-contenido {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    .modal-contenido h3 {
+      margin-bottom: 15px;
+      color: #007acc;
+    }
+
+    .modal input, .modal select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .modal button {
+      width: 48%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fa-solid fa-chart-line"></i> Estados - Dentodesk</h1>
+    <a href="administrador.html" class="btn-volver">← Volver</a>
+  </header>
+
+  <main>
+    <div class="panel">
+      <h2>Estados Financieros / Clínicos</h2>
+
+      <div class="acciones">
+        <button onclick="abrirModal()"><i class="fa-solid fa-plus"></i> Nuevo Registro</button>
+        <button onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Exportar</button>
+        <button onclick="imprimirTabla()"><i class="fa-solid fa-print"></i> Imprimir</button>
+      </div>
+
+      <table id="tablaEstados">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Monto (S/.)</th>
+            <th>Responsable</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025-10-21</td>
+            <td>Ingreso</td>
+            <td>Tratamiento Ortodoncia</td>
+            <td>350.00</td>
+            <td>Dr. Morales</td>
+            <td><button onclick="editarFila(this)">✏️</button> <button onclick="eliminarFila(this)">🗑️</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="resumen" id="resumenTotal">
+        Total actual: S/. 350.00
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modalEstado" class="modal">
+    <div class="modal-contenido">
+      <h3>Registrar Estado</h3>
+      <input type="date" id="fecha">
+      <select id="tipo">
+        <option value="">Seleccione tipo</option>
+        <option value="Ingreso">Ingreso</option>
+        <option value="Egreso">Egreso</option>
+      </select>
+      <input type="text" id="descripcion" placeholder="Descripción">
+      <input type="number" id="monto" placeholder="Monto en soles">
+      <input type="text" id="responsable" placeholder="Responsable">
+      <div style="display:flex;justify-content:space-between;">
+        <button onclick="guardarEstado()">Guardar</button>
+        <button onclick="cerrarModal()" style="background:#ccc;color:#333;">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modalEstado');
+
+    function abrirModal() {
+      modal.style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      modal.style.display = 'none';
+    }
+
+    function guardarEstado() {
+      const fecha = document.getElementById('fecha').value;
+      const tipo = document.getElementById('tipo').value;
+      const descripcion = document.getElementById('descripcion').value;
+      const monto = parseFloat(document.getElementById('monto').value);
+      const responsable = document.getElementById('responsable').value;
+
+      if (!fecha || !tipo || !descripcion || !monto || !responsable) {
+        alert('Por favor, complete todos los campos.');
+        return;
+      }
+
+      const tabla = document.getElementById('tablaEstados').querySelector('tbody');
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+        <td>${fecha}</td>
+        <td>${tipo}</td>
+        <td>${descripcion}</td>
+        <td>${monto.toFixed(2)}</td>
+        <td>${responsable}</td>
+        <td><button onclick="editarFila(this)">✏️</button> <button onclick="eliminarFila(this)">🗑️</button></td>
+      `;
+      tabla.appendChild(fila);
+      actualizarTotal();
+      cerrarModal();
+      alert('Estado registrado correctamente.');
+    }
+
+    function eliminarFila(btn) {
+      if (confirm('¿Seguro que desea eliminar este registro?')) {
+        btn.closest('tr').remove();
+        actualizarTotal();
+      }
+    }
+
+    function editarFila(btn) {
+      const fila = btn.closest('tr');
+      const celdas = fila.querySelectorAll('td');
+      document.getElementById('fecha').value = celdas[0].innerText;
+      document.getElementById('tipo').value = celdas[1].innerText;
+      document.getElementById('descripcion').value = celdas[2].innerText;
+      document.getElementById('monto').value = celdas[3].innerText;
+      document.getElementById('responsable').value = celdas[4].innerText;
+      fila.remove();
+      abrirModal();
+    }
+
+    function actualizarTotal() {
+      const filas = document.querySelectorAll("#tablaEstados tbody tr");
+      let total = 0;
+      filas.forEach(fila => {
+        const tipo = fila.children[1].innerText;
+        const monto = parseFloat(fila.children[3].innerText);
+        total += tipo === "Ingreso" ? monto : -monto;
+      });
+      document.getElementById("resumenTotal").innerText = `Total actual: S/. ${total.toFixed(2)}`;
+    }
+
+    function exportarExcel() {
+      alert("Función de exportar a Excel próximamente disponible.");
+    }
+
+    function imprimirTabla() {
+      window.print();
+    }
+  </script>
+</body>
+</html>

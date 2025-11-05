@@ -1,0 +1,73 @@
+@media only screen and (min-width:871px){
+body {
+    background-color: #B2BABB;
+}
+
+label {
+    color: black;
+}
+
+#btnagregar {
+    background-color: #B2BABB;
+    border: none;
+}
+
+#agregar {
+    font-size: 16px;
+    font-family: roman;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#historial {
+    font-size: 12px;
+    font-family: roman;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+.myFrames2{
+    position: absolute;
+    height: 100%;
+    width: 85%;
+    right: 0%;
+    bottom: 0%;
+    border: none;
+    background-color: white;
+}
+}
+@media only screen and (max-width:870px){
+    body {
+        background-color: #B2BABB;
+    }
+    
+    label {
+        color: black;
+    }
+    
+    #btnagregar {
+        background-color: #B2BABB;
+        border: none;
+    }
+    
+    #agregar {
+        font-size: 16px;
+        font-family: roman;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    
+    #historial {
+        font-size: 12px;
+        font-family: roman;
+        margin-left: 10px;
+        margin-top: 15px;
+    }
+    .myFrames2{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        bottom: 0%;
+        border: none;
+        background-color: white;
+    }
+    }

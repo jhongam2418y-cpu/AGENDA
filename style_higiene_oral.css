@@ -1,0 +1,43 @@
+
+#btn2 {
+    border-bottom: 2px solid #25eaa4;
+    background-color: #d3d4d5;
+  }
+  #tablahistoria {
+    width: 80%;
+    font-family: sans-serif;
+  }
+  #tabladato {
+    margin-top: 10px;
+    width: 80%;
+    font-family: sans-serif;
+  }
+  #higiene_oral {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+  }
+  #higiene_oral tr td {
+    width: 16px;
+  }
+  .diente {
+      width: 14px;
+      height: 14px;
+      color: transparent;
+      border-radius: 5px 5px 5px 5px;
+  }
+  .dientemarcar {
+      width: 14px;
+      height: 14px;
+      color: transparent;
+      background-color: darkgray;
+      border-radius: 5px 5px 5px 5px;
+  }
+  #actualizar {
+    position: fixed;
+    right: 2%;
+    bottom: 12%;
+    background-color: #25eaa4;
+    color: white;
+  }

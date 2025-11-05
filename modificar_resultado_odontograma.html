@@ -1,0 +1,730 @@
+<?php
+date_default_timezone_set("America/Lima");
+date_default_timezone_get();
+$id = 0;
+$fecha = date('Y-m-d H:i:s');
+$idpaciente = $_POST['idpaciente'];
+
+include("../../datos/bd.php");
+
+$diente17 = $_POST['diente17'];
+$diente16 = $_POST['diente16'];
+$diente15 = $_POST['diente15'];
+$diente14 = $_POST['diente14'];
+$diente13 = $_POST['diente13'];
+$diente12 = $_POST['diente12'];
+$diente11 = $_POST['diente11'];
+$diente21 = $_POST['diente21'];
+$diente22 = $_POST['diente22'];
+$diente23 = $_POST['diente23'];
+$diente24 = $_POST['diente24'];
+$diente25 = $_POST['diente25'];
+$diente26 = $_POST['diente26'];
+$diente27 = $_POST['diente27'];
+$diente55 = $_POST['diente55'];
+$diente54 = $_POST['diente54'];
+$diente53 = $_POST['diente53'];
+$diente52 = $_POST['diente52'];
+$diente51 = $_POST['diente51'];
+$diente61 = $_POST['diente61'];
+$diente62 = $_POST['diente62'];
+$diente63 = $_POST['diente63'];
+$diente64 = $_POST['diente64'];
+$diente65 = $_POST['diente65'];
+$diente85 = $_POST['diente85'];
+$diente84 = $_POST['diente84'];
+$diente83 = $_POST['diente83'];
+$diente82 = $_POST['diente82'];
+$diente81 = $_POST['diente81'];
+$diente71 = $_POST['diente71'];
+$diente72 = $_POST['diente72'];
+$diente73 = $_POST['diente73'];
+$diente74 = $_POST['diente74'];
+$diente75 = $_POST['diente75'];
+$diente47 = $_POST['diente47'];
+$diente46 = $_POST['diente46'];
+$diente45 = $_POST['diente45'];
+$diente44 = $_POST['diente44'];
+$diente43 = $_POST['diente43'];
+$diente42 = $_POST['diente42'];
+$diente41 = $_POST['diente41'];
+$diente31 = $_POST['diente31'];
+$diente32 = $_POST['diente32'];
+$diente33 = $_POST['diente33'];
+$diente34 = $_POST['diente34'];
+$diente35 = $_POST['diente35'];
+$diente36 = $_POST['diente36'];
+$diente37 = $_POST['diente37'];
+
+
+
+$c17 = $_POST['c17'];
+$c16 = $_POST['c16'];
+$c15 = $_POST['c15'];
+$c14 = $_POST['c14'];
+$c13 = $_POST['c13'];
+$c12 = $_POST['c12'];
+$c11 = $_POST['c11'];
+$c21 = $_POST['c21'];
+$c22 = $_POST['c22'];
+$c23 = $_POST['c23'];
+$c24 = $_POST['c24'];
+$c25 = $_POST['c25'];
+$c26 = $_POST['c26'];
+$c27 = $_POST['c27'];
+
+$t17 = $_POST['t17'];
+$t16 = $_POST['t16'];
+$t15 = $_POST['t15'];
+$t14 = $_POST['t14'];
+$t13 = $_POST['t13'];
+$t12 = $_POST['t12'];
+$t11 = $_POST['t11'];
+$t21 = $_POST['t21'];
+$t22 = $_POST['t22'];
+$t23 = $_POST['t23'];
+$t24 = $_POST['t24'];
+$t25 = $_POST['t25'];
+$t26 = $_POST['t26'];
+$t27 = $_POST['t27'];
+
+$v17 = $_POST['v17'];
+$v16 = $_POST['v16'];
+$v15 = $_POST['v15'];
+$v14 = $_POST['v14'];
+$v13 = $_POST['v13'];
+$v12 = $_POST['v12'];
+$v11 = $_POST['v11'];
+$v21 = $_POST['v21'];
+$v22 = $_POST['v22'];
+$v23 = $_POST['v23'];
+$v24 = $_POST['v24'];
+$v25 = $_POST['v25'];
+$v26 = $_POST['v26'];
+$v27 = $_POST['v27'];
+
+$d17 = $_POST['d17'];
+$d16 = $_POST['d16'];
+$d15 = $_POST['d15'];
+$d14 = $_POST['d14'];
+$d13 = $_POST['d13'];
+$d12 = $_POST['d12'];
+$d11 = $_POST['d11'];
+$d21 = $_POST['d21'];
+$d22 = $_POST['d22'];
+$d23 = $_POST['d23'];
+$d24 = $_POST['d24'];
+$d25 = $_POST['d25'];
+$d26 = $_POST['d26'];
+$d27 = $_POST['d27'];
+
+$o17 = $_POST['o17'];
+$o16 = $_POST['o16'];
+$o15 = $_POST['o15'];
+$o14 = $_POST['o14'];
+$i13 = $_POST['i13'];
+$i12 = $_POST['i12'];
+$i11 = $_POST['i11'];
+$i21 = $_POST['i21'];
+$i22 = $_POST['i22'];
+$i23 = $_POST['i23'];
+$o24 = $_POST['o24'];
+$o25 = $_POST['o25'];
+$o26 = $_POST['o26'];
+$o27 = $_POST['o27'];
+
+$m17 = $_POST['m17'];
+$m16 = $_POST['m16'];
+$m15 = $_POST['m15'];
+$m14 = $_POST['m14'];
+$m13 = $_POST['m13'];
+$m12 = $_POST['m12'];
+$m11 = $_POST['m11'];
+$m21 = $_POST['m21'];
+$m22 = $_POST['m22'];
+$m23 = $_POST['m23'];
+$m24 = $_POST['m24'];
+$m25 = $_POST['m25'];
+$m26 = $_POST['m26'];
+$m27 = $_POST['m27'];
+
+$p17 = $_POST['p17'];
+$p16 = $_POST['p16'];
+$p15 = $_POST['p15'];
+$p14 = $_POST['p14'];
+$p13 = $_POST['p13'];
+$p12 = $_POST['p12'];
+$p11 = $_POST['p11'];
+$p21 = $_POST['p21'];
+$p22 = $_POST['p22'];
+$p23 = $_POST['p23'];
+$p24 = $_POST['p24'];
+$p25 = $_POST['p25'];
+$p26 = $_POST['p26'];
+$p27 = $_POST['p27'];
+
+$u17 = $_POST['u17'];
+$u16 = $_POST['u16'];
+$u15 = $_POST['u15'];
+$u14 = $_POST['u14'];
+$u13 = $_POST['u13'];
+$u12 = $_POST['u12'];
+$u11 = $_POST['u11'];
+$u21 = $_POST['u21'];
+$u22 = $_POST['u22'];
+$u23 = $_POST['u23'];
+$u24 = $_POST['u24'];
+$u25 = $_POST['u25'];
+$u26 = $_POST['u26'];
+$u27 = $_POST['u27'];
+
+
+
+
+
+$c55 = $_POST['c55'];
+$c54 = $_POST['c54'];
+$c53 = $_POST['c53'];
+$c52 = $_POST['c52'];
+$c51 = $_POST['c51'];
+$c61 = $_POST['c61'];
+$c62 = $_POST['c62'];
+$c63 = $_POST['c63'];
+$c64 = $_POST['c64'];
+$c65 = $_POST['c65'];
+
+$t55 = $_POST['t55'];
+$t54 = $_POST['t54'];
+$t53 = $_POST['t53'];
+$t52 = $_POST['t52'];
+$t51 = $_POST['t51'];
+$t61 = $_POST['t61'];
+$t62 = $_POST['t62'];
+$t63 = $_POST['t63'];
+$t64 = $_POST['t64'];
+$t65 = $_POST['t65'];
+
+$v55 = $_POST['v55'];
+$v54 = $_POST['v54'];
+$v53 = $_POST['v53'];
+$v52 = $_POST['v52'];
+$v51 = $_POST['v51'];
+$v61 = $_POST['v61'];
+$v62 = $_POST['v62'];
+$v63 = $_POST['v63'];
+$v64 = $_POST['v64'];
+$v65 = $_POST['v65'];
+
+$d55 = $_POST['d55'];
+$d54 = $_POST['d54'];
+$d53 = $_POST['d53'];
+$d52 = $_POST['d52'];
+$d51 = $_POST['d51'];
+$d61 = $_POST['d61'];
+$d62 = $_POST['d62'];
+$d63 = $_POST['d63'];
+$d64 = $_POST['d64'];
+$d65 = $_POST['d65'];
+
+$o55 = $_POST['o55'];
+$o54 = $_POST['o54'];
+$i53 = $_POST['i53'];
+$i52 = $_POST['i52'];
+$i51 = $_POST['i51'];
+$i61 = $_POST['i61'];
+$i62 = $_POST['i62'];
+$i63 = $_POST['i63'];
+$o64 = $_POST['o64'];
+$o65 = $_POST['o65'];
+
+$m55 = $_POST['m55'];
+$m54 = $_POST['m54'];
+$m53 = $_POST['m53'];
+$m52 = $_POST['m52'];
+$m51 = $_POST['m51'];
+$m61 = $_POST['m61'];
+$m62 = $_POST['m62'];
+$m63 = $_POST['m63'];
+$m64 = $_POST['m64'];
+$m65 = $_POST['m65'];
+
+$p55 = $_POST['p55'];
+$p54 = $_POST['p54'];
+$p53 = $_POST['p53'];
+$p52 = $_POST['p52'];
+$p51 = $_POST['p51'];
+$p61 = $_POST['p61'];
+$p62 = $_POST['p62'];
+$p63 = $_POST['p63'];
+$p64 = $_POST['p64'];
+$p65 = $_POST['p65'];
+
+$u55 = $_POST['u55'];
+$u54 = $_POST['u54'];
+$u53 = $_POST['u53'];
+$u52 = $_POST['u52'];
+$u51 = $_POST['u51'];
+$u61 = $_POST['u61'];
+$u62 = $_POST['u62'];
+$u63 = $_POST['u63'];
+$u64 = $_POST['u64'];
+$u65 = $_POST['u65'];
+
+
+
+
+
+$c85 = $_POST['c85'];
+$c84 = $_POST['c84'];
+$c83 = $_POST['c83'];
+$c82 = $_POST['c82'];
+$c81 = $_POST['c81'];
+$c71 = $_POST['c71'];
+$c72 = $_POST['c72'];
+$c73 = $_POST['c73'];
+$c74 = $_POST['c74'];
+$c75 = $_POST['c75'];
+
+$t85 = $_POST['t85'];
+$t84 = $_POST['t84'];
+$t83 = $_POST['t83'];
+$t82 = $_POST['t82'];
+$t81 = $_POST['t81'];
+$t71 = $_POST['t71'];
+$t72 = $_POST['t72'];
+$t73 = $_POST['t73'];
+$t74 = $_POST['t74'];
+$t75 = $_POST['t75'];
+
+$l85 = $_POST['l85'];
+$l84 = $_POST['l84'];
+$l83 = $_POST['l83'];
+$l82 = $_POST['l82'];
+$l81 = $_POST['l81'];
+$l71 = $_POST['l71'];
+$l72 = $_POST['l72'];
+$l73 = $_POST['l73'];
+$l74 = $_POST['l74'];
+$l75 = $_POST['l75'];
+
+$d85 = $_POST['d85'];
+$d84 = $_POST['d84'];
+$d83 = $_POST['d83'];
+$d82 = $_POST['d82'];
+$d81 = $_POST['d81'];
+$d71 = $_POST['d71'];
+$d72 = $_POST['d72'];
+$d73 = $_POST['d73'];
+$d74 = $_POST['d74'];
+$d75 = $_POST['d75'];
+
+$o85 = $_POST['o85'];
+$o84 = $_POST['o84'];
+$i83 = $_POST['i83'];
+$i82 = $_POST['i82'];
+$i81 = $_POST['i81'];
+$i71 = $_POST['i71'];
+$i72 = $_POST['i72'];
+$i73 = $_POST['i73'];
+$o74 = $_POST['o74'];
+$o75 = $_POST['o75'];
+
+$m85 = $_POST['m85'];
+$m84 = $_POST['m84'];
+$m83 = $_POST['m83'];
+$m82 = $_POST['m82'];
+$m81 = $_POST['m81'];
+$m71 = $_POST['m71'];
+$m72 = $_POST['m72'];
+$m73 = $_POST['m73'];
+$m74 = $_POST['m74'];
+$m75 = $_POST['m75'];
+
+$v85 = $_POST['v85'];
+$v84 = $_POST['v84'];
+$v83 = $_POST['v83'];
+$v82 = $_POST['v82'];
+$v81 = $_POST['v81'];
+$v71 = $_POST['v71'];
+$v72 = $_POST['v72'];
+$v73 = $_POST['v73'];
+$v74 = $_POST['v74'];
+$v75 = $_POST['v75'];
+
+$u85 = $_POST['u85'];
+$u84 = $_POST['u84'];
+$u83 = $_POST['u83'];
+$u82 = $_POST['u82'];
+$u81 = $_POST['u81'];
+$u71 = $_POST['u71'];
+$u72 = $_POST['u72'];
+$u73 = $_POST['u73'];
+$u74 = $_POST['u74'];
+$u75 = $_POST['u75'];
+
+
+
+
+
+$c47 = $_POST['c47'];
+$c46 = $_POST['c46'];
+$c45 = $_POST['c45'];
+$c44 = $_POST['c44'];
+$c43 = $_POST['c43'];
+$c42 = $_POST['c42'];
+$c41 = $_POST['c41'];
+$c31 = $_POST['c31'];
+$c32 = $_POST['c32'];
+$c33 = $_POST['c33'];
+$c34 = $_POST['c34'];
+$c35 = $_POST['c35'];
+$c36 = $_POST['c36'];
+$c37 = $_POST['c37'];
+
+$t47 = $_POST['t47'];
+$t46 = $_POST['t46'];
+$t45 = $_POST['t45'];
+$t44 = $_POST['t44'];
+$t43 = $_POST['t43'];
+$t42 = $_POST['t42'];
+$t41 = $_POST['t41'];
+$t31 = $_POST['t31'];
+$t32 = $_POST['t32'];
+$t33 = $_POST['t33'];
+$t34 = $_POST['t34'];
+$t35 = $_POST['t35'];
+$t36 = $_POST['t36'];
+$t37 = $_POST['t37'];
+
+$l47 = $_POST['l47'];
+$l46 = $_POST['l46'];
+$l45 = $_POST['l45'];
+$l44 = $_POST['l44'];
+$l43 = $_POST['l43'];
+$l42 = $_POST['l42'];
+$l41 = $_POST['l41'];
+$l31 = $_POST['l31'];
+$l32 = $_POST['l32'];
+$l33 = $_POST['l33'];
+$l34 = $_POST['l34'];
+$l35 = $_POST['l35'];
+$l36 = $_POST['l36'];
+$l37 = $_POST['l37'];
+
+$d47 = $_POST['d47'];
+$d46 = $_POST['d46'];
+$d45 = $_POST['d45'];
+$d44 = $_POST['d44'];
+$d43 = $_POST['d43'];
+$d42 = $_POST['d42'];
+$d41 = $_POST['d41'];
+$d31 = $_POST['d31'];
+$d32 = $_POST['d32'];
+$d33 = $_POST['d33'];
+$d34 = $_POST['d34'];
+$d35 = $_POST['d35'];
+$d36 = $_POST['d36'];
+$d37 = $_POST['d37'];
+
+$o47 = $_POST['o47'];
+$o46 = $_POST['o46'];
+$o45 = $_POST['o45'];
+$o44 = $_POST['o44'];
+$i43 = $_POST['i43'];
+$i42 = $_POST['i42'];
+$i41 = $_POST['i41'];
+$i31 = $_POST['i31'];
+$i32 = $_POST['i32'];
+$i33 = $_POST['i33'];
+$o34 = $_POST['o34'];
+$o35 = $_POST['o35'];
+$o36 = $_POST['o36'];
+$o37 = $_POST['o37'];
+
+$m47 = $_POST['m47'];
+$m46 = $_POST['m46'];
+$m45 = $_POST['m45'];
+$m44 = $_POST['m44'];
+$m43 = $_POST['m43'];
+$m42 = $_POST['m42'];
+$m41 = $_POST['m41'];
+$m31 = $_POST['m31'];
+$m32 = $_POST['m32'];
+$m33 = $_POST['m33'];
+$m34 = $_POST['m34'];
+$m35 = $_POST['m35'];
+$m36 = $_POST['m36'];
+$m37 = $_POST['m37'];
+
+$v47 = $_POST['v47'];
+$v46 = $_POST['v46'];
+$v45 = $_POST['v45'];
+$v44 = $_POST['v44'];
+$v43 = $_POST['v43'];
+$v42 = $_POST['v42'];
+$v41 = $_POST['v41'];
+$v31 = $_POST['v31'];
+$v32 = $_POST['v32'];
+$v33 = $_POST['v33'];
+$v34 = $_POST['v34'];
+$v35 = $_POST['v35'];
+$v36 = $_POST['v36'];
+$v37 = $_POST['v37'];
+
+$u47 = $_POST['u47'];
+$u46 = $_POST['u46'];
+$u45 = $_POST['u45'];
+$u44 = $_POST['u44'];
+$u43 = $_POST['u43'];
+$u42 = $_POST['u42'];
+$u41 = $_POST['u41'];
+$u31 = $_POST['u31'];
+$u32 = $_POST['u32'];
+$u33 = $_POST['u33'];
+$u34 = $_POST['u34'];
+$u35 = $_POST['u35'];
+$u36 = $_POST['u36'];
+$u37 = $_POST['u37'];
+
+$p1 = $_POST['p1'];
+$u1 = $_POST['u1'];
+$f1 = $_POST['f1'];
+$a1 = $_POST['a1'];
+
+$p2 = $_POST['p2'];
+$u2 = $_POST['u2'];
+$f2 = $_POST['f2'];
+$a2 = $_POST['a2'];
+
+$pufa1 = $p1 + $u1 + $f1 + $a1;
+
+$pufa2 = $p2 + $u2 + $f2 + $a2;
+
+$rest11 = $_POST['rest11'];
+$rest12 = $_POST['rest12'];
+$tratpul1 = $_POST['tratpul1'];
+$exodoncias1 = $_POST['exodoncias1'];
+$fluor1 = $_POST['fluor1'];
+$fp1 = $_POST['fp1'];
+$fi1 = $_POST['fi1'];
+
+
+$n13 = $_POST['n13'];
+$n14 = $_POST['n14'];
+$n17 = $_POST['n17'];
+$n18 = $_POST['n18'];
+$n19 = $_POST['n19'];
+
+$rest21 = $_POST['rest21'];
+$rest22 = $_POST['rest22'];
+$tratpul2 = $_POST['tratpul2'];
+$exodoncias2 = $_POST['exodoncias2'];
+$fluor2 = $_POST['fluor2'];
+$fp2 = $_POST['fp2'];
+$fi2 = $_POST['fi2'];
+
+$n23 = $_POST['n23'];
+$n24 = $_POST['n24'];
+$n27 = $_POST['n27'];
+$n28 = $_POST['n28'];
+$n29 = $_POST['n29'];
+
+$ndpp1 = $_POST['ndpp1'];
+$npps1 = $_POST['npps1'];
+$dc11 = $_POST['dc11'];
+$dc12 = $_POST['dc12'];
+$dp1 = $_POST['dp1'];
+$do1 = $_POST['do1'];
+
+$nddp2 = $_POST['nddp2'];
+$ndds2 = $_POST['ndds2'];
+$dc21 = $_POST['dc21'];
+$dc22 = $_POST['dc22'];
+$dp2 = $_POST['dp2'];
+$do2 = $_POST['do2'];
+
+
+$sco11 = $_POST['sco11'];
+$sco12 = $_POST['sco12'];
+$spo1 = $_POST['spo1'];
+$soo1 = $_POST['soo1'];
+$sco21 = $_POST['sco21'];
+$sco22 = $_POST['sco22'];
+$spo2 = $_POST['spo2'];
+$soo2 = $_POST['soo2'];
+
+$scp11 = $_POST['scp11'];
+$scp12 = $_POST['scp11'];
+$spp1 = $_POST['spp1'];
+$sop1 = $_POST['sop1'];
+$scp21 = $_POST['scp21'];
+$scp22 = $_POST['scp22'];
+$spp2 = $_POST['spp2'];
+$sop2 = $_POST['sop2'];
+
+$scd11 = $_POST['scd11'];
+$scd12 = $_POST['scd11'];
+$spd1 = $_POST['spd1'];
+$sod1 = $_POST['sod1'];
+$scd21 = $_POST['scd21'];
+$scd22 = $_POST['scd22'];
+$spd2 = $_POST['spd2'];
+$sod2 = $_POST['sod2'];
+
+$scv11 = $_POST['scv11'];
+$scv12 = $_POST['scv11'];
+$spv1 = $_POST['spv1'];
+$sov1 = $_POST['sov1'];
+$scv21 = $_POST['scv21'];
+$scv22 = $_POST['scv22'];
+$spv2 = $_POST['spv2'];
+$sov2 = $_POST['sov2'];
+
+$scm11 = $_POST['scm11'];
+$scm12 = $_POST['scm11'];
+$spm1 = $_POST['spm1'];
+$som1 = $_POST['som1'];
+$scm21 = $_POST['scm21'];
+$scm22 = $_POST['scm22'];
+$spm2 = $_POST['spm2'];
+$som2 = $_POST['som2'];
+
+$sc11 = $sco11 + $scp11 + $scd11 + $scv11 + $scm11;
+$sc12 = $sco12 + $scp12 + $scd12 + $scv12 + $scm12;
+$sp1 = $spo1 + $spp1 + $spd1 + $spv1 + $spm1;
+$so1 = $soo1 + $sop1 + $sod1 + $sov1 + $som1;
+$sc21 = $sco21 + $scp21 + $scd21 + $scv21 + $scm21;
+$sc22 = $sco22 + $scp22 + $scd22 + $scv22 + $scm22;
+$sp2 = $spo2 + $spp2 + $spd2 + $spv2 + $spm2;
+$so2 = $soo2 + $sop2 + $sod2 + $sov2 + $som2;
+
+$cpod1 = $_POST['cpod1'];
+$ceod2 = $_POST['ceod2'];
+$cpos1 = $_POST['cpos1'];
+$cpos2 = $_POST['cpos2'];
+$total = $_POST['total'];
+$null = 0;
+$exisodon = "Llenado";
+
+
+
+
+$sql = "UPDATE odontograma_uno 
+        SET  fecha = '$fecha', 
+            diente17 = '$diente17', diente16 = '$diente16', diente15 = '$diente15', diente14 = '$diente14', diente13 = '$diente13', diente12 = '$diente12', diente11 = '$diente11', 
+            diente21 = '$diente21', diente22 = '$diente22', diente23 = '$diente23', diente24 = '$diente24', diente25 = '$diente25', diente26 = '$diente26', diente27 = '$diente27', 
+            diente55 = '$diente55', diente54 = '$diente54', diente53 = '$diente53', diente52 = '$diente52', diente51 = '$diente51', diente61 = '$diente61', diente62 = '$diente62', 
+            diente63 = '$diente63', diente64 = '$diente64', diente65 = '$diente65', 
+            diente85 = '$diente85', diente84 = '$diente84', diente83 = '$diente83', diente82 = '$diente82', diente81 = '$diente81', 
+            diente71 = '$diente71', diente72 = '$diente72', diente73 = '$diente73', diente74 = '$diente74', diente75 = '$diente75',
+            diente47 = '$diente47', diente46 = '$diente46', diente45 = '$diente45', diente44 = '$diente44', diente43 = '$diente43', 
+            diente42 = '$diente42', diente41 = '$diente41', diente31 = '$diente31', diente32 = '$diente32', diente33 = '$diente33', 
+            diente34 = '$diente34', diente35 = '$diente35', diente36 = '$diente36', diente37 = '$diente37',
+            c17 = '$c17', c16 = '$c16', c15 = '$c15', c14 = '$c14', c13 = '$c13', c12 = '$c12', c11 = '$c11', 
+            c21 = '$c21', c22 = '$c22', c23 = '$c23', c24 = '$c24', c25 = '$c25', c26 = '$c26', c27 = '$c27', 
+            t17 = '$t17', t16 = '$t16', t15 = '$t15', t14 = '$t14', t13 = '$t13', t12 = '$t12', t11 = '$t11', 
+            t21 = '$t21', t22 = '$t22', t23 = '$t23', t24 = '$t24', t25 = '$t25', t26 = '$t26', t27 = '$t27', 
+            v17 = '$v17', v16 = '$v16', v15 = '$v15', v14 = '$v14', v13 = '$v13', v12 = '$v12', v11 = '$v11', 
+            v21 = '$v21', v22 = '$v22', v23 = '$v23', v24 = '$v24', v25 = '$v25', v26 = '$v26', v27 = '$v27', 
+            d17 = '$d17', d16 = '$d16', d15 = '$d15', d14 = '$d14', d13 = '$d13', d12 = '$d12', d11 = '$d11', 
+            d21 = '$d21', d22 = '$d22', d23 = '$d23', d24 = '$d24', d25 = '$d25', d26 = '$d26', d27 = '$d27', 
+            o17 = '$o17', o16 = '$o16', o15 = '$o15', o14 = '$o14', i13 = '$i13', i12 = '$i12', i11 = '$i11', 
+            i21 = '$i21', i22 = '$i22', i23 = '$i23', o24 = '$o24', o25 = '$o25', o26 = '$o26', o27 = '$o27', 
+            m17 = '$m17', m16 = '$m16', m15 = '$m15', m14 = '$m14', m13 = '$m13', m12 = '$m12', m11 = '$m11', 
+            m21 = '$m21', m22 = '$m22', m23 = '$m23', m24 = '$m24', m25 = '$m25', m26 = '$m26', m27 = '$m27', 
+            p17 = '$p17', p16 = '$p16', p15 = '$p15', p14 = '$p14', p13 = '$p13', p12 = '$p12', p11 = '$p11', 
+            p21 = '$p21', p22 = '$p22', p23 = '$p23', p24 = '$p24', p25 = '$p25', p26 = '$p26', p27 = '$p27', 
+            u17 = '$u17', u16 = '$u16', u15 = '$u15', u14 = '$u14', u13 = '$u13', u12 = '$u12', u11 = '$u11', 
+            u21 = '$u21', u22 = '$u22', u23 = '$u23', u24 = '$u24', u25 = '$u25', u26 = '$u26', u27 = '$u27', 
+            c55 = '$c55', c54 = '$c54', c53 = '$c53', c52 = '$c52', c51 = '$c51', c61 = '$c61', c62 = '$c62', 
+            c63 = '$c63', c64 = '$c64', c65 = '$c65', 
+            t55 = '$t55', t54 = '$t54', t53 = '$t53', t52 = '$t52', t51 = '$t51', t61 = '$t61', t62 = '$t62', 
+            t63 = '$t63', t64 = '$t64', t65 = '$t65', 
+            v55 = '$v55', v54 = '$v54', v53 = '$v53', v52 = '$v52', v51 = '$v51', v61 = '$v61', v62 = '$v62', 
+            v63 = '$v63', v64 = '$v64', v65 = '$v65', 
+            d55 = '$d55', d54 = '$d54', d53 = '$d53', d52 = '$d52', d51 = '$d51', d61 = '$d61', d62 = '$d62', 
+            d63 = '$d63', d64 = '$d64', d65 = '$d65', 
+            o55 = '$o55', o54 = '$o54', i53 = '$i53', i52 = '$i52', i51 = '$i51', i61 = '$i61', i62 = '$i62', 
+            i63 = '$i63', o64 = '$o64', o65 = '$o65', 
+            m55 = '$m55', m54 = '$m54', m53 = '$m53', m52 = '$m52', m51 = '$m51', m61 = '$m61', m62 = '$m62', 
+            m63 = '$m63', m64 = '$m64', m65 = '$m65', 
+            p55 = '$p55', p54 = '$p54', p53 = '$p53', p52 = '$p52', p51 = '$p51', p61 = '$p61', p62 = '$p62', 
+            p63 = '$p63', p64 = '$p64', p65 = '$p65', 
+            u55 = '$u55', u54 = '$u54', u53 = '$u53', u52 = '$u52', u51 = '$u51', u61 = '$u61', u62 = '$u62', 
+            u63 = '$u63', u64 = '$u64', u65 = '$u65', 
+            c85 = '$c85', c84 = '$c84', c83 = '$c83', c82 = '$c82', c81 = '$c81', c71 = '$c71', c72 = '$c72', 
+            c73 = '$c73', c74 = '$c74', c75 = '$c75', 
+            t85 = '$t85', t84 = '$t84', t83 = '$t83', t82 = '$t82', t81 = '$t81', t71 = '$t71', t72 = '$t72', 
+            t73 = '$t73', t74 = '$t74', t75 = '$t75', 
+            l85 = '$l85', l84 = '$l84', l83 = '$l83', l82 = '$l82', l81 = '$l81', l71 = '$l71', l72 = '$l72', 
+            l73 = '$l73', l74 = '$l74', l75 = '$l75', 
+            d85 = '$d85', d84 = '$d84', d83 = '$d83', d82 = '$d82', d81 = '$d81', d71 = '$d71', d72 = '$d72', 
+            d73 = '$d73', d74 = '$d74', d75 = '$d75', 
+            o85 = '$o85', o84 = '$o84', i83 = '$i83', i82 = '$i82', i81 = '$i81', i71 = '$i71', i72 = '$i72', 
+            i73 = '$i73', o74 = '$o74', o75 = '$o75', 
+            m85 = '$m85', m84 = '$m84', m83 = '$m83', m82 = '$m82', m81 = '$m81', m71 = '$m71', m72 = '$m72', 
+            m73 = '$m73', m74 = '$m74', m75 = '$m75', 
+            v85 = '$v85', v84 = '$v84', v83 = '$v83', v82 = '$v82', v81 = '$v81', v71 = '$v71', v72 = '$v72', 
+            v73 = '$v73', v74 = '$v74', v75 = '$v75', 
+            u85 = '$u85', u84 = '$u84', u83 = '$u83', u82 = '$u82', u81 = '$u81', u71 = '$u71', u72 = '$u72', 
+            u73 = '$u73', u74 = '$u74', u75 = '$u75',
+            c47 = '$c47', c46 = '$c46', c45 = '$c45', c44 = '$c44', c43 = '$c43', c42 = '$c42', c41 = '$c41',
+            c31 = '$c31', c32 = '$c32', c33 = '$c33', c34 = '$c34', c35 = '$c35', c36 = '$c36', c37 = '$c37',
+            t47 = '$t47', t46 = '$t46', t45 = '$t45', t44 = '$t44', t43 = '$t43', t42 = '$t42', t41 = '$t41',
+            t31 = '$t31', t32 = '$t32', t33 = '$t33', t34 = '$t34', t35 = '$t35', t36 = '$t36', t37 = '$t37',
+            l47 = '$l47', l46 = '$l46', l45 = '$l45', l44 = '$l44', l43 = '$l43', l42 = '$l42', l41 = '$l41',
+            l31 = '$l31', l32 = '$l32', l33 = '$l33', l34 = '$l34', l35 = '$l35', l36 = '$l36', l37 = '$l37',
+            d47 = '$d47', d46 = '$d46', d45 = '$d45', d44 = '$d44', d43 = '$d43', d42 = '$d42', d41 = '$d41',
+            d31 = '$d31', d32 = '$d32', d33 = '$d33', d34 = '$d34', d35 = '$d35', d36 = '$d36', d37 = '$d37',
+            o47 = '$o47', o46 = '$o46', o45 = '$o45', o44 = '$o44', i43 = '$i43', i42 = '$i42', i41 = '$i41',
+            i31 = '$i31', i32 = '$i32', i33 = '$i33', o34 = '$o34', o35 = '$o35', o36 = '$o36', o37 = '$o37',
+            m47 = '$m47', m46 = '$m46', m45 = '$m45', m44 = '$m44', m43 = '$m43', m42 = '$m42', m41 = '$m41',
+            m31 = '$m31', m32 = '$m32', m33 = '$m33', m34 = '$m34', m35 = '$m35', m36 = '$m36', m37 = '$m37',
+            v47 = '$v47', v46 = '$v46', v45 = '$v45', v44 = '$v44', v43 = '$v43', v42 = '$v42', v41 = '$v41',
+            v31 = '$v31', v32 = '$v32', v33 = '$v33', v34 = '$v34', v35 = '$v35', v36 = '$v36', v37 = '$v37',
+            u47 = '$u47', u46 = '$u46', u45 = '$u45', u44 = '$u44', u43 = '$u43', u42 = '$u42', u41 = '$u41',
+            u31 = '$u31', u32 = '$u32', u33 = '$u33', u34 = '$u34', u35 = '$u35', u36 = '$u36', u37 = '$u37'
+        WHERE idpaciente = '$idpaciente'";
+
+
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+    die("Error en la consulta de odontograma_uno: " . mysqli_error($conn) . "\nSQL: " . $sql);
+}
+
+$sql = "INSERT INTO higiene_oral (id, idpaciente, fecha, total) VALUES ('$id', '$idpaciente', '$fecha', '$total')";
+
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+    die("Error en la consulta de higiene_oral: " . mysqli_error($conn) . "\nSQL: " . $sql);
+}
+
+$sql = "UPDATE datos_grupal SET cpod1='$cpod1', ceod2='$ceod2', cpos1='$cpos1', cpos2='$cpos2', pufa1='$pufa1', pufa2='$pufa2',
+                                sc11='$sc11', sc12='$sc12', sp1='$sp1', so1='$so1', sc21='$sc21', sc22='$sc22', sp2='$sp2', so2='$so2',
+                                p1='$p1', u1='$u1', f1='$f1', a1='$a1', p2='$p2', u2='$u2', f2='$f2', a2='$a2',
+                                rest11='$rest11', rest12='$rest12', tratpul1='$tratpul1', exodoncias1='$exodoncias1', fluor1='$fluor1', fp1='$fp1', fi1='$fi1', 
+                                rest21='$rest21', rest22='$rest22', tratpul2='$tratpul2', exodoncias2='$exodoncias2', fluor2='$fluor2', fp2='$fp2', fi2='$fi2',
+                                ndpp1='$ndpp1', npps1='$npps1', dc11='$dc11', dc12='$dc12', dp1='$dp1', do1='$do1', 
+                                nddp2='$nddp2', ndds2='$ndds2', dc21='$dc21', dc22='$dc22', dp2='$dp2', do2='$do2',
+                                sco11='$sco11', sco12='$sco12', spo1='$spo1', soo1='$soo1', sco21='$sco21', sco22='$sco22', spo2='$spo2', soo2='$soo2',
+                                scp11='$scp11', scp12='$scp12', spp1='$spp1', sop1='$sop1', scp21='$scp21', scp22='$scp22', spp2='$spp2', sop2='$sop2',
+                                scd11='$scd11', scd12='$scd12', spd1='$spd1', sod1='$sod1', scd21='$scd21', scd22='$scd22', spd2='$spd2', sod2='$sod2',
+                                scv11='$scv11', scv12='$scv12', spv1='$spv1', sov1='$sov1', scv21='$scv21', scv22='$scv22', spv2='$spv2', sov2='$sov2',
+                                scm11='$scm11', scm12='$scm12', spm1='$spm1', som1='$som1', scm21='$scm21', scm22='$scm22', spm2='$spm2', som2='$som2'
+                                 WHERE id='$id'";
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+    die("Error en la consulta de datos_grupal: " . mysqli_error($conn) . "\nSQL: " . $sql);
+}
+
+if ($query) {
+    Header("Location: ../../ventana/paciente/nuevo_odontograma.php?idpaciente=$idpaciente");
+    exit();
+} else {
+    echo "Error: No se pudo actualizar los datos. " . mysqli_error($conn);
+}
+
+?>

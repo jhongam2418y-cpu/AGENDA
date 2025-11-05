@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Endodoncia - Dentodesk</title>
+  <style>
+    body { font-family: 'Segoe UI'; background: #f0f8ff; margin: 0; }
+    header { background: #0077b6; color: white; text-align: center; padding: 10px; }
+    nav {
+      background: #eaf4fc; display: flex; justify-content: center;
+      gap: 15px; padding: 10px;
+    }
+    nav a { color: #0077b6; font-weight: bold; text-decoration: none; }
+    main {
+      width: 85%; margin: 20px auto; background: white; padding: 20px;
+      border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2, h3 { color: #0077b6; text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea {
+      width: 100%; padding: 8px; border: 1px solid #0077b6; border-radius: 5px;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    button {
+      margin-top: 15px; background: #0077b6; color: white;
+      border: none; padding: 10px 15px; border-radius: 5px;
+    }
+    button:hover { background: #005f87; }
+    button {
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    }
+
+    button:hover {
+    background: #005f87;
+    }
+
+  </style>
+</head>
+<body>
+  <header>🪡 ENDODONCIA</header>
+  <button onclick="window.location.href='pacientes.html'">← Volver a Pacientes</button>
+
+  <nav>
+    <a href="anamnesis.html">📋 Anamnesis</a>
+    <a href="odontograma.html">🦷 Odontograma</a>
+    <a href="periodontograma.html">🪥 Periodontograma</a>
+    <a href="ortodoncia.html">🧩 Ortodoncia</a>
+    <a href="orofacial.html">😊 Orofacial</a>
+    <a href="imagenes.html">🖼️ Imágenes</a>
+  </nav>
+
+  <main>
+    <h2>Evaluación Endodóntica</h2>
+    <div class="grid">
+      <div>
+        <label>Diente afectado:</label>
+        <input type="text" placeholder="Ej: 11, 36, 45...">
+        <label>Motivo de consulta:</label>
+        <textarea rows="2" placeholder="Ej: dolor espontáneo, sensibilidad térmica, fractura dental..."></textarea>
+        <label>Prueba de vitalidad pulpar:</label>
+        <select>
+          <option>Positiva</option><option>Negativa</option><option>Reacción tardía</option>
+        </select>
+      </div>
+      <div>
+        <label>Diagnóstico pulpar:</label>
+        <select>
+          <option>Pulpa sana</option>
+          <option>Pulpitis reversible</option>
+          <option>Pulpitis irreversible</option>
+          <option>Necrosis pulpar</option>
+        </select>
+        <label>Diagnóstico periapical:</label>
+        <select>
+          <option>Normal</option><option>Periodontitis apical aguda</option><option>Absceso apical crónico</option><option>Granuloma periapical</option>
+        </select>
+        <label>Prueba de percusión:</label>
+        <select><option>Negativa</option><option>Leve</option><option>Dolor moderado</option></select>
+      </div>
+    </div>
+
+    <h3>Plan de Tratamiento Endodóntico</h3>
+    <textarea rows="4" placeholder="Ej: tratamiento de conductos, retratamiento, obturación, seguimiento radiográfico..."></textarea>
+    <h3>Notas Clínicas</h3>
+    <textarea rows="4" placeholder="Ej: se observa cámara pulpar amplia, raíces curvas, calcificación parcial..."></textarea>
+    <button>Guardar Endodoncia</button>
+  </main>
+</body>
+</html>

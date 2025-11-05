@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Informe - Sistema Médico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #4a6fa5, #6a5acd);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .warning-box {
+            background-color: #fff8e6;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .document-icon {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 48px;
+        }
+        
+        .info-box {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            width: 120px;
+            color: #495057;
+        }
+        
+        .info-value {
+            color: #212529;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+        }
+        
+        .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .cancel-btn:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #4a6fa5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .icon {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Eliminar Informe</h1>
+            <p>Sistema de Gestión de Documentos</p>
+        </div>
+        
+        <div class="content">
+            <div class="document-icon">📄</div>
+            
+            <div class="warning-box">
+                <h3>
+                    <span class="icon">⚠️</span>
+                    Confirmar Eliminación
+                </h3>
+                <p>Está a punto de eliminar un informe médico del sistema. Esta acción no se puede deshacer y el documento será permanentemente eliminado.</p>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-item">
+                    <div class="info-label">ID Informe:</div>
+                    <div class="info-value" id="id-informe">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">ID Paciente:</div>
+                    <div class="info-value" id="id-paciente">-</div>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button id="deleteBtn" class="delete-btn">
+                    <span class="icon">🗑️</span>
+                    Eliminar Informe
+                </button>
+                <button id="cancelBtn" class="cancel-btn">
+                    <span class="icon">↩️</span>
+                    Cancelar
+                </button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Eliminando informe...</p>
+            </div>
+            
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        const idpaciente = urlParams.get('paciente');
+        
+        // Elementos DOM
+        const idInformeElement = document.getElementById('id-informe');
+        const idPacienteElement = document.getElementById('id-paciente');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const messageDiv = document.getElementById('message');
+        const loadingDiv = document.getElementById('loading');
+        
+        // Mostrar información en la página
+        idInformeElement.textContent = id || 'No especificado';
+        idPacienteElement.textContent = idpaciente || 'No especificado';
+        
+        // Verificar que tenemos los parámetros necesarios
+        if (!id || !idpaciente) {
+            messageDiv.textContent = 'Error: Faltan parámetros necesarios para eliminar el informe.';
+            messageDiv.className = 'message error';
+            messageDiv.style.display = 'block';
+            deleteBtn.disabled = true;
+        }
+        
+        // Manejar clic en el botón de eliminar
+        deleteBtn.addEventListener('click', function() {
+            // Mostrar indicador de carga
+            loadingDiv.style.display = 'block';
+            messageDiv.style.display = 'none';
+            deleteBtn.disabled = true;
+            
+            // Simular proceso de eliminación (en un caso real, esto sería una petición AJAX)
+            setTimeout(function() {
+                // Ocultar indicador de carga
+                loadingDiv.style.display = 'none';
+                
+                // Simular éxito (en un caso real, esto dependería de la respuesta del servidor)
+                const success = Math.random() > 0.2; // 80% de probabilidad de éxito
+                
+                if (success) {
+                    messageDiv.textContent = 'Informe eliminado correctamente. Redirigiendo...';
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    
+                    // Redirigir después de un breve retraso
+                    setTimeout(function() {
+                        // En un entorno real, esta sería la URL correcta
+                        // window.location.href = `../../ventana/paciente/documentos.php?idpaciente=${idpaciente}`;
+                        
+                        // Para demostración, redirigimos a una página simulada
+                        window.location.href = `documentos.html?idpaciente=${idpaciente}`;
+                    }, 1500);
+                } else {
+                    messageDiv.textContent = 'Error al eliminar el informe. Inténtelo de nuevo.';
+                    messageDiv.className = 'message error';
+                    messageDiv.style.display = 'block';
+                    deleteBtn.disabled = false;
+                }
+            }, 1500);
+        });
+        
+        // Manejar clic en el botón de cancelar
+        cancelBtn.addEventListener('click', function() {
+            // En un entorno real, esta sería la URL correcta
+            // window.location.href = `../../ventana/paciente/documentos.php?idpaciente=${idpaciente}`;
+            
+            // Para demostración, redirigimos a una página simulada
+            window.location.href = `documentos.html?idpaciente=${idpaciente}`;
+        });
+        
+        // Versión con AJAX para entorno real (comentada)
+        /*
+        function eliminarInformeReal() {
+            fetch('/api/eliminar-informe', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: id,
+                    idpaciente: idpaciente
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingDiv.style.display = 'none';
+                
+                if (data.success) {
+                    messageDiv.textContent = 'Informe eliminado correctamente. Redirigiendo...';
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = `../../ventana/paciente/documentos.php?idpaciente=${idpaciente}`;
+                    }, 1500);
+                } else {
+                    messageDiv.textContent = 'Error al eliminar el informe: ' + data.message;
+                    messageDiv.className = 'message error';
+                    messageDiv.style.display = 'block';
+                    deleteBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                loadingDiv.style.display = 'none';
+                messageDiv.textContent = 'Error de conexión. Inténtelo de nuevo.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                deleteBtn.disabled = false;
+            });
+        }
+        */
+    </script>
+</body>
+</html>

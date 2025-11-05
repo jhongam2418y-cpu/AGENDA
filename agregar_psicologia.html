@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Psicología</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f8fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .pregunta {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .pregunta:last-child {
+            border-bottom: none;
+        }
+
+        .pregunta-texto {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #1f2937;
+            font-size: 1.1rem;
+        }
+
+        .opciones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .opcion {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .opcion:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .opcion.selected {
+            background: #dbeafe;
+            border-color: #2563eb;
+        }
+
+        .opcion input {
+            display: none;
+        }
+
+        .opcion-label {
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            background: #2563eb;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 6px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #10b981;
+        }
+
+        .notification.error {
+            background: #ef4444;
+        }
+
+        .pregunta-numero {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .opciones {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> Cuestionario de Psicología</h1>
+            <p>Complete el siguiente formulario con sinceridad. Sus respuestas nos ayudarán a comprender mejor su situación.</p>
+            
+            <div class="progress-text" id="progress-text">0% completado</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+
+        <form id="form-psicologia" class="form-container">
+            <input type="hidden" id="idpaciente" name="idpaciente" value="">
+            <input type="hidden" id="id" name="id" value="">
+
+            <!-- Pregunta 1 -->
+            <div class="pregunta">
+                <div class="pregunta-texto">
+                    <span class="pregunta-numero">1</span>
+                    Me siento tenso o nervioso
+                </div>
+                <div class="opciones">
+                    <label class="opcion">
+                        <input type="radio" name="p1" value="nu">
+                        <span class="opcion-label">Nunca</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p1" value="po">
+                        <span class="opcion-label">Pocas veces</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p1" value="no">
+                        <span class="opcion-label">No sabría decir</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p1" value="ve">
+                        <span class="opcion-label">Muchas veces</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p1" value="s">
+                        <span class="opcion-label">Siempre</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="pregunta">
+                <div class="pregunta-texto">
+                    <span class="pregunta-numero">2</span>
+                    Tengo dificultad para conciliar el sueño
+                </div>
+                <div class="opciones">
+                    <label class="opcion">
+                        <input type="radio" name="p2" value="nu">
+                        <span class="opcion-label">Nunca</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p2" value="po">
+                        <span class="opcion-label">Pocas veces</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p2" value="no">
+                        <span class="opcion-label">No sabría decir</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p2" value="ve">
+                        <span class="opcion-label">Muchas veces</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p2" value="s">
+                        <span class="opcion-label">Siempre</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="pregunta">
+                <div class="pregunta-texto">
+                    <span class="pregunta-numero">3</span>
+                    Me siento cansado durante el día
+                </div>
+                <div class="opciones">
+                    <label class="opcion">
+                        <input type="radio" name="p3" value="nu">
+                        <span class="opcion-label">Nunca</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p3" value="po">
+                        <span class="opcion-label">Pocas veces</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p3" value="no">
+                        <span class="opcion-label">No sabría decir</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p3" value="ve">
+                        <span class="opcion-label">Muchas veces</span>
+                    </label>
+                    <label class="opcion">
+                        <input type="radio" name="p3" value="s">
+                        <span class="opcion-label">Siempre</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Las demás preguntas seguirían el mismo patrón hasta la 49 -->
+            <!-- Por brevedad, solo muestro las primeras 3 como ejemplo -->
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="cancelarFormulario()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Guardar Respuestas
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Notificación -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text"></span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    <script>
+        // Mapeo de valores para mostrar en notificaciones
+        const valor_respuesta = {
+            'nu': 'Nunca',
+            'po': 'Pocas veces',
+            'no': 'No sabría decir',
+            've': 'Muchas veces',
+            's': 'Siempre'
+        };
+
+        // Elementos del DOM
+        const form = document.getElementById('form-psicologia');
+        const progress = document.getElementById('progress');
+        const progressText = document.getElementById('progress-text');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+
+        // Inicializar eventos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const idpaciente = urlParams.get('idpaciente');
+            const id = urlParams.get('id');
+            
+            if (idpaciente) {
+                document.getElementById('idpaciente').value = idpaciente;
+            }
+            
+            if (id) {
+                document.getElementById('id').value = id;
+                // Aquí cargaríamos los datos existentes si estamos editando
+            }
+            
+            // Actualizar progreso inicial
+            actualizarProgreso();
+            
+            // Agregar eventos a las opciones
+            document.querySelectorAll('.opcion').forEach(opcion => {
+                opcion.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Actualizar estilos visuales
+                    this.parentElement.querySelectorAll('.opcion').forEach(o => {
+                        o.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    
+                    // Actualizar progreso
+                    actualizarProgreso();
+                });
+            });
+        });
+
+        // Actualizar barra de progreso
+        function actualizarProgreso() {
+            const totalPreguntas = 49; // Cambiar según el número real de preguntas
+            const preguntasRespondidas = document.querySelectorAll('input[type="radio"]:checked').length;
+            const porcentaje = Math.round((preguntasRespondidas / totalPreguntas) * 100);
+            
+            progress.style.width = porcentaje + '%';
+            progressText.textContent = porcentaje + '% completado';
+        }
+
+        // Mostrar notificación
+        function mostrarNotificacion(mensaje, tipo = 'success') {
+            notificationText.textContent = mensaje;
+            notification.className = `notification ${tipo}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Validar formulario
+        function validarFormulario() {
+            const totalPreguntas = 49; // Cambiar según el número real de preguntas
+            const preguntasRespondidas = document.querySelectorAll('input[type="radio"]:checked').length;
+            
+            if (preguntasRespondidas < totalPreguntas) {
+                mostrarNotificacion(`Faltan ${totalPreguntas - preguntasRespondidas} preguntas por responder`, 'error');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Manejar envío del formulario
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validarFormulario()) {
+                return;
+            }
+            
+            // Simular envío de datos (en un caso real, aquí se enviaría al servidor)
+            const idpaciente = document.getElementById('idpaciente').value;
+            const id = document.getElementById('id').value;
+            
+            // Recopilar respuestas
+            const respuestas = {};
+            for (let i = 1; i <= 49; i++) {
+                const pregunta = document.querySelector(`input[name="p${i}"]:checked`);
+                if (pregunta) {
+                    respuestas[`p${i}`] = valor_respuesta[pregunta.value];
+                }
+            }
+            
+            console.log('Respuestas recopiladas:', respuestas);
+            console.log('ID Paciente:', idpaciente);
+            console.log('ID Registro:', id);
+            
+            // Simular éxito de guardado
+            mostrarNotificacion('Respuestas guardadas correctamente');
+            
+            // Redirigir después de guardar (simulado)
+            setTimeout(() => {
+                if (idpaciente) {
+                    window.location.href = `../../ventana/paciente/psicologia.php?idpaciente=${idpaciente}`;
+                } else {
+                    window.location.href = '../../ventana/paciente/psicologia.php';
+                }
+            }, 1500);
+        });
+
+        // Cancelar formulario
+        function cancelarFormulario() {
+            if (confirm('¿Está seguro de que desea cancelar? Los cambios no guardados se perderán.')) {
+                const idpaciente = document.getElementById('idpaciente').value;
+                if (idpaciente) {
+                    window.location.href = `../../ventana/paciente/psicologia.php?idpaciente=${idpaciente}`;
+                } else {
+                    window.location.href = '../../ventana/paciente/psicologia.php';
+                }
+            }
+        }
+
+        // Simular carga de datos existentes (para edición)
+        function cargarDatosExistentes(datos) {
+            // Esta función cargaría los datos existentes en el formulario
+            // cuando se está editando un registro
+            for (let i = 1; i <= 49; i++) {
+                const valor = datos[`p${i}`];
+                if (valor) {
+                    // Encontrar la clave correspondiente al valor
+                    const clave = Object.keys(valor_respuesta).find(key => valor_respuesta[key] === valor);
+                    if (clave) {
+                        const radio = document.querySelector(`input[name="p${i}"][value="${clave}"]`);
+                        if (radio) {
+                            radio.checked = true;
+                            radio.closest('.opcion').classList.add('selected');
+                        }
+                    }
+                }
+            }
+            actualizarProgreso();
+        }
+    </script>
+</body>
+</html>

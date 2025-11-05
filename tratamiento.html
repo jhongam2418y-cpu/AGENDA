@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="MobileOptimized" content="width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datos Personales del Paciente</title>
+  <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="css/style_datos_paciente.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <style>
+    body {
+      margin-bottom: 120px;
+    }
+
+    #btn1 {
+      border-bottom: 2px solid #25eaa4;
+      background-color: #d3d4d5;
+    }
+
+    .btn-light {
+      background-color: #e9ecef;
+      color: #495057;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .error-message {
+      color: red;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+        <a id="btn1" href="datos_personales.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Datos</a>
+        <a id="btn2" href="odontograma.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen odontológico</a>
+        <a id="btn3" href="nutricion.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Nutricional</a>
+        <a id="btn4" href="psicologia.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Psicologico</a>
+        <a id="btn5" href="img.html" class="btn btn-secondary" tabindex="-1" role="button"
+          aria-disabled="true">Imagenes</a>
+        <a id="btn6" href="img_r.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Radiografias</a>
+        <a id="btn7" href="documentos.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html" target="_paren" class="btn btn-secondary"
+          tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal de datos personales -->
+  <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+      <div class="col-12">
+        <div class="bg-light rounded p-4">
+          <h4 class="mb-4">Datos Personales del Paciente</h4>
+          <div id="datos-paciente">
+            <!-- Los datos del paciente se cargarán aquí dinámicamente -->
+            <div class="alert alert-info">
+              Seleccione un paciente para ver sus datos personales.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Función para obtener parámetros de la URL
+    function getUrlParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const pairs = queryString.split('&');
+      
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i].split('=');
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+      }
+      
+      return params;
+    }
+
+    // Función para obtener el ID del paciente
+    function obtenerIdPaciente() {
+      const params = getUrlParams();
+      return params.idpaciente || params.paciente;
+    }
+
+    // Simulación de base de datos de pacientes
+    const pacientesDB = {
+      'María González López': {
+        nombre: 'María',
+        apellidos: 'González López',
+        genero: 'Femenino',
+        nacimiento: '2012-05-15',
+        edad: 11,
+        meses: 7,
+        dni: '12345678A',
+        telefono: '+34 600 123 456',
+        email: 'maria.gonzalez@email.com',
+        direccion: 'Calle Principal 123, Madrid',
+        seguro: 'Seguro Médico Privado',
+        alergias: 'Penicilina',
+        observaciones: 'Paciente con seguimiento regular'
+      },
+      'Carlos Rodríguez Pérez': {
+        nombre: 'Carlos',
+        apellidos: 'Rodríguez Pérez',
+        genero: 'Masculino',
+        nacimiento: '2010-08-22',
+        edad: 13,
+        meses: 4,
+        dni: '87654321B',
+        telefono: '+34 600 654 321',
+        email: 'carlos.rodriguez@email.com',
+        direccion: 'Avenida Central 456, Barcelona',
+        seguro: 'Seguridad Social',
+        alergias: 'Ninguna',
+        observaciones: 'Control odontológico cada 6 meses'
+      },
+      'Ana Martínez Sánchez': {
+        nombre: 'Ana',
+        apellidos: 'Martínez Sánchez',
+        genero: 'Femenino',
+        nacimiento: '2014-03-10',
+        edad: 9,
+        meses: 9,
+        dni: '11223344C',
+        telefono: '+34 600 789 012',
+        email: 'ana.martinez@email.com',
+        direccion: 'Plaza Mayor 789, Valencia',
+        seguro: 'Seguro Dental Plus',
+        alergias: 'Analgésicos',
+        observaciones: 'Tratamiento de ortodoncia en curso'
+      }
+    };
+
+    // Función para cargar datos del paciente
+    function cargarDatosPaciente(nombrePaciente) {
+      const paciente = pacientesDB[nombrePaciente];
+      const datosContainer = document.getElementById('datos-paciente');
+      
+      if (paciente) {
+        datosContainer.innerHTML = `
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label"><strong>Nombre:</strong></label>
+                <p class="form-control-plaintext">${paciente.nombre}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Apellidos:</strong></label>
+                <p class="form-control-plaintext">${paciente.apellidos}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Género:</strong></label>
+                <p class="form-control-plaintext">${paciente.genero}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Fecha de Nacimiento:</strong></label>
+                <p class="form-control-plaintext">${paciente.nacimiento}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Edad:</strong></label>
+                <p class="form-control-plaintext">${paciente.edad} años y ${paciente.meses} meses</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label"><strong>DNI:</strong></label>
+                <p class="form-control-plaintext">${paciente.dni}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Teléfono:</strong></label>
+                <p class="form-control-plaintext">${paciente.telefono}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Email:</strong></label>
+                <p class="form-control-plaintext">${paciente.email}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Dirección:</strong></label>
+                <p class="form-control-plaintext">${paciente.direccion}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Seguro Médico:</strong></label>
+                <p class="form-control-plaintext">${paciente.seguro}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label"><strong>Alergias:</strong></label>
+                <p class="form-control-plaintext">${paciente.alergias}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Observaciones:</strong></label>
+                <p class="form-control-plaintext">${paciente.observaciones}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary" onclick="editarPaciente('${nombrePaciente}')">Editar Datos</button>
+                <button class="btn btn-outline-secondary" onclick="exportarDatos('${nombrePaciente}')">Exportar PDF</button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        datosContainer.innerHTML = `
+          <div class="alert alert-warning">
+            No se encontraron datos para el paciente: ${nombrePaciente}
+          </div>
+        `;
+      }
+    }
+
+    // Función para editar paciente (simulada)
+    function editarPaciente(nombrePaciente) {
+      alert(`Función de edición para: ${nombrePaciente}\n\nEn una aplicación real, aquí se abriría un formulario de edición.`);
+    }
+
+    // Función para exportar datos (simulada)
+    function exportarDatos(nombrePaciente) {
+      alert(`Exportando datos de: ${nombrePaciente}\n\nEn una aplicación real, aquí se generaría un PDF con los datos del paciente.`);
+    }
+
+    // Función para actualizar enlaces de navegación
+    function actualizarEnlacesNavegacion(idPaciente) {
+      const enlaces = document.querySelectorAll('a[id^="btn"]');
+      enlaces.forEach(enlace => {
+        const href = enlace.getAttribute('href');
+        if (href && !href.includes('idpaciente=')) {
+          enlace.setAttribute('href', href + '?idpaciente=' + encodeURIComponent(idPaciente));
+        }
+      });
+    }
+
+    // Inicialización cuando la página carga
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obtener ID del paciente de la URL
+      const idPaciente = obtenerIdPaciente();
+      
+      if (idPaciente) {
+        // Actualizar enlaces de navegación
+        actualizarEnlacesNavegacion(idPaciente);
+        
+        // Cargar datos del paciente
+        cargarDatosPaciente(idPaciente);
+        
+        // Ocultar pantalla de carga
+        setTimeout(function() {
+          const contenedor = document.getElementById('contenedor_carga');
+          contenedor.style.visibility = 'hidden';
+          contenedor.style.opacity = '0';
+        }, 500);
+      } else {
+        // Mostrar mensaje de error si no hay paciente
+        const datosContainer = document.getElementById('datos-paciente');
+        datosContainer.innerHTML = `
+          <div class="alert alert-danger">
+            <strong>Error:</strong> No se ha especificado un paciente. 
+            Por favor, seleccione un paciente desde la lista de pacientes.
+          </div>
+        `;
+        
+        // Ocultar pantalla de carga
+        const contenedor = document.getElementById('contenedor_carga');
+        contenedor.style.visibility = 'hidden';
+        contenedor.style.opacity = '0';
+      }
+    });
+
+    // También puedes cargar datos desde localStorage si los guardaste allí
+    function cargarDatosDesdeLocalStorage(nombrePaciente) {
+      const pacientesLocal = JSON.parse(localStorage.getItem('pacientes')) || {};
+      return pacientesLocal[nombrePaciente] || null;
+    }
+
+    // Función para guardar datos en localStorage (para futuras ediciones)
+    function guardarDatosEnLocalStorage(nombrePaciente, datos) {
+      const pacientesLocal = JSON.parse(localStorage.getItem('pacientes')) || {};
+      pacientesLocal[nombrePaciente] = datos;
+      localStorage.setItem('pacientes', JSON.stringify(pacientesLocal));
+    }
+  </script>
+</body>
+</html>

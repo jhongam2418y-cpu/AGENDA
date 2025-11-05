@@ -1,0 +1,652 @@
+if(document.getElementById("u17").value=="PUFA"){
+    u17.value="0";
+}
+if(document.getElementById("u16").value=="PUFA"){
+    u16.value="0";
+}
+if(document.getElementById("u55").value=="PUFA"){
+    u55.value="0";
+}
+if(document.getElementById("u54").value=="PUFA"){
+    u54.value="0";
+}
+if(document.getElementById("u53").value=="PUFA"){
+    u53.value="0";
+}
+if(document.getElementById("u52").value=="PUFA"){
+    u52.value="0";
+}
+if(document.getElementById("u51").value=="PUFA"){
+    u51.value="0";
+}
+if(document.getElementById("u61").value=="PUFA"){
+    u61.value="0";
+}
+if(document.getElementById("u62").value=="PUFA"){
+    u62.value="0";
+}
+if(document.getElementById("u63").value=="PUFA"){
+    u63.value="0";
+}
+if(document.getElementById("u64").value=="PUFA"){
+    u64.value="0";
+}
+if(document.getElementById("u65").value=="PUFA"){
+    u65.value="0";
+}
+if(document.getElementById("u26").value=="PUFA"){
+    u26.value="0";
+}
+if(document.getElementById("u27").value=="PUFA"){
+    u27.value="0";
+}
+
+if(document.getElementById("c17").value=="CPOD"){
+    c17.value="0";
+}
+if(document.getElementById("c16").value=="CPOD"){
+    c16.value="0";
+}
+if(document.getElementById("c55").value=="CPOD"){
+    c55.value="0";
+}
+if(document.getElementById("c54").value=="CPOD"){
+    c54.value="0";
+}
+if(document.getElementById("c53").value=="CPOD"){
+    c53.value="0";
+}
+if(document.getElementById("c52").value=="CPOD"){
+    c52.value="0";
+}
+if(document.getElementById("c51").value=="CPOD"){
+    c51.value="0";
+}
+if(document.getElementById("c61").value=="CPOD"){
+    c61.value="0";
+}
+if(document.getElementById("c62").value=="CPOD"){
+    c62.value="0";
+}
+if(document.getElementById("c63").value=="CPOD"){
+    c63.value="0";
+}
+if(document.getElementById("c64").value=="CPOD"){
+    c64.value="0";
+}
+if(document.getElementById("c65").value=="CPOD"){
+    c65.value="0";
+}
+if(document.getElementById("c26").value=="CPOD"){
+    c26.value="0";
+}
+if(document.getElementById("c27").value=="CPOD"){
+    c27.value="0";
+}
+
+if(document.getElementById("t17").value=="NT"){
+    t17.value="0";
+}
+if(document.getElementById("t16").value=="NT"){
+    t16.value="0";
+}
+if(document.getElementById("t55").value=="NT"){
+    t55.value="0";
+}
+if(document.getElementById("t54").value=="NT"){
+    t54.value="0";
+}
+if(document.getElementById("t53").value=="NT"){
+    t53.value="0";
+}
+if(document.getElementById("t52").value=="NT"){
+    t52.value="0";
+}
+if(document.getElementById("t51").value=="NT"){
+    t51.value="0";
+}
+if(document.getElementById("t61").value=="NT"){
+    t61.value="0";
+}
+if(document.getElementById("t62").value=="NT"){
+    t62.value="0";
+}
+if(document.getElementById("t63").value=="NT"){
+    t63.value="0";
+}
+if(document.getElementById("t64").value=="NT"){
+    t64.value="0";
+}
+if(document.getElementById("t65").value=="NT"){
+    t65.value="0";
+}
+if(document.getElementById("t26").value=="NT"){
+    t26.value="0";
+}
+if(document.getElementById("t27").value=="NT"){
+    t27.value="0";
+}
+
+if(document.getElementById("o17").value=="O"){
+    o17.value="0";
+}
+if(document.getElementById("o16").value=="O"){
+    o16.value="0";
+}
+if(document.getElementById("o55").value=="O"){
+    o55.value="0";
+}
+if(document.getElementById("o54").value=="O"){
+    o54.value="0";
+}
+if(document.getElementById("o64").value=="O"){
+    o64.value="0";
+}
+if(document.getElementById("o65").value=="O"){
+    o65.value="0";
+}
+if(document.getElementById("o26").value=="O"){
+    o26.value="0";
+}
+if(document.getElementById("o27").value=="O"){
+    o27.value="0";
+}
+
+if(document.getElementById("p17").value=="P"){
+    p17.value="0";
+}
+if(document.getElementById("p16").value=="P"){
+    p16.value="0";
+}
+if(document.getElementById("p55").value=="P"){
+    p55.value="0";
+}
+if(document.getElementById("p54").value=="P"){
+    p54.value="0";
+}
+if(document.getElementById("p53").value=="P"){
+    p53.value="0";
+}
+if(document.getElementById("p52").value=="P"){
+    p52.value="0";
+}
+if(document.getElementById("p51").value=="P"){
+    p51.value="0";
+}
+if(document.getElementById("p61").value=="P"){
+    p61.value="0";
+}
+if(document.getElementById("p62").value=="P"){
+    p62.value="0";
+}
+if(document.getElementById("p63").value=="P"){
+    p63.value="0";
+}
+if(document.getElementById("p64").value=="P"){
+    p64.value="0";
+}
+if(document.getElementById("p65").value=="P"){
+    p65.value="0";
+}
+if(document.getElementById("p26").value=="P"){
+    p26.value="0";
+}
+if(document.getElementById("p27").value=="P"){
+    p27.value="0";
+}
+
+if(document.getElementById("d17").value=="D"){
+    d17.value="0";
+}
+if(document.getElementById("d16").value=="D"){
+    d16.value="0";
+}
+if(document.getElementById("d55").value=="D"){
+    d55.value="0";
+}
+if(document.getElementById("d54").value=="D"){
+    d54.value="0";
+}
+if(document.getElementById("d53").value=="D"){
+    d53.value="0";
+}
+if(document.getElementById("d52").value=="D"){
+    d52.value="0";
+}
+if(document.getElementById("d51").value=="D"){
+    d51.value="0";
+}
+if(document.getElementById("d61").value=="D"){
+    d61.value="0";
+}
+if(document.getElementById("d62").value=="D"){
+    d62.value="0";
+}
+if(document.getElementById("d63").value=="D"){
+    d63.value="0";
+}
+if(document.getElementById("d64").value=="D"){
+    d64.value="0";
+}
+if(document.getElementById("d65").value=="D"){
+    d65.value="0";
+}
+if(document.getElementById("d26").value=="D"){
+    d26.value="0";
+}
+if(document.getElementById("d27").value=="D"){
+    d27.value="0";
+}
+
+if(document.getElementById("v17").value=="V"){
+    v17.value="0";
+}
+if(document.getElementById("v16").value=="V"){
+    v16.value="0";
+}
+if(document.getElementById("v55").value=="V"){
+    v55.value="0";
+}
+if(document.getElementById("v54").value=="V"){
+    v54.value="0";
+}
+if(document.getElementById("v53").value=="V"){
+    v53.value="0";
+}
+if(document.getElementById("v52").value=="V"){
+    v52.value="0";
+}
+if(document.getElementById("v51").value=="V"){
+    v51.value="0";
+}
+if(document.getElementById("v61").value=="V"){
+    v61.value="0";
+}
+if(document.getElementById("v62").value=="V"){
+    v62.value="0";
+}
+if(document.getElementById("v63").value=="V"){
+    v63.value="0";
+}
+if(document.getElementById("v64").value=="V"){
+    v64.value="0";
+}
+if(document.getElementById("v65").value=="V"){
+    v65.value="0";
+}
+if(document.getElementById("v26").value=="V"){
+    v26.value="0";
+}
+if(document.getElementById("v27").value=="V"){
+    v27.value="0";
+}
+
+if(document.getElementById("m17").value=="M"){
+    m17.value="0";
+}
+if(document.getElementById("m16").value=="M"){
+    m16.value="0";
+}
+if(document.getElementById("m55").value=="M"){
+    m55.value="0";
+}
+if(document.getElementById("m54").value=="M"){
+    m54.value="0";
+}
+if(document.getElementById("m53").value=="M"){
+    m53.value="0";
+}
+if(document.getElementById("m52").value=="M"){
+    m52.value="0";
+}
+if(document.getElementById("m51").value=="M"){
+    m51.value="0";
+}
+if(document.getElementById("m61").value=="M"){
+    m61.value="0";
+}
+if(document.getElementById("m62").value=="M"){
+    m62.value="0";
+}
+if(document.getElementById("m63").value=="M"){
+    m63.value="0";
+}
+if(document.getElementById("m64").value=="M"){
+    m64.value="0";
+}
+if(document.getElementById("m65").value=="M"){
+    m65.value="0";
+}
+if(document.getElementById("m26").value=="M"){
+    m26.value="0";
+}
+if(document.getElementById("m27").value=="M"){
+    m27.value="0";
+}
+
+
+if(document.getElementById("u47").value=="PUFA"){
+    u47.value="0";
+}
+if(document.getElementById("u46").value=="PUFA"){
+    u46.value="0";
+}
+if(document.getElementById("u85").value=="PUFA"){
+    u85.value="0";
+}
+if(document.getElementById("u84").value=="PUFA"){
+    u84.value="0";
+}
+if(document.getElementById("u83").value=="PUFA"){
+    u83.value="0";
+}
+if(document.getElementById("u82").value=="PUFA"){
+    u82.value="0";
+}
+if(document.getElementById("u81").value=="PUFA"){
+    u81.value="0";
+}
+if(document.getElementById("u71").value=="PUFA"){
+    u71.value="0";
+}
+if(document.getElementById("u72").value=="PUFA"){
+    u72.value="0";
+}
+if(document.getElementById("u73").value=="PUFA"){
+    u73.value="0";
+}
+if(document.getElementById("u74").value=="PUFA"){
+    u74.value="0";
+}
+if(document.getElementById("u75").value=="PUFA"){
+    u75.value="0";
+}
+if(document.getElementById("u36").value=="PUFA"){
+    u36.value="0";
+}
+if(document.getElementById("u37").value=="PUFA"){
+    u37.value="0";
+}
+
+if(document.getElementById("c47").value=="CPOD"){
+    c47.value="0";
+}
+if(document.getElementById("c46").value=="CPOD"){
+    c46.value="0";
+}
+if(document.getElementById("c85").value=="CPOD"){
+    c85.value="0";
+}
+if(document.getElementById("c84").value=="CPOD"){
+    c84.value="0";
+}
+if(document.getElementById("c83").value=="CPOD"){
+    c83.value="0";
+}
+if(document.getElementById("c82").value=="CPOD"){
+    c82.value="0";
+}
+if(document.getElementById("c81").value=="CPOD"){
+    c81.value="0";
+}
+if(document.getElementById("c71").value=="CPOD"){
+    c71.value="0";
+}
+if(document.getElementById("c72").value=="CPOD"){
+    c72.value="0";
+}
+if(document.getElementById("c73").value=="CPOD"){
+    c73.value="0";
+}
+if(document.getElementById("c74").value=="CPOD"){
+    c74.value="0";
+}
+if(document.getElementById("c75").value=="CPOD"){
+    c75.value="0";
+}
+if(document.getElementById("c36").value=="CPOD"){
+    c36.value="0";
+}
+if(document.getElementById("c37").value=="CPOD"){
+    c37.value="0";
+}
+
+if(document.getElementById("t47").value=="NT"){
+    t47.value="0";
+}
+if(document.getElementById("t46").value=="NT"){
+    t46.value="0";
+}
+if(document.getElementById("t85").value=="NT"){
+    t85.value="0";
+}
+if(document.getElementById("t84").value=="NT"){
+    t84.value="0";
+}
+if(document.getElementById("t83").value=="NT"){
+    t83.value="0";
+}
+if(document.getElementById("t82").value=="NT"){
+    t82.value="0";
+}
+if(document.getElementById("t81").value=="NT"){
+    t81.value="0";
+}
+if(document.getElementById("t71").value=="NT"){
+    t71.value="0";
+}
+if(document.getElementById("t72").value=="NT"){
+    t72.value="0";
+}
+if(document.getElementById("t73").value=="NT"){
+    t73.value="0";
+}
+if(document.getElementById("t74").value=="NT"){
+    t74.value="0";
+}
+if(document.getElementById("t75").value=="NT"){
+    t75.value="0";
+}
+if(document.getElementById("t36").value=="NT"){
+    t36.value="0";
+}
+if(document.getElementById("t37").value=="NT"){
+    t37.value="0";
+}
+
+if(document.getElementById("o47").value=="O"){
+    o47.value="0";
+}
+if(document.getElementById("o46").value=="O"){
+    o46.value="0";
+}
+if(document.getElementById("o85").value=="O"){
+    o85.value="0";
+}
+if(document.getElementById("o84").value=="O"){
+    o84.value="0";
+}
+if(document.getElementById("o74").value=="O"){
+    o74.value="0";
+}
+if(document.getElementById("o75").value=="O"){
+    o75.value="0";
+}
+if(document.getElementById("o36").value=="O"){
+    o36.value="0";
+}
+if(document.getElementById("o37").value=="O"){
+    o37.value="0";
+}
+
+if(document.getElementById("l47").value=="L"){
+    l47.value="0";
+}
+if(document.getElementById("l46").value=="L"){
+    l46.value="0";
+}
+if(document.getElementById("l85").value=="L"){
+    l85.value="0";
+}
+if(document.getElementById("l84").value=="L"){
+    l84.value="0";
+}
+if(document.getElementById("l83").value=="L"){
+    l83.value="0";
+}
+if(document.getElementById("l82").value=="L"){
+    l82.value="0";
+}
+if(document.getElementById("l81").value=="L"){
+    l81.value="0";
+}
+if(document.getElementById("l71").value=="L"){
+    l71.value="0";
+}
+if(document.getElementById("l72").value=="L"){
+    l72.value="0";
+}
+if(document.getElementById("l73").value=="L"){
+    l73.value="0";
+}
+if(document.getElementById("l74").value=="L"){
+    l74.value="0";
+}
+if(document.getElementById("l75").value=="L"){
+    l75.value="0";
+}
+if(document.getElementById("l36").value=="L"){
+    l36.value="0";
+}
+if(document.getElementById("l37").value=="L"){
+    l37.value="0";
+}
+
+if(document.getElementById("d47").value=="D"){
+    d47.value="0";
+}
+if(document.getElementById("d46").value=="D"){
+    d46.value="0";
+}
+if(document.getElementById("d85").value=="D"){
+    d85.value="0";
+}
+if(document.getElementById("d84").value=="D"){
+    d84.value="0";
+}
+if(document.getElementById("d83").value=="D"){
+    d83.value="0";
+}
+if(document.getElementById("d82").value=="D"){
+    d82.value="0";
+}
+if(document.getElementById("d81").value=="D"){
+    d81.value="0";
+}
+if(document.getElementById("d71").value=="D"){
+    d71.value="0";
+}
+if(document.getElementById("d72").value=="D"){
+    d72.value="0";
+}
+if(document.getElementById("d73").value=="D"){
+    d73.value="0";
+}
+if(document.getElementById("d74").value=="D"){
+    d74.value="0";
+}
+if(document.getElementById("d75").value=="D"){
+    d75.value="0";
+}
+if(document.getElementById("d36").value=="D"){
+    d36.value="0";
+}
+if(document.getElementById("d37").value=="D"){
+    d37.value="0";
+}
+
+if(document.getElementById("v47").value=="V"){
+    v47.value="0";
+}
+if(document.getElementById("v46").value=="V"){
+    v46.value="0";
+}
+if(document.getElementById("v85").value=="V"){
+    v85.value="0";
+}
+if(document.getElementById("v84").value=="V"){
+    v84.value="0";
+}
+if(document.getElementById("v83").value=="V"){
+    v83.value="0";
+}
+if(document.getElementById("v82").value=="V"){
+    v82.value="0";
+}
+if(document.getElementById("v81").value=="V"){
+    v81.value="0";
+}
+if(document.getElementById("v71").value=="V"){
+    v71.value="0";
+}
+if(document.getElementById("v72").value=="V"){
+    v72.value="0";
+}
+if(document.getElementById("v73").value=="V"){
+    v73.value="0";
+}
+if(document.getElementById("v74").value=="V"){
+    v74.value="0";
+}
+if(document.getElementById("v75").value=="V"){
+    v75.value="0";
+}
+if(document.getElementById("v36").value=="V"){
+    v36.value="0";
+}
+if(document.getElementById("v37").value=="V"){
+    v37.value="0";
+}
+
+if(document.getElementById("m47").value=="M"){
+    m47.value="0";
+}
+if(document.getElementById("m46").value=="M"){
+    m46.value="0";
+}
+if(document.getElementById("m85").value=="M"){
+    m85.value="0";
+}
+if(document.getElementById("m84").value=="M"){
+    m84.value="0";
+}
+if(document.getElementById("m83").value=="M"){
+    m83.value="0";
+}
+if(document.getElementById("m82").value=="M"){
+    m82.value="0";
+}
+if(document.getElementById("m81").value=="M"){
+    m81.value="0";
+}
+if(document.getElementById("m71").value=="M"){
+    m71.value="0";
+}
+if(document.getElementById("m72").value=="M"){
+    m72.value="0";
+}
+if(document.getElementById("m73").value=="M"){
+    m73.value="0";
+}
+if(document.getElementById("m74").value=="M"){
+    m74.value="0";
+}
+if(document.getElementById("m75").value=="M"){
+    m75.value="0";
+}
+if(document.getElementById("m36").value=="M"){
+    m36.value="0";
+}
+if(document.getElementById("m37").value=="M"){
+    m37.value="0";
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ortodoncia - Dentodesk</title>
+  <style>
+    body {
+      font-family: 'Segoe UI';
+      background: #f5fbff;
+      margin: 0;
+    }
+    header {
+      background: #0077b6;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+    nav {
+      background: #eaf4fc;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: bold;
+    }
+    nav a:hover { color: #005f87; }
+    main {
+      width: 80%;
+      margin: 30px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+    h2 { color: #0077b6; text-align: center; }
+    label { display: block; margin: 10px 0 5px; font-weight: 600; }
+    select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #0077b6;
+      border-radius: 6px;
+    }
+    button {
+      background: #0077b6;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #005f87; }
+
+    button {
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    }
+
+    button:hover {
+    background: #005f87;
+    }
+
+  </style>
+</head>
+<body>
+  <header>🧩 ORTODONCIA</header>
+  <button onclick="window.location.href='pacientes.html'">← Volver a Pacientes</button>
+
+  <nav>
+    <a href="anamnesis.html">📋 Anamnesis</a>
+    <a href="odontograma.html">🦷 Odontograma</a>
+    <a href="periodontograma.html">🪥 Periodontograma</a>
+    <a href="orofacial.html">😊 Orofacial</a>
+    <a href="endodoncia.html">🪡 Endodoncia</a>
+    <a href="imagenes.html">🖼️ Imágenes</a>
+  </nav>
+  <main>
+    <h2>Evaluación Ortodóntica</h2>
+    <div class="grid">
+      <div>
+        <label>Tipo de maloclusión:</label>
+        <select>
+          <option>Clase I</option><option>Clase II</option><option>Clase III</option>
+        </select>
+        <label>Mordida:</label>
+        <select>
+          <option>Normal</option><option>Abierta</option><option>Cruzada</option><option>Profunda</option>
+        </select>
+        <label>Desviación de línea media:</label>
+        <input type="text" placeholder="Ej: 2mm derecha">
+      </div>
+      <div>
+        <label>Apiñamiento dental:</label>
+        <select><option>No</option><option>Leve</option><option>Moderado</option><option>Severo</option></select>
+        <label>Espaciamiento:</label>
+        <select><option>No</option><option>Leve</option><option>Moderado</option><option>Severo</option></select>
+        <label>Hábitos orales:</label>
+        <textarea rows="2" placeholder="Ej: respiración bucal, succión digital, deglución atípica..."></textarea>
+      </div>
+    </div>
+
+    <h3>Plan de Tratamiento</h3>
+    <textarea rows="4" placeholder="Ej: brackets metálicos, alineadores, expansión palatina..."></textarea>
+    <button>Guardar Ortodoncia</button>
+  </main>
+
+    
+</body>
+</html>
