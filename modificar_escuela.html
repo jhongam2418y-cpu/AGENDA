@@ -1,0 +1,22 @@
+<?php
+include("../../datos/bd.php");
+
+$idescuela = $_POST['idescuela'];
+$nombre = $_POST['nombre'];
+$departamento = $_POST['departamento'];
+$provincia = $_POST['provincia'];
+$nivel = $_POST['nivel'];
+$distrito = $_POST['distrito'];
+$director = $_POST['director'];
+
+$sql = "UPDATE escuela SET nombre='$nombre', departamento='$departamento', provincia='$provincia', nivel='$nivel', distrito='$distrito', 
+                                director='$director' WHERE idescuela='$idescuela'";
+
+$query = mysqli_query($conn, $sql);
+
+if ($query) {
+    Header("Location: ../../ventana/escuela/datos_escuela.php?idescuela=$idescuela");
+} else {
+}
+
+?>

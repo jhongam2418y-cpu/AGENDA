@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Periodontograma - Dentodesk</title>
+  <style>
+    body { font-family: 'Segoe UI'; background: #f0f8ff; margin: 0; }
+    header { background: #0077b6; color: white; text-align: center; padding: 10px; }
+    nav {
+      background: #eaf4fc; display: flex; justify-content: center;
+      gap: 15px; padding: 10px;
+    }
+    nav a { color: #0077b6; font-weight: bold; text-decoration: none; }
+    main {
+      width: 85%; margin: 20px auto; background: white; padding: 20px;
+      border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2, h3 { color: #0077b6; text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea {
+      width: 100%; padding: 8px; border: 1px solid #0077b6; border-radius: 5px;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    button {
+      margin-top: 15px; background: #0077b6; color: white;
+      border: none; padding: 10px 15px; border-radius: 5px;
+    }
+    button:hover { background: #005f87; }
+    button {
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    }
+
+    button:hover {
+    background: #005f87;
+    }
+
+  </style>
+</head>
+<body>
+  <header>🪥 PERIODONTOGRAMA</header>
+  <button onclick="window.location.href='pacientes.html'">← Volver a Pacientes</button>
+
+  <nav>
+    <a href="anamnesis.html">📋 Anamnesis</a>
+    <a href="odontograma.html">🦷 Odontograma</a>
+    <a href="ortodoncia.html">🧩 Ortodoncia</a>
+    <a href="orofacial.html">😊 Orofacial</a>
+    <a href="endodoncia.html">🪡 Endodoncia</a>
+    <a href="imagenes.html">🖼️ Imágenes</a>
+  </nav>
+
+  <main>
+    <h2>Evaluación Periodontal General</h2>
+    <div class="grid">
+      <div>
+        <label>Placa bacteriana:</label>
+        <select>
+          <option>Baja</option><option>Moderada</option><option>Alta</option>
+        </select>
+        <label>Sangrado al sondaje:</label>
+        <select>
+          <option>No</option><option>Leve</option><option>Moderado</option><option>Severo</option>
+        </select>
+        <label>Pérdida de inserción clínica (mm):</label>
+        <input type="text">
+      </div>
+      <div>
+        <label>Movilidad dental:</label>
+        <select>
+          <option>Grado 0</option><option>Grado I</option><option>Grado II</option><option>Grado III</option>
+        </select>
+        <label>Retracción gingival (mm):</label>
+        <input type="text">
+        <label>Bolsa periodontal:</label>
+        <select>
+          <option>Ausente</option><option>3 mm</option><option>4-6 mm</option><option>+7 mm</option>
+        </select>
+      </div>
+    </div>
+
+    <h3>Observaciones Clínicas</h3>
+    <textarea rows="4" placeholder="Ejemplo: encías inflamadas, pérdida de papila interdental..."></textarea>
+    <button>Guardar Evaluación</button>
+  </main>
+
+
+</body>
+</html>

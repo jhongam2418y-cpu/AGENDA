@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="MobileOptimized" content="width" />
+  <title>Gestión de Imágenes - Sistema Médico</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    #contenedor_carga {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 9999;
+      transition: all 1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #carga {
+      border: 15px solid #ccc;
+      border-top-color: #25eaa4;
+      border-top-style: groove;
+      height: 100px;
+      width: 100px;
+      border-radius: 100%;
+      animation: girar 1.5s linear infinite;
+    }
+    
+    @keyframes girar {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    #btn5 {
+      border-bottom: 2px solid #25eaa4;
+      background-color: #565e64 !important;
+      color: white !important;
+    }
+    
+    .btn-light {
+      background-color: #e9ecef;
+      color: #495057;
+    }
+    
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+    
+    #rounded1, #rounded2 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    #img2, #img3 {
+      width: 50px;
+      height: 50px;
+      filter: invert(1);
+    }
+    
+    #guardar {
+      background-color: #25eaa4;
+      color: white;
+      font-weight: bold;
+      padding: 10px 30px;
+      border-radius: 5px;
+      border: none;
+      transition: all 0.3s;
+    }
+    
+    #guardar:hover {
+      background-color: #1ec98c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(37, 234, 164, 0.3);
+    }
+    
+    .small_img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    
+    .small_img:hover {
+      transform: scale(1.05);
+      border-color: #e74c3c;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    #end {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    
+    #end label {
+      font-weight: bold;
+      color: #e74c3c;
+      margin-bottom: 15px;
+      display: block;
+      font-size: 1.2rem;
+    }
+    
+    #end ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    #end li {
+      position: relative;
+    }
+    
+    .delete-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(231, 76, 60, 0.8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .delete-icon {
+      color: white;
+      font-size: 24px;
+    }
+    
+    #end li:hover .delete-overlay {
+      opacity: 1;
+    }
+    
+    .carousel-item img {
+      height: 400px;
+      object-fit: contain;
+      background-color: #f0f0f0;
+    }
+    
+    .carousel-caption {
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 5px;
+    }
+    
+    .form-control:focus {
+      border-color: #25eaa4;
+      box-shadow: 0 0 0 0.2rem rgba(37, 234, 164, 0.25);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Pantalla de carga -->
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+
+  <!-- Barra de navegación -->
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+        <a id="btn1" href="datos_personales.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Datos</a>
+        <a id="btn2" href="odontograma.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen odontológico</a>
+        <a id="btn3" href="nutricion.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Nutricional</a>
+        <a id="btn4" href="psicologia.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Psicologico</a>
+        <a id="btn5" href="img.html" class="btn btn-secondary" tabindex="-1" role="button"
+          aria-disabled="true">Imagenes</a>
+        <a id="btn6" href="img_r.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Radiografias</a>
+        <a id="btn7" href="documentos.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html" target="_paren" class="btn btn-secondary"tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulario para agregar imágenes -->
+  <form id="imageForm">
+    <input type="hidden" class="form-control" name="paciente" id="paciente" value="">
+    <input name="fecha" type="hidden" id="fecha" value="">
+    
+    <div class="container-fluid pt-4 px-4">
+      <div class="row g-4">
+        <div class="col-sm-6 col-xl-4">
+          <div id="rounded1" class="rounded d-flex align-items-center justify-content-between p-4">
+            <img id="img3" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDY0IDQ0OEg0OEMyMS41IDQ0OCAwIDQyNi41IDAgNDAwdj0yODhjMC0yNi41IDIxLjUtNDggNDgtNDhoNDE2YzI2LjUgMCA0OCAyMS41IDggNDh2Mjg4YzAgMjYuNS0yMS41IDQ4LTQ4IDQ4ek0xMTIgMTY4Yy0yMi4xIDAtNDAtMTcuOS00MC00MHMxNy45LTQwIDQwLTQwIDQwIDE3LjkgNDAgNDAtMTcuOSA0MC00MCA0MHoiLz48L3N2Zz4=" alt="Seleccionar imagen">
+            <div class="ms-3">
+              <p class="mb-2 text-white">SELECCIONAR IMAGEN</p>
+              <input id="imageInput" class="form-control form-control-sm" type="file" name="imagen" accept="image/*" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div id="rounded2" class="rounded d-flex align-items-center justify-content-between p-4">
+            <img id="img2" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDY0IDQ0OEg0OEMyMS41IDQ0OCAwIDQyNi41IDAgNDAwdj0yODhjMC0yNi41IDIxLjUtNDggNDgtNDhoNDE2YzI2LjUgMCA0OCAyMS41IDggNDh2Mjg4YzAgMjYuNS0yMS41IDQ4LTQ4IDQ4ek0xMTIgMTY4Yy0yMi4xIDAtNDAtMTcuOS00MC00MHMxNy45LTQwIDQwLTQwIDQwIDE3LjkgNDAgNDAtMTcuOSA0MC00MCA0MHoiLz48L3N2Zz4=" alt="Título de imagen">
+            <div class="ms-3">
+              <p class="mb-2 text-white">TÍTULO DE LA IMAGEN</p>
+              <input id="titleInput" class="form-control form-control-sm" type="text" name="titulo" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="rounded d-flex align-items-center justify-content-between p-4">
+            <input id="guardar" type="submit" class="btn" value="Guardar" name="Guardar">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Carrusel de imágenes -->
+  <div class="container-fluid pt-4 px-4">
+    <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-inner" id="carousel-inner">
+        <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de imágenes para eliminar -->
+  <div id="end" class="container-fluid pt-4 px-4">
+    <label>Eliminar</label>
+    <ul id="image-list">
+      <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
+    </ul>
+  </div>
+
+  <!-- Modal de confirmación -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Está seguro de que desea eliminar esta imagen?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Función para obtener parámetros de la URL
+    function getUrlParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const pairs = queryString.split('&');
+      
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i].split('=');
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+      }
+      
+      return params;
+    }
+
+    // Función para obtener el ID del paciente
+    function obtenerIdPaciente() {
+      const params = getUrlParams();
+      return params.idpaciente || params.paciente;
+    }
+
+    // Función para cargar imágenes del paciente
+    function cargarImagenesPaciente(nombrePaciente) {
+      const imagenesPacientes = JSON.parse(localStorage.getItem('imagenesPacientes')) || {};
+      return imagenesPacientes[nombrePaciente] || [];
+    }
+
+    // Función para guardar imágenes del paciente
+    function guardarImagenesPaciente(nombrePaciente, imagenes) {
+      const imagenesPacientes = JSON.parse(localStorage.getItem('imagenesPacientes')) || {};
+      imagenesPacientes[nombrePaciente] = imagenes;
+      localStorage.setItem('imagenesPacientes', JSON.stringify(imagenesPacientes));
+    }
+
+    // Cargar imágenes en el carrusel y en la lista
+    function loadImages(imagenes) {
+      const carouselInner = document.getElementById('carousel-inner');
+      const imageList = document.getElementById('image-list');
+      
+      // Limpiar contenido existente
+      carouselInner.innerHTML = '';
+      imageList.innerHTML = '';
+      
+      if (imagenes.length === 0) {
+        carouselInner.innerHTML = `
+          <div class="carousel-item active">
+            <div class="d-flex align-items-center justify-content-center" style="height: 400px; background-color: #f0f0f0;">
+              <p class="text-muted">No hay imágenes disponibles</p>
+            </div>
+          </div>
+        `;
+        imageList.innerHTML = '<p class="text-muted">No hay imágenes para eliminar</p>';
+        return;
+      }
+      
+      // Agregar imágenes al carrusel
+      imagenes.forEach((image, index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = index === 0 ? 'carousel-item active' : 'carousel-item';
+        
+        carouselItem.innerHTML = `
+          <img src="${image.src}" class="d-block w-100" alt="${image.title}">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>${image.title}</h5>
+            <p>${image.fecha}</p>
+          </div>
+        `;
+        
+        carouselInner.appendChild(carouselItem);
+      });
+      
+      // Agregar imágenes a la lista de eliminación
+      imagenes.forEach(image => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <a href="#" class="delete-image" data-id="${image.id}">
+            <img src="${image.src}" class="small_img" alt="${image.title}">
+            <div class="delete-overlay">
+              <span class="delete-icon">🗑️</span>
+            </div>
+          </a>
+        `;
+        
+        imageList.appendChild(listItem);
+      });
+      
+      // Agregar event listeners para eliminar imágenes
+      document.querySelectorAll('.delete-image').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const imageId = this.getAttribute('data-id');
+          showDeleteConfirmation(imageId);
+        });
+      });
+    }
+
+    // Mostrar modal de confirmación para eliminar
+    function showDeleteConfirmation(imageId) {
+      const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+      const confirmDeleteBtn = document.getElementById('confirmDelete');
+      
+      // Configurar el botón de confirmación
+      confirmDeleteBtn.onclick = function() {
+        deleteImage(imageId);
+        confirmModal.hide();
+      };
+      
+      confirmModal.show();
+    }
+
+    // Eliminar imagen
+    function deleteImage(imageId) {
+      const nombrePaciente = document.getElementById('paciente').value;
+      if (!nombrePaciente) return;
+      
+      const imagenes = cargarImagenesPaciente(nombrePaciente);
+      const nuevasImagenes = imagenes.filter(img => img.id != imageId);
+      
+      guardarImagenesPaciente(nombrePaciente, nuevasImagenes);
+      loadImages(nuevasImagenes);
+      
+      // Mostrar mensaje de éxito
+      alert('Imagen eliminada correctamente');
+    }
+
+    // Convertir archivo a base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Manejar envío del formulario
+    document.getElementById('imageForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const nombrePaciente = document.getElementById('paciente').value;
+      if (!nombrePaciente) {
+        alert('No se ha especificado un paciente');
+        return;
+      }
+      
+      const imageInput = document.getElementById('imageInput');
+      const titleInput = document.getElementById('titleInput');
+      
+      // Validar que se haya seleccionado una imagen
+      if (imageInput.files.length === 0) {
+        alert('Por favor, seleccione una imagen');
+        return;
+      }
+      
+      // Validar que se haya ingresado un título
+      if (!titleInput.value.trim()) {
+        alert('Por favor, ingrese un título para la imagen');
+        return;
+      }
+      
+      try {
+        // Convertir imagen a base64
+        const imageBase64 = await fileToBase64(imageInput.files[0]);
+        
+        // Obtener imágenes existentes
+        const imagenes = cargarImagenesPaciente(nombrePaciente);
+        
+        // Crear nueva imagen
+        const nuevaImagen = {
+          id: Date.now().toString(),
+          title: titleInput.value,
+          src: imageBase64,
+          fecha: document.getElementById('fecha').value
+        };
+        
+        // Agregar nueva imagen
+        imagenes.push(nuevaImagen);
+        guardarImagenesPaciente(nombrePaciente, imagenes);
+        
+        // Recargar imágenes
+        loadImages(imagenes);
+        
+        // Limpiar formulario
+        imageInput.value = '';
+        titleInput.value = '';
+        
+        // Mostrar mensaje de éxito
+        alert('Imagen guardada correctamente');
+        
+      } catch (error) {
+        console.error('Error al procesar la imagen:', error);
+        alert('Error al procesar la imagen. Por favor, intente nuevamente.');
+      }
+    });
+
+    // Inicialización cuando la página carga
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obtener ID del paciente
+      const idPaciente = obtenerIdPaciente();
+      
+      if (idPaciente) {
+        // Configurar el formulario
+        document.getElementById('paciente').value = idPaciente;
+        
+        // Actualizar enlaces de navegación
+        const enlaces = document.querySelectorAll('a[id^="btn"]');
+        enlaces.forEach(enlace => {
+          const href = enlace.getAttribute('href');
+          if (href && !href.includes('idpaciente=')) {
+            enlace.setAttribute('href', href + '?idpaciente=' + encodeURIComponent(idPaciente));
+          }
+        });
+        
+        // Cargar imágenes del paciente
+        const imagenes = cargarImagenesPaciente(idPaciente);
+        loadImages(imagenes);
+      } else {
+        alert('No se ha especificado un paciente');
+      }
+      
+      // Establecer fecha actual
+      const today = new Date();
+      document.getElementById('fecha').value = today.toISOString().split('T')[0];
+      
+      // Ocultar pantalla de carga
+      setTimeout(function() {
+        const contenedor = document.getElementById('contenedor_carga');
+        contenedor.style.visibility = 'hidden';
+        contenedor.style.opacity = '0';
+      }, 500);
+    });
+  </script>
+</body>
+</html>

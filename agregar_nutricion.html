@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Nutrición Guardada</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .success-card {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #25eaa4;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .btn-custom:hover {
+            background-color: #1ec98c;
+            color: white;
+            text-decoration: none;
+        }
+        .data-summary {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .data-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .data-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .data-value {
+            color: #333;
+        }
+        .section-title {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-card">
+            <div class="success-icon">✓</div>
+            <h2>¡Ficha de Nutrición Guardada Exitosamente!</h2>
+            <p>Los datos nutricionales del paciente han sido registrados correctamente en el sistema.</p>
+            
+            <div class="data-summary">
+                <h4>Resumen de datos guardados:</h4>
+                
+                <div class="section-title">Información del Paciente</div>
+                <div class="data-item">
+                    <span class="data-label">ID Paciente:</span> 
+                    <span class="data-value" id="display-idpaciente">123</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Fecha de Registro:</span> 
+                    <span class="data-value" id="display-fecha">2023-11-15 14:30:00</span>
+                </div>
+                
+                <div class="section-title">Mediciones Antropométricas</div>
+                <div class="data-item">
+                    <span class="data-label">Peso:</span> 
+                    <span class="data-value" id="display-peso">38.50 kg</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Talla:</span> 
+                    <span class="data-value" id="display-talla">145.00 cm</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">IMC:</span> 
+                    <span class="data-value" id="display-imc">18.30</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Peso/Edad:</span> 
+                    <span class="data-value" id="display-pesoedad">30.80</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Talla/Edad:</span> 
+                    <span class="data-value" id="display-tallaedad">116.00</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Peso/Talla:</span> 
+                    <span class="data-value" id="display-pesotalla">26.55</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">IMC/Edad:</span> 
+                    <span class="data-value" id="display-imcedad">18.30</span>
+                </div>
+                
+                <div class="section-title">Indicadores Bioquímicos</div>
+                <div class="data-item">
+                    <span class="data-label">Anemia:</span> 
+                    <span class="data-value" id="display-anemia">12.5</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Valor Anemia:</span> 
+                    <span class="data-value" id="display-anemiavalor">11.65 g/dL</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Diabetes:</span> 
+                    <span class="data-value" id="display-diabetes">99.5</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Valor Diabetes:</span> 
+                    <span class="data-value" id="display-diabetesvalor">99.25 mg/dL</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Prediabetes:</span> 
+                    <span class="data-value" id="display-prediabetes">105.5</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Valor Prediabetes:</span> 
+                    <span class="data-value" id="display-prediabetesvalor">105.55 mg/dL</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <a href="nutricion.html?idpaciente=123" class="btn-custom">
+                    Volver a Examen Nutricional
+                </a>
+                <a href="datos_personales.html?idpaciente=123" class="btn-custom" style="background-color: #6c757d;">
+                    Ver Datos del Paciente
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para obtener parámetros de la URL
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const data = {};
+            
+            // Valores por defecto para la demostración
+            const defaultData = {
+                idpaciente: "123",
+                fecha: new Date().toLocaleString('es-ES'),
+                peso: "38.50",
+                talla: "145.00",
+                imc: "18.30",
+                pesoedad: "30.80",
+                tallaedad: "116.00",
+                pesotalla: "26.55",
+                imcedad: "18.30",
+                anemia: "12.5",
+                anemiavalor: "11.65 g/dL",
+                diabetes: "99.5",
+                diabetesvalor: "99.25 mg/dL",
+                prediabetes: "105.5",
+                prediabetesvalor: "105.55 mg/dL"
+            };
+            
+            // En un caso real, aquí se obtendrían los datos del formulario
+            // Para esta demostración, usamos los valores por defecto
+            return defaultData;
+        }
+        
+        // Función para cargar y mostrar los datos
+        function cargarDatosGuardados() {
+            const datos = getUrlParams();
+            
+            // Actualizar la visualización con los datos
+            for (const [key, value] of Object.entries(datos)) {
+                const element = document.getElementById(`display-${key}`);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+        }
+        
+        // Cargar los datos cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', cargarDatosGuardados);
+        
+        // Simular validación de datos como en el PHP original
+        function validarDatosNutricionales(datos) {
+            // Validar rangos (simulando la validación PHP)
+            const peso = Math.max(0, Math.min(500, parseFloat(datos.peso) || 0));
+            const talla = Math.max(0, Math.min(300, parseFloat(datos.talla) || 0));
+            const imc = Math.max(0, Math.min(50, parseFloat(datos.imc) || 0));
+            
+            console.log("Datos validados:");
+            console.log("- Peso:", peso.toFixed(2), "kg");
+            console.log("- Talla:", talla.toFixed(2), "cm");
+            console.log("- IMC:", imc.toFixed(2));
+            
+            return true;
+        }
+    </script>
+</body>
+</html>

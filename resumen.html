@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Resumen del Paciente - Dentodesk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* ANIMACIÓN DE ESTRELLAS FLOTANTES */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes drift {
+      0% { transform: translateX(0) translateY(0); }
+      33% { transform: translateX(30px) translateY(-30px); }
+      66% { transform: translateX(-20px) translateY(20px); }
+      100% { transform: translateX(0) translateY(0); }
+    }
+
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Estrellas animadas de fondo */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .star.small {
+      width: 2px;
+      height: 2px;
+      animation-duration: 8s;
+      animation-delay: 0s;
+    }
+
+    .star.medium {
+      width: 3px;
+      height: 3px;
+      animation-duration: 10s;
+      animation-delay: 2s;
+    }
+
+    .star.large {
+      width: 4px;
+      height: 4px;
+      animation-duration: 12s;
+      animation-delay: 4s;
+    }
+
+    .star::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: 50%;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    header { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; 
+      text-align: center; 
+      padding: 20px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      font-size: 24px;
+      font-weight: bold;
+      position: relative;
+      z-index: 10;
+    }
+
+    nav {
+      background: white;
+      display: flex; 
+      justify-content: center;
+      gap: 5px; 
+      padding: 12px;
+      flex-wrap: wrap;
+      border-left: 4px solid #764ba2;
+      border-right: 4px solid #764ba2;
+      position: relative;
+      z-index: 10;
+    }
+
+    nav a { 
+      color: #667eea; 
+      font-weight: 600; 
+      text-decoration: none; 
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: #f0f4ff;
+      transform: translateY(-2px);
+    }
+
+    .contenedor {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      text-align: center;
+      color: #764ba2;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .bloque {
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+      padding: 20px 25px;
+      border-radius: 12px;
+      border: 2px solid #e8ecf7;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+    }
+
+    .bloque:hover {
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .bloque h2 {
+      color: #764ba2;
+      margin-bottom: 15px;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info {
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .info p {
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info p:last-child {
+      border-bottom: none;
+    }
+
+    .info strong {
+      color: #667eea;
+      min-width: 150px;
+      font-weight: 600;
+    }
+
+    .sin-datos {
+      color: #999;
+      font-style: italic;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #999;
+    }
+
+    .actualizar {
+      display: block;
+      margin: 30px auto;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .actualizar:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+
+  </style>
+</head>
+<body>
+    <body>
+  <header>🔵RESUMEN</header>
+  <button onclick="window.location.href='pacientes.html'">← Volver a Pacientes</button>
+
+  <nav>
+    <a href="anamnesis.html">📋 Anamnesis</a>
+    <a href="odontograma.html">🦷 Odontograma</a>
+    <a href="periodontograma.html">🪥 Periodontograma</a>
+    <a href="orofacial.html">😊 Orofacial</a>
+    <a href="endodoncia.html">🪡 Endodoncia</a>
+    <a href="imagenes.html">🖼️ Imágenes</a>
+    <a href="resumen.html">Resumen</a>
+
+  </nav>
+
+
+
+  <div class="contenedor">
+    <h1>Resumen Clínico del Paciente</h1>
+
+    <div id="datos-paciente" class="bloque">
+      <h2>Datos Personales</h2>
+      <div class="info" id="info-personal"></div>
+    </div>
+
+    <div id="datos-anamnesis" class="bloque">
+      <h2>Anamnesis</h2>
+      <div class="info" id="info-anamnesis"></div>
+    </div>
+
+    <div id="datos-periodontograma" class="bloque">
+      <h2>Periodontograma</h2>
+      <div class="info" id="info-periodontograma"></div>
+    </div>
+
+    <div id="datos-ortodoncia" class="bloque">
+      <h2>Ortodoncia</h2>
+      <div class="info" id="info-ortodoncia"></div>
+    </div>
+
+    <div id="datos-orofacial" class="bloque">
+      <h2>Orofacial</h2>
+      <div class="info" id="info-orofacial"></div>
+    </div>
+
+    <div id="datos-endodoncia" class="bloque">
+      <h2>Endodoncia</h2>
+      <div class="info" id="info-endodoncia"></div>
+    </div>
+
+    <button class="actualizar" onclick="actualizarResumen()">Actualizar Resumen</button>
+  </div>
+
+  <script>
+    // Crear estrellas animadas de fondo
+    function crearEstrellas() {
+      const starsContainer = document.createElement('div');
+      starsContainer.className = 'stars';
+      document.body.appendChild(starsContainer);
+      
+      const numStars = 50;
+      
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Tamaño aleatorio
+        const size = Math.random() > 0.5 ? (Math.random() > 0.5 ? 'large' : 'medium') : 'small';
+        star.classList.add(size);
+        
+        // Posición aleatoria
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        
+        // Animación individual
+        star.style.animationDelay = Math.random() * 6 + 's';
+        
+        starsContainer.appendChild(star);
+      }
+    }
+    
+    // Crear estrellas al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      crearEstrellas();
+    });
+
+    // Función principal de carga del resumen
+    function cargarDatos() {
+      let pacienteSeleccionado = localStorage.getItem('pacienteSeleccionado');
+      
+      // Auto-detectar paciente si no hay uno seleccionado
+      if (!pacienteSeleccionado) {
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        if (citas.length > 0 && citas[0].paciente) {
+          pacienteSeleccionado = citas[0].paciente;
+          localStorage.setItem('pacienteSeleccionado', pacienteSeleccionado);
+        }
+        
+        // Si aún no hay, buscar por claves de localStorage
+        if (!pacienteSeleccionado) {
+          const keys = Object.keys(localStorage);
+          for (let key of keys) {
+            if (key.startsWith('orofacial_') || key.startsWith('anamnesis_') || key.startsWith('paciente_')) {
+              pacienteSeleccionado = key.replace(/^(orofacial_|anamnesis_|paciente_)/, '');
+              if (pacienteSeleccionado && pacienteSeleccionado !== 'default') {
+                localStorage.setItem('pacienteSeleccionado', pacienteSeleccionado);
+                break;
+              }
+            }
+          }
+        }
+      }
+      
+      if (!pacienteSeleccionado) {
+        document.getElementById('info-personal').innerHTML = '<p class="sin-datos">No hay paciente seleccionado.</p>';
+        return;
+      }
+
+      // Cargar datos desde localStorage por secciones
+      const datos = {
+        personal: JSON.parse(localStorage.getItem(`paciente_${pacienteSeleccionado}`)) || {},
+        anamnesis: JSON.parse(localStorage.getItem(`anamnesis_${pacienteSeleccionado}`)) || {},
+        periodontograma: JSON.parse(localStorage.getItem(`periodontograma_${pacienteSeleccionado}`)) || {},
+        ortodoncia: JSON.parse(localStorage.getItem(`ortodoncia_${pacienteSeleccionado}`)) || {},
+        orofacial: JSON.parse(localStorage.getItem(`orofacial_${pacienteSeleccionado}`)) || {},
+        endodoncia: JSON.parse(localStorage.getItem(`endodoncia_${pacienteSeleccionado}`)) || {}
+      };
+
+      // --- DATOS PERSONALES ---
+      const dp = datos.personal;
+      document.getElementById('info-personal').innerHTML = dp.nombre
+        ? `
+          <p><strong>Nombre:</strong> ${dp.nombre}</p>
+          <p><strong>Edad:</strong> ${dp.edad || '—'}</p>
+          <p><strong>DNI:</strong> ${dp.dni || '—'}</p>
+          <p><strong>Teléfono:</strong> ${dp.telefono || '—'}</p>
+          <p><strong>Dirección:</strong> ${dp.direccion || '—'}</p>
+          <p><strong>Email:</strong> ${dp.email || '—'}</p>
+        `
+        : '<p class="sin-datos">Sin datos personales guardados.</p>';
+
+      // --- ANAMNESIS ---
+      const an = datos.anamnesis;
+      document.getElementById('info-anamnesis').innerHTML = Object.keys(an).length
+        ? Object.entries(an).slice(0, 10).map(([k, v]) => `<p><strong>${k}:</strong> ${v || '—'}</p>`).join('')
+        : '<p class="sin-datos">Sin datos de anamnesis.</p>';
+
+      // --- PERIODONTOGRAMA ---
+      const pe = datos.periodontograma;
+      document.getElementById('info-periodontograma').innerHTML = Object.keys(pe).length
+        ? Object.entries(pe).map(([k, v]) => `<p><strong>${k}:</strong> ${v || '—'}</p>`).join('')
+        : '<p class="sin-datos">Sin registros periodontales.</p>';
+
+      // --- ORTODONCIA ---
+      const or = datos.ortodoncia;
+      document.getElementById('info-ortodoncia').innerHTML = Object.keys(or).length
+        ? Object.entries(or).map(([k, v]) => `<p><strong>${k}:</strong> ${v || '—'}</p>`).join('')
+        : '<p class="sin-datos">Sin información de ortodoncia.</p>';
+
+      // --- OROFACIAL ---
+      const of = datos.orofacial;
+      console.log('Paciente seleccionado:', pacienteSeleccionado);
+      console.log('Datos orofacial en localStorage:', localStorage.getItem(`orofacial_${pacienteSeleccionado}`));
+      console.log('Datos orofacial procesados:', of);
+      document.getElementById('info-orofacial').innerHTML = Object.keys(of).length > 0
+        ? Object.entries(of).map(([k, v]) => `<p><strong>${k}:</strong> ${v || '—'}</p>`).join('')
+        : '<p class="sin-datos">Sin registros orofaciales.</p>';
+
+      // --- ENDODONCIA ---
+      const en = datos.endodoncia;
+      document.getElementById('info-endodoncia').innerHTML = Object.keys(en).length
+        ? Object.entries(en).map(([k, v]) => `<p><strong>${k}:</strong> ${v || '—'}</p>`).join('')
+        : '<p class="sin-datos">Sin datos de endodoncia.</p>';
+    }
+
+    function actualizarResumen() {
+      cargarDatos();
+      cargarCitas();
+      alert("✅ Resumen actualizado correctamente.");
+    }
+
+    // Función para cargar datos de citas también
+    function cargarCitas() {
+      const citas = JSON.parse(localStorage.getItem("citas")) || [];
+      const pacienteSeleccionado = localStorage.getItem('pacienteSeleccionado') || 'default';
+      
+      if (citas.length > 0) {
+        // Buscar citas del paciente seleccionado
+        const citasPaciente = citas.filter(c => c.paciente || true);
+        
+        let citasHTML = '<div class="bloque"><h2>Citas Registradas</h2><div class="info">';
+        
+        citasPaciente.slice(0, 5).forEach((cita, index) => {
+          citasHTML += `
+            <p><strong>Cita ${index + 1}:</strong> ${cita.paciente || 'Sin nombre'}</p>
+            <p><strong>Fecha:</strong> ${cita.fecha || 'No especificada'}</p>
+            <p><strong>Hora:</strong> ${cita.hora || 'No especificada'}</p>
+            <p><strong>Estado:</strong> ${cita.estado || 'Sin especificar'}</p>
+            <hr style="margin: 10px 0; border: none; border-top: 1px solid #eee;">
+          `;
+        });
+        
+        citasHTML += '</div></div>';
+        
+        // Agregar bloque de citas antes del botón
+        const contenedor = document.querySelector('.contenedor');
+        const btnActualizar = document.querySelector('.actualizar');
+        
+        // Verificar si ya existe el bloque de citas
+        let bloqueCitas = document.getElementById('datos-citas');
+        if (!bloqueCitas) {
+          bloqueCitas = document.createElement('div');
+          bloqueCitas.id = 'datos-citas';
+          contenedor.insertBefore(bloqueCitas, btnActualizar);
+        }
+        
+        bloqueCitas.innerHTML = citasHTML;
+      }
+    }
+
+    window.onload = function() {
+      cargarDatos();
+      cargarCitas();
+    };
+  </script>
+</body>
+</html>

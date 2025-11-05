@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examen Psicológico</title>
+  <link href="css/stylecarga.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <style>
+    /* Estilos para los botones de radio */
+    input[type="radio"] {
+      width: 25px;
+      height: 25px;
+      margin: 0 8px;
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+    
+    /* Estilos para la tabla */
+    #tablapaciente th {
+      text-align: center;
+      padding: 12px;
+      background-color: #f8f9fa;
+      font-size: 16px;
+    }
+    
+    #tablapaciente td {
+      padding: 12px;
+      vertical-align: middle;
+    }
+    
+    /* Estilos para los enunciados */
+    #tablapaciente td:nth-child(2) {
+      text-align: left;
+      font-size: 15px;
+    }
+    
+    /* Estilos para las columnas de opciones */
+    #tablapaciente td:nth-child(n+3) {
+      text-align: center;
+      min-width: 80px;
+    }
+
+    body {
+      margin-bottom: 120px;
+    }
+
+    #btn4 {
+      border-bottom: 2px solid #25eaa4;
+      background-color: #d3d4d5;
+    }
+
+    #guardar {
+      position: fixed;
+      right: 2%;
+      bottom: 12%;
+      background-color: #25eaa4;
+      color: white;
+    }
+
+    .marca {
+      width: 40px;
+    }
+  </style>
+  <script type="text/javascript">
+    function validarFormulario() {
+      var radioGroups = document.querySelectorAll('input[type="radio"]');
+      var checked = false;
+      
+      // Verificar que cada grupo de radio buttons tenga una opción seleccionada
+      for (var i = 0; i < radioGroups.length; i += 5) {
+        var groupChecked = false;
+        for (var j = 0; j < 5; j++) {
+          if (radioGroups[i + j] && radioGroups[i + j].checked) {
+            groupChecked = true;
+            break;
+          }
+        }
+        if (!groupChecked) {
+          alert('Por favor, responde todas las preguntas');
+          return false;
+        }
+      }
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+  <div id="contenedor_carga">
+    <div id="carga"></div>
+  </div>
+
+  <div class="container-fluid pt-2 px-2">
+    <div class="row g-2">
+      <div class="col-sm-12 col-xl-12">
+        <a id="btn1" href="datos_personales.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Datos</a>
+        <a id="btn2" href="odontograma.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen odontológico</a>
+        <a id="btn3" href="nutricion.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Nutricional</a>
+        <a id="btn4" href="psicologia.html" class="btn btn-light" tabindex="-1"
+          role="button" aria-disabled="true">Examen Psicologico</a>
+        <a id="btn5" href="img.html" class="btn btn-secondary" tabindex="-1" role="button"
+          aria-disabled="true">Imagenes</a>
+        <a id="btn6" href="img_r.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Radiografias</a>
+        <a id="btn7" href="documentos.html" class="btn btn-secondary" tabindex="-1"
+          role="button" aria-disabled="true">Documentos</a>
+        <a id="btn8" href="tratamiento.html" target="_paren" class="btn btn-secondary"
+          tabindex="-1" role="button" aria-disabled="true">Tratamiento</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid pt-4 px-4">
+    <div class="text-center rounded p-4">
+      <div class="table-responsive">
+        <table class="table table-striped text-start align-middle mb-0" id="tablahistoria">
+          <thead>
+            <tr class="table-secondary">
+              <th>Examen Psicológico</th>
+            </tr>
+          </thead>
+          <tbody id="historial-body">
+            <!-- Los registros se cargarán dinámicamente aquí -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tablita -->
+  <form id="form-psicologia" method="POST">
+    <input type="hidden" name="idpaciente" id="idpaciente" value="">
+    <input type="hidden" name="fecha" id="fecha" value="">
+    <input type="hidden" name="id" id="id" value="">
+    <div class="container-fluid pt-4 px-4">
+      <div class="text-center rounded p-4">
+        <div class="table-responsive">
+          <table class="table table-striped text-start align-middle mb-0" id="tablapaciente">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Enunciado</th>
+                <th>Nunca</th>
+                <th>Pocas veces</th>
+                <th>No sabría decir</th>
+                <th>Muchas veces</th>
+                <th>Siempre</th>
+              </tr>
+            </thead>
+            <tbody id="preguntas-body">
+              <!-- Las preguntas se generarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <input id="guardar" class="btn" type="submit" value="Guardar">
+  </form>
+
+  <script>
+    // Función para obtener parámetros de la URL
+    function getUrlParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const pairs = queryString.split('&');
+      
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i].split('=');
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+      }
+      
+      return params;
+    }
+
+    // Función para obtener el ID del paciente
+    function obtenerIdPaciente() {
+      const params = getUrlParams();
+      return params.idpaciente || params.paciente || params.id;
+    }
+
+    // Función para cargar historial de psicología
+    function cargarHistorialPsicologia(nombrePaciente) {
+      const historialPsicologia = JSON.parse(localStorage.getItem('historialPsicologia')) || {};
+      const historial = historialPsicologia[nombrePaciente] || [];
+      const historialBody = document.getElementById('historial-body');
+      historialBody.innerHTML = '';
+      
+      historial.forEach(registro => {
+        const fila = document.createElement('tr');
+        fila.className = 'table-secondary';
+        fila.innerHTML = `
+          <td>${registro.fecha}
+            <a id="modificar" class="btn btn-sm button" 
+              href="psicologia.html?idpaciente=${encodeURIComponent(nombrePaciente)}&fecha=${registro.fecha}&id=${registro.id}">
+              <img class="buttonimg" src="img/historia.png" width="20"></a>
+            <a class="btn btn-sm button"
+              href="#"
+              onclick='eliminarRegistro("${nombrePaciente}", "${registro.id}")'>
+              <img class="buttonimg" src="img/eliminar.png" width="20"></a>
+          </td>
+        `;
+        historialBody.appendChild(fila);
+      });
+    }
+
+    // Función para eliminar registro
+    function eliminarRegistro(nombrePaciente, id) {
+      if (confirm('¿Está seguro de que desea eliminar este registro?')) {
+        const historialPsicologia = JSON.parse(localStorage.getItem('historialPsicologia')) || {};
+        if (historialPsicologia[nombrePaciente]) {
+          historialPsicologia[nombrePaciente] = historialPsicologia[nombrePaciente].filter(reg => reg.id !== id);
+          localStorage.setItem('historialPsicologia', JSON.stringify(historialPsicologia));
+          cargarHistorialPsicologia(nombrePaciente);
+        }
+      }
+    }
+
+    // Función para generar las preguntas
+    function generarPreguntas() {
+      const preguntasBody = document.getElementById('preguntas-body');
+      const preguntas = [
+        "Tengo una cara agradable.",
+        "Tengo muchos amigos.",
+        "Creo problema a mi familia.",
+        "Soy lista (o listo).",
+        "Soy una persona feliz.",
+        "Soy una persona feliz.",
+        "Siento que, en general, controlo lo que me pasa.",
+        "Tengo los ojos bonitos.",
+        "Mis compañeros se burlan de mí.",
+        "Mis compañeros se burlan de mí.",
+        "Hago bien mi trabajo intelectual.",
+        "Estoy triste muchas veces.",
+        "Suelo tener mis cosas en orden.",
+        "Tengo el pelo bonito.",
+        "Me parece fácil encontrar amigos.",
+        "Mis padres y yo nos divertimos juntos muchas veces.",
+        "Soy lento haciendo mi trabajo escolar.",
+        "Soy tímido.",
+        "Soy capaz de controlarme cuando me provocan.",
+        "Soy guapo.",
+        "Me resulta difícil encontrar amigos.",
+        "En casa me hacen mucho caso.",
+        "Soy un buen lector.",
+        "Me gusta ser como soy.",
+        "Cuando todo sale mal encuentro formas de no sentirme tan desgraciado.",
+        "Tengo un buen cuerpo.",
+        "Soy popular entre mis compañeros.",
+        "Mis padres me comprenden bien.",
+        "Puedo recordar fácilmente las cosas.",
+        "Estoy satisfecho conmigo mismo.",
+        "Si no consigo algo a la primera, busco otros medios para conseguirlo.",
+        "Me gusta mi cuerpo tal como es.",
+        "Me gusta la gente.",
+        "Muchas veces desearía marcharme de casa.",
+        "Respondo bien en clase.",
+        "Soy una buena persona.",
+        "Puedo conseguir que otros hagan lo que yo quiero.",
+        "Me siento bien con el aspecto que tengo.",
+        "Tengo todos los amigos que quiero.",
+        "En casa me enfado fácilmente.",
+        "Termino rápidamente mi trabajo escolar.",
+        "Creo que en conjunto soy un desastre.",
+        "Suelo tener todo bajo control.",
+        "Soy fuerte.",
+        "Soy popular entre la gente de tu edad.",
+        "En casa abusan de mí.",
+        "Creo que soy inteligente.",
+        "Me entiendo bien a mí mismo.",
+        "Me siento como 'una pluma al viento' manejada por otras personas."
+      ];
+
+      let html = '';
+      for (let i = 0; i < preguntas.length; i++) {
+        const num = i + 1;
+        html += `
+          <tr>
+            <td>${num}</td>
+            <td>${preguntas[i]}</td>
+            <td><input type="radio" name="p${num}" value="nu${num}"></td>
+            <td><input type="radio" name="p${num}" value="po${num}"></td>
+            <td><input type="radio" name="p${num}" value="no${num}"></td>
+            <td><input type="radio" name="p${num}" value="ve${num}"></td>
+            <td><input type="radio" name="p${num}" value="s${num}"></td>
+          </tr>
+        `;
+      }
+      preguntasBody.innerHTML = html;
+    }
+
+    // Función para cargar datos existentes
+    function cargarDatosExistentes(nombrePaciente, fecha, id) {
+      if (fecha && id) {
+        const historialPsicologia = JSON.parse(localStorage.getItem('historialPsicologia')) || {};
+        const historial = historialPsicologia[nombrePaciente] || [];
+        const registro = historial.find(reg => reg.id === id && reg.fecha === fecha);
+        
+        if (registro) {
+          // Marcar los radio buttons según los datos guardados
+          for (let i = 1; i <= 49; i++) {
+            const valor = registro[`p${i}`];
+            if (valor) {
+              const radio = document.querySelector(`input[name="p${i}"][value="${valor}"]`);
+              if (radio) {
+                radio.checked = true;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Función para guardar datos de psicología
+    function guardarPsicologia(event) {
+      event.preventDefault();
+      
+      const nombrePaciente = document.getElementById('idpaciente').value;
+      if (!nombrePaciente) {
+        alert('No se ha especificado un paciente');
+        return;
+      }
+
+      // Recoger todas las respuestas
+      const datos = {
+        fecha: new Date().toISOString().split('T')[0],
+        id: Date.now().toString()
+      };
+
+      for (let i = 1; i <= 49; i++) {
+        const radio = document.querySelector(`input[name="p${i}"]:checked`);
+        datos[`p${i}`] = radio ? radio.value : '';
+      }
+
+      // Guardar en localStorage
+      const historialPsicologia = JSON.parse(localStorage.getItem('historialPsicologia')) || {};
+      if (!historialPsicologia[nombrePaciente]) {
+        historialPsicologia[nombrePaciente] = [];
+      }
+      
+      historialPsicologia[nombrePaciente].unshift(datos);
+      localStorage.setItem('historialPsicologia', JSON.stringify(historialPsicologia));
+      
+      alert('Datos psicológicos guardados correctamente');
+      cargarHistorialPsicologia(nombrePaciente);
+      
+      // Limpiar formulario
+      document.getElementById('form-psicologia').reset();
+    }
+
+    // Inicialización cuando la página carga
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obtener ID del paciente
+      const idPaciente = obtenerIdPaciente();
+      const params = getUrlParams();
+      
+      if (idPaciente) {
+        // Configurar el formulario
+        document.getElementById('idpaciente').value = idPaciente;
+        document.getElementById('fecha').value = params.fecha || '';
+        document.getElementById('id').value = params.id || '';
+        
+        // Actualizar enlaces de navegación
+        const enlaces = document.querySelectorAll('a[id^="btn"]');
+        enlaces.forEach(enlace => {
+          const href = enlace.getAttribute('href');
+          if (href && !href.includes('idpaciente=')) {
+            enlace.setAttribute('href', href + '?idpaciente=' + encodeURIComponent(idPaciente));
+          }
+        });
+        
+        // Cargar datos
+        cargarHistorialPsicologia(idPaciente);
+        generarPreguntas();
+        cargarDatosExistentes(idPaciente, params.fecha, params.id);
+      } else {
+        alert('No se ha especificado un paciente');
+      }
+      
+      // Agregar event listener para el formulario
+      document.getElementById('form-psicologia').addEventListener('submit', guardarPsicologia);
+      
+      // Ocultar pantalla de carga
+      var contenedor = document.getElementById('contenedor_carga');
+      contenedor.style.visibility = 'hidden';
+      contenedor.style.opacity = '0';
+    });
+  </script>
+</body>
+
+</html>

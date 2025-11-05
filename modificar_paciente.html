@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Actualizados</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .success-card {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+        .data-summary {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .data-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-card">
+            <div class="success-icon">✓</div>
+            <h2>¡Datos Actualizados Exitosamente!</h2>
+            <p>La información del paciente ha sido actualizada correctamente en el sistema.</p>
+            
+            <div class="data-summary">
+                <h4>Resumen de datos actualizados:</h4>
+                <div class="data-item">
+                    <strong>ID Paciente:</strong> <span id="display-idpaciente">123</span>
+                </div>
+                <div class="data-item">
+                    <strong>Nombre:</strong> <span id="display-nombre">María</span>
+                </div>
+                <div class="data-item">
+                    <strong>Apellidos:</strong> <span id="display-apellidos">González López</span>
+                </div>
+                <div class="data-item">
+                    <strong>Edad:</strong> <span id="display-edad">11</span> años, 
+                    <span id="display-meses">7</span> meses
+                </div>
+                <div class="data-item">
+                    <strong>DNI:</strong> <span id="display-dni">76543210</span>
+                </div>
+                <div class="data-item">
+                    <strong>Género:</strong> <span id="display-genero">Femenino</span>
+                </div>
+                <div class="data-item">
+                    <strong>Dirección:</strong> <span id="display-direccion">Av. Larco 123</span>
+                </div>
+                <div class="data-item">
+                    <strong>Teléfono:</strong> <span id="display-telefono">987654321</span>
+                </div>
+                <div class="data-item">
+                    <strong>Escuela:</strong> <span id="display-escuela">Escuela Primaria San Martín</span>
+                </div>
+                <div class="data-item">
+                    <strong>Grado y Sección:</strong> <span id="display-seccion">5to A</span>
+                </div>
+            </div>
+            
+            <a href="datos_personales.html?idpaciente=123" class="btn-custom">
+                Volver a Datos del Paciente
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Esta función simularía la obtención de datos del formulario
+        // En un entorno real, estos datos vendrían del servidor
+        function cargarDatosActualizados() {
+            // En un caso real, estos valores vendrían de la URL o de localStorage
+            // Para esta demostración, usamos valores estáticos
+            const datos = {
+                idpaciente: "123",
+                nombre: "María",
+                apellidos: "González López",
+                edad: "11",
+                meses: "7",
+                dni: "76543210",
+                genero: "Femenino",
+                direccion: "Av. Larco 123",
+                telefono: "987654321",
+                escuela: "Escuela Primaria San Martín",
+                seccion: "5to A"
+            };
+            
+            // Actualizar la visualización con los datos
+            for (const [key, value] of Object.entries(datos)) {
+                const element = document.getElementById(`display-${key}`);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+        }
+        
+        // Cargar los datos cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', cargarDatosActualizados);
+    </script>
+</body>
+</html>
